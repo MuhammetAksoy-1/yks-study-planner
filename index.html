@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>YKS Odak — Premium Çalışma Asistanı</title>
+  <meta name="description" content="YKS sınavına hazırlık sürecinde odaklanmanı artıran, çalışmalarını takip eden ve gelişimini grafiklerle gösteren premium çalışma asistanı.">
+  <meta name="theme-color" content="#6C5CE7">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="YKS Odak">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/icon-512.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+
+<!-- Aurora animated background -->
+<div class="aurora-bg">
+  <div class="aurora-orb"></div>
+</div>
+
+<!-- Confetti canvas -->
+<canvas id="confetti-canvas"></canvas>
+
+<div class="app-shell">
+
+  <!-- ── TOP HEADER ── -->
+  <header class="top-header">
+    <div class="brand">
+      <div class="brand-icon"><i data-lucide="graduation-cap"></i></div>
+      <div>
+        <h1>YKS Odak</h1>
+        <div class="sub">Premium Çalışma Asistanı</div>
+      </div>
+    </div>
+
+    <!-- YKS Countdown -->
+    <div class="cd-widget">
+      <div class="cd-label"><span class="cd-pulse"></span>YKS 2027'ye Kalan</div>
+      <div class="cd-timer">
+        <div class="cd-block"><b id="cd-day">--</b><small>Gün</small></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-block"><b id="cd-hour">--</b><small>Saat</small></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-block"><b id="cd-min">--</b><small>Dk</small></div>
+        <div class="cd-sep">:</div>
+        <div class="cd-block"><b id="cd-sec">--</b><small>Sn</small></div>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <button class="install-btn" id="install-btn">
+        <i data-lucide="download"></i> Uygulamayı Yükle
+      </button>
+      <button class="icon-btn" id="theme-btn" title="Tema Değiştir">
+        <i data-lucide="sun" class="theme-sun"></i>
+        <i data-lucide="moon" class="theme-moon"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- ── QUOTE BAR ── -->
+  <div class="quote-bar">
+    <div class="quote-text"><span class="sparkle">✦</span><span id="quote-text">Başarı, her gün tekrarlanan küçük çabaların toplamıdır.</span></div>
+    <button class="quote-btn" id="quote-btn"><i data-lucide="refresh-cw"></i> Yeni Söz</button>
+  </div>
+
+  <!-- ── MAIN BODY ── -->
+  <div class="main-body">
+
+    <!-- Desktop Sidebar -->
+    <nav class="side-nav">
+      <button class="side-btn active" onclick="goTo('plan',this)"><i data-lucide="calendar-check"></i><span>Çalışma Planı</span></button>
+      <button class="side-btn" onclick="goTo('pomodoro',this)"><i data-lucide="clock-4"></i><span>Pomodoro</span></button>
+      <button class="side-btn" onclick="goTo('stopwatch',this)"><i data-lucide="timer"></i><span>Kronometre</span></button>
+      <button class="side-btn" onclick="goTo('nets',this)"><i data-lucide="trending-up"></i><span>Net Takipçisi</span></button>
+      <button class="side-btn" onclick="goTo('questions',this)"><i data-lucide="hash"></i><span>Soru Sayacı</span></button>
+      <button class="side-btn" onclick="goTo('topics',this)"><i data-lucide="book-open"></i><span>Konu Takipçisi</span></button>
+      <button class="side-btn" onclick="goTo('summary',this)"><i data-lucide="bar-chart-3"></i><span>Özet & İstatistik</span></button>
+    </nav>
+
+    <!-- Content -->
+    <main class="content-main">
+
+      <!-- ══ PLAN ══ -->
+      <section id="sec-plan" class="sec active">
+        <div class="sec-head-row">
+          <div class="sec-head">
+            <h2>Çalışma Planım</h2>
+            <p>Günlük, haftalık ve aylık hedeflerini belirle.</p>
+          </div>
+          <div class="filter-group">
+            <button class="filter-pill active" onclick="setPlanScope('gunluk',this)">Günlük</button>
+            <button class="filter-pill" onclick="setPlanScope('haftalik',this)">Haftalık</button>
+            <button class="filter-pill" onclick="setPlanScope('aylik',this)">Aylık</button>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="glass glow-purple">
+            <h3 class="card-title"><i data-lucide="plus-circle"></i>Yeni Görev Ekle</h3>
+            <form id="plan-form" onsubmit="addPlan(event)">
+              <div class="form-g">
+                <label for="p-ders">Ders</label>
+                <select id="p-ders">
+                  <option value="Matematik">Matematik</option>
+                  <option value="Geometri">Geometri</option>
+                  <option value="Türkçe">Türkçe</option>
+                  <option value="Edebiyat">Edebiyat</option>
+                  <option value="Fizik">Fizik</option>
+                  <option value="Kimya">Kimya</option>
+                  <option value="Biyoloji">Biyoloji</option>
+                  <option value="Tarih">Tarih</option>
+                  <option value="Coğrafya">Coğrafya</option>
+                  <option value="Felsefe">Felsefe</option>
+                  <option value="Din Kültürü">Din Kültürü</option>
+                  <option value="İngilizce">İngilizce</option>
+                </select>
+              </div>
+              <div class="form-row">
+                <div class="form-g">
+                  <label for="p-sure">Süre (dk)</label>
+                  <input type="number" id="p-sure" value="45" min="5" max="480">
+                </div>
+                <div class="form-g">
+                  <label for="p-tarih">Tarih</label>
+                  <input type="date" id="p-tarih">
+                </div>
+              </div>
+              <div class="form-g">
+                <label for="p-konu">Konu / Hedef</label>
+                <input type="text" id="p-konu" placeholder="Örn: Türev soru çözümü" required>
+              </div>
+              <button type="submit" class="btn btn-primary btn-full"><i data-lucide="plus"></i>Plana Ekle</button>
+            </form>
+          </div>
+          <div class="glass">
+            <h3 class="card-title" style="justify-content:space-between">
+              <span><i data-lucide="check-square"></i>Yapılacaklar</span>
+              <span class="badge" id="plan-badge" style="background:rgba(108,92,231,0.15);color:var(--aurora-purple)">0/0</span>
+            </h3>
+            <div class="list-scroll" id="plan-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ POMODORO ══ -->
+      <section id="sec-pomodoro" class="sec">
+        <div class="sec-head">
+          <h2>Pomodoro Zamanlayıcı</h2>
+          <p>Kısa aralıklarla yüksek verimde odaklan.</p>
+        </div>
+        <div class="glass glow-purple">
+          <div class="pom-wrap">
+            <!-- Ring -->
+            <div class="timer-ring" id="pom-ring">
+              <svg viewBox="0 0 200 200">
+                <circle class="ring-bg" cx="100" cy="100" r="88"/>
+                <circle class="ring-fg" id="pom-circle" cx="100" cy="100" r="88"
+                  stroke-dasharray="552.92" stroke-dashoffset="0"/>
+              </svg>
+              <div class="timer-inner">
+                <div class="timer-digits" id="pom-digits">25:00</div>
+                <div class="timer-label" id="pom-phase-lbl">Odaklanma</div>
+              </div>
+            </div>
+            <!-- Subject -->
+            <div class="pom-ders">
+              <label for="pom-ders">Ders:</label>
+              <select id="pom-ders" style="min-width:130px">
+                <option value="Matematik">Matematik</option>
+                <option value="Geometri">Geometri</option>
+                <option value="Türkçe">Türkçe</option>
+                <option value="Edebiyat">Edebiyat</option>
+                <option value="Fizik">Fizik</option>
+                <option value="Kimya">Kimya</option>
+                <option value="Biyoloji">Biyoloji</option>
+                <option value="Tarih">Tarih</option>
+                <option value="Coğrafya">Coğrafya</option>
+                <option value="Felsefe">Felsefe</option>
+                <option value="Din Kültürü">Din Kültürü</option>
+                <option value="İngilizce">İngilizce</option>
+              </select>
+            </div>
+            <!-- Controls -->
+            <div class="pom-controls">
+              <button class="btn btn-secondary btn-icon" id="pom-reset-btn" title="Sıfırla"><i data-lucide="rotate-ccw"></i></button>
+              <button class="btn btn-primary btn-lg" id="pom-play-btn"><i data-lucide="play" id="pom-play-ico"></i><span id="pom-play-txt">Başlat</span></button>
+              <button class="btn btn-secondary btn-icon" id="pom-skip-btn" title="Atla"><i data-lucide="skip-forward"></i></button>
+            </div>
+            <!-- Stars -->
+            <div class="star-streak">
+              <span class="star-label">Seri:</span>
+              <div class="stars" id="pom-stars"></div>
+              <span class="star-count" id="pom-count">0 Pomodoro</span>
+            </div>
+            <!-- Settings -->
+            <div class="pom-settings">
+              <div class="pom-set">
+                <label>Odaklanma</label>
+                <input type="number" id="pom-work" value="25" min="5" max="60">
+                <span>dk</span>
+              </div>
+              <div class="pom-set">
+                <label>Kısa Mola</label>
+                <input type="number" id="pom-short" value="5" min="1" max="30">
+                <span>dk</span>
+              </div>
+              <div class="pom-set">
+                <label>Uzun Mola</label>
+                <input type="number" id="pom-long" value="15" min="5" max="45">
+                <span>dk</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ STOPWATCH ══ -->
+      <section id="sec-stopwatch" class="sec">
+        <div class="sec-head-row">
+          <div class="sec-head">
+            <h2>Kronometre</h2>
+            <p>Ders sürenizi hassasça ölçün ve kaydedin.</p>
+          </div>
+          <div class="sw-status" id="sw-status">
+            <div class="dot"></div>
+            <span class="sw-status-text" id="sw-status-txt">Beklemede</span>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="glass glow-cyan flex-col text-center" style="align-items:center;justify-content:center">
+            <div class="sw-display" id="sw-digits">00:00:00</div>
+            <div class="sw-ders">
+              <label for="sw-ders">Ders:</label>
+              <select id="sw-ders" style="min-width:130px">
+                <option value="Matematik">Matematik</option>
+                <option value="Geometri">Geometri</option>
+                <option value="Türkçe">Türkçe</option>
+                <option value="Edebiyat">Edebiyat</option>
+                <option value="Fizik">Fizik</option>
+                <option value="Kimya">Kimya</option>
+                <option value="Biyoloji">Biyoloji</option>
+                <option value="Tarih">Tarih</option>
+                <option value="Coğrafya">Coğrafya</option>
+                <option value="Felsefe">Felsefe</option>
+                <option value="Din Kültürü">Din Kültürü</option>
+                <option value="İngilizce">İngilizce</option>
+              </select>
+            </div>
+            <div style="display:flex;gap:0.75rem;align-items:center">
+              <button class="btn btn-danger" id="sw-reset-btn"><i data-lucide="rotate-ccw"></i>Sıfırla</button>
+              <button class="btn btn-primary btn-lg" id="sw-play-btn"><i data-lucide="play" id="sw-play-ico"></i><span id="sw-play-txt">Başlat</span></button>
+              <button class="btn btn-success" id="sw-save-btn"><i data-lucide="save"></i>Kaydet</button>
+            </div>
+            <div class="sw-total">Bugün toplam: <strong id="sw-today">0 dk</strong></div>
+          </div>
+          <div class="glass">
+            <h3 class="card-title" style="justify-content:space-between">
+              <span><i data-lucide="history"></i>Bugünkü Oturumlar</span>
+              <button class="btn btn-danger" style="padding:4px 10px;font-size:0.72rem" onclick="clearSessions()">Temizle</button>
+            </h3>
+            <div class="list-scroll" id="sess-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ NET TRACKER ══ -->
+      <section id="sec-nets" class="sec">
+        <div class="sec-head">
+          <h2>TYT & AYT Net Takipçisi</h2>
+          <p>Deneme sonuçlarını kaydet, gelişimini grafikle izle.</p>
+        </div>
+        <div class="grid-30-70">
+          <div class="glass glow-pink">
+            <h3 class="card-title"><i data-lucide="file-plus"></i>Deneme Ekle</h3>
+            <form id="net-form" onsubmit="addNet(event)">
+              <div class="radio-row">
+                <input type="radio" id="nt-tyt" name="net-type" value="TYT" checked onchange="toggleNetForm()">
+                <label for="nt-tyt">TYT</label>
+                <input type="radio" id="nt-ayt" name="net-type" value="AYT" onchange="toggleNetForm()">
+                <label for="nt-ayt">AYT</label>
+              </div>
+              <div class="form-g">
+                <label>Deneme Adı</label>
+                <input type="text" id="net-name" placeholder="3D Türkiye Geneli - 1" required>
+              </div>
+              <div class="form-g">
+                <label>Tarih</label>
+                <input type="date" id="net-date" required>
+              </div>
+              <div id="tyt-inputs">
+                <div class="sub-title">TYT Netleri</div>
+                <div class="net-grid">
+                  <div class="net-cell"><label>Türkçe</label><input type="number" id="nt-tr" step="0.25" min="0" max="40" value="0"></div>
+                  <div class="net-cell"><label>Matematik</label><input type="number" id="nt-mat" step="0.25" min="0" max="40" value="0"></div>
+                  <div class="net-cell"><label>Sosyal</label><input type="number" id="nt-sos" step="0.25" min="0" max="20" value="0"></div>
+                  <div class="net-cell"><label>Fen</label><input type="number" id="nt-fen" step="0.25" min="0" max="20" value="0"></div>
+                </div>
+              </div>
+              <div id="ayt-inputs" class="hidden">
+                <div class="sub-title">AYT Netleri</div>
+                <div class="net-grid">
+                  <div class="net-cell"><label>Matematik</label><input type="number" id="na-mat" step="0.25" min="0" max="40" value="0"></div>
+                  <div class="net-cell"><label>Fen</label><input type="number" id="na-fen" step="0.25" min="0" max="40" value="0"></div>
+                  <div class="net-cell"><label>Ed-Sos1</label><input type="number" id="na-edes" step="0.25" min="0" max="40" value="0"></div>
+                  <div class="net-cell"><label>Sos2</label><input type="number" id="na-sos2" step="0.25" min="0" max="40" value="0"></div>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary btn-full"><i data-lucide="plus"></i>Kaydet</button>
+            </form>
+          </div>
+          <div class="flex-col gap-4">
+            <div class="glass">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem">
+                <h3 class="card-title" style="margin:0"><i data-lucide="line-chart"></i>Gelişim Grafiği</h3>
+                <div class="filter-group">
+                  <button class="filter-pill active" id="nc-tyt" onclick="setNetChart('TYT')">TYT</button>
+                  <button class="filter-pill" id="nc-ayt" onclick="setNetChart('AYT')">AYT</button>
+                </div>
+              </div>
+              <div class="chart-wrap"><canvas id="net-chart"></canvas></div>
+            </div>
+            <div class="glass" style="max-height:260px;overflow:hidden;display:flex;flex-direction:column">
+              <h3 class="card-title"><i data-lucide="list"></i>Kayıtlı Denemeler</h3>
+              <div style="overflow-y:auto;flex:1">
+                <table class="data-tbl">
+                  <thead><tr><th>Tarih</th><th>Tür</th><th>İsim</th><th>Toplam Net</th><th></th></tr></thead>
+                  <tbody id="net-tbody"></tbody>
+                </table>
+                <div id="net-empty" class="empty"><i data-lucide="bar-chart-2"></i><p>Deneme kaydı yok.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ SORU SAYACI ══ -->
+      <section id="sec-questions" class="sec">
+        <div class="sec-head">
+          <h2>Soru Sayacı</h2>
+          <p>Çözdüğün soruları derse göre kaydet ve hedefine ulaş.</p>
+        </div>
+        <!-- Stat cards -->
+        <div class="q-stat-grid">
+          <div class="q-stat glass glow-purple">
+            <div class="q-stat-val" id="q-total">0</div>
+            <div class="q-stat-lbl">Bugün Toplam Soru</div>
+          </div>
+          <div class="q-stat glass glow-green">
+            <div class="q-stat-val" style="color:var(--aurora-green)" id="q-correct">0</div>
+            <div class="q-stat-lbl">Doğru</div>
+          </div>
+          <div class="q-stat glass glow-pink">
+            <div class="q-stat-val" style="color:var(--aurora-pink)" id="q-wrong">0</div>
+            <div class="q-stat-lbl">Yanlış</div>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="glass glow-cyan">
+            <h3 class="card-title"><i data-lucide="plus-circle"></i>Soru Ekle</h3>
+            <form id="q-form" onsubmit="addQuestion(event)">
+              <div class="form-g">
+                <label>Ders</label>
+                <select id="q-ders">
+                  <option value="Matematik">Matematik</option>
+                  <option value="Geometri">Geometri</option>
+                  <option value="Türkçe">Türkçe</option>
+                  <option value="Edebiyat">Edebiyat</option>
+                  <option value="Fizik">Fizik</option>
+                  <option value="Kimya">Kimya</option>
+                  <option value="Biyoloji">Biyoloji</option>
+                  <option value="Tarih">Tarih</option>
+                  <option value="Coğrafya">Coğrafya</option>
+                  <option value="Felsefe">Felsefe</option>
+                  <option value="Din Kültürü">Din Kültürü</option>
+                  <option value="İngilizce">İngilizce</option>
+                </select>
+              </div>
+              <div class="form-row">
+                <div class="form-g">
+                  <label>Doğru</label>
+                  <input type="number" id="q-dogru" min="0" value="0">
+                </div>
+                <div class="form-g">
+                  <label>Yanlış</label>
+                  <input type="number" id="q-yanlis" min="0" value="0">
+                </div>
+              </div>
+              <div class="form-g">
+                <label>Günlük Soru Hedefi</label>
+                <input type="number" id="q-hedef" min="1" value="50" placeholder="50">
+              </div>
+              <button type="submit" class="btn btn-primary btn-full"><i data-lucide="plus"></i>Kaydet</button>
+            </form>
+          </div>
+          <div class="glass">
+            <h3 class="card-title"><i data-lucide="history"></i>Bugün Çözülenler</h3>
+            <!-- Progress bar for daily goal -->
+            <div style="margin-bottom:1rem">
+              <div style="display:flex;justify-content:space-between;font-size:0.78rem;color:var(--text-2);margin-bottom:5px">
+                <span>Günlük Hedef İlerlemesi</span><span id="q-prog-txt">0 / 50</span>
+              </div>
+              <div class="prog-wrap"><div class="prog-fill" id="q-prog-fill" style="width:0%;background:linear-gradient(90deg,var(--aurora-purple),var(--aurora-cyan))"></div></div>
+            </div>
+            <div class="list-scroll" id="q-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══ KONU TAKİPÇİSİ ══ -->
+      <section id="sec-topics" class="sec">
+        <div class="sec-head">
+          <h2>Konu Takipçisi</h2>
+          <p>MEB müfredatına göre tüm konular. TYT veya AYT seç, derse tıkla.</p>
+        </div>
+
+        <!-- TYT / AYT Exam Toggle -->
+        <div style="display:flex;gap:0.75rem;margin-bottom:1rem;align-items:center;flex-wrap:wrap">
+          <div style="display:flex;gap:4px;background:rgba(108,92,231,0.06);border:1px solid var(--border-dim);padding:4px;border-radius:var(--radius-md)">
+            <button class="topic-exam-btn filter-pill active" data-exam="TYT" onclick="setTopicExam('TYT')" style="min-width:60px">
+              🎯 TYT
+            </button>
+            <button class="topic-exam-btn filter-pill" data-exam="AYT" onclick="setTopicExam('AYT')" style="min-width:60px">
+              🚀 AYT
+            </button>
+          </div>
+          <div style="font-size:0.75rem;color:var(--text-3)">Derse tıklayarak konularını gör ve işaretle</div>
+        </div>
+
+        <!-- Dynamic Ders Navigation (rendered by JS) -->
+        <div id="topic-ders-nav" style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:1rem">
+          <!-- JS ile doldurulacak -->
+        </div>
+
+        <!-- Content -->
+        <div class="grid-2">
+          <!-- Progress + Add -->
+          <div class="glass glow-green flex-col" style="align-items:center">
+            <h3 class="card-title"><i data-lucide="target"></i>Sınav İlerlemesi</h3>
+            <div class="topic-progress-ring">
+              <svg viewBox="0 0 100 100">
+                <circle class="tp-bg" cx="50" cy="50" r="42"/>
+                <circle class="tp-fg" id="tp-circle" cx="50" cy="50" r="42"
+                  stroke-dasharray="263.9" stroke-dashoffset="263.9"/>
+              </svg>
+              <div class="topic-pct" id="tp-pct">0%</div>
+            </div>
+            <div style="text-align:center;font-size:0.85rem;color:var(--text-2);margin-bottom:1rem" id="tp-summary">0 / 0 konu tamamlandı</div>
+
+            <!-- Status legend -->
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;width:100%;margin-bottom:1rem">
+              <div style="display:flex;align-items:center;gap:5px;font-size:0.7rem;color:var(--text-3)">
+                <span style="width:8px;height:8px;border-radius:2px;background:var(--text-3);flex-shrink:0"></span>Başlamadım
+              </div>
+              <div style="display:flex;align-items:center;gap:5px;font-size:0.7rem;color:var(--aurora-amber)">
+                <span style="width:8px;height:8px;border-radius:2px;background:var(--aurora-amber);flex-shrink:0"></span>Çalışıyorum
+              </div>
+              <div style="display:flex;align-items:center;gap:5px;font-size:0.7rem;color:var(--aurora-green)">
+                <span style="width:8px;height:8px;border-radius:2px;background:var(--aurora-green);flex-shrink:0"></span>Bitti ✓
+              </div>
+              <div style="display:flex;align-items:center;gap:5px;font-size:0.7rem;color:var(--aurora-pink)">
+                <span style="width:8px;height:8px;border-radius:2px;background:var(--aurora-pink);flex-shrink:0"></span>Tekrar Lazım
+              </div>
+            </div>
+
+            <div style="width:100%">
+              <div class="form-g">
+                <label>Özel Konu Ekle</label>
+                <input type="text" id="topic-input" placeholder="Konu adı girin..." style="margin-bottom:6px">
+              </div>
+              <button class="btn btn-primary btn-full" onclick="addTopic()"><i data-lucide="plus"></i>Ekle</button>
+            </div>
+          </div>
+
+          <!-- Konu List -->
+          <div class="glass">
+            <h3 class="card-title" style="justify-content:space-between">
+              <span><i data-lucide="book-open"></i>Konular — <span id="topic-ders-title" style="color:var(--aurora-green)">Türkçe</span></span>
+            </h3>
+            <div class="list-scroll" id="topic-list"></div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ══ SUMMARY ══ -->
+      <section id="sec-summary" class="sec">
+        <div class="sec-head">
+          <h2>Özet & İstatistikler</h2>
+          <p>Haftalık çalışma analizin ve hedef takibin.</p>
+        </div>
+
+        <!-- Info box -->
+        <div class="info-box">
+          <i data-lucide="info"></i>
+          <span><strong>Önemli:</strong> Verileriniz tarayıcınızın hafızasında saklanır. Tarayıcı geçmişini ve çerezleri temizlerken bu siteye ait verileri silmemeye dikkat edin.</span>
+        </div>
+
+        <!-- Stat cards -->
+        <div class="stat-cards">
+          <div class="stat-card grad-purple">
+            <div class="stat-top"><span>Toplam Çalışma</span><i data-lucide="hourglass"></i></div>
+            <div class="stat-val" id="s-time">0 dk</div>
+            <div class="stat-sub">Bu hafta tüm oturumlar</div>
+          </div>
+          <div class="stat-card grad-cyan">
+            <div class="stat-top"><span>Pomodoro</span><i data-lucide="flame"></i></div>
+            <div class="stat-val" id="s-pom">0</div>
+            <div class="stat-sub">Tamamlanan odaklanma seansı</div>
+          </div>
+          <div class="stat-card grad-green">
+            <div class="stat-top"><span>Görev Oranı</span><i data-lucide="check-circle-2"></i></div>
+            <div class="stat-val" id="s-plan-pct">0%</div>
+            <div class="stat-sub" id="s-plan-frac">0 / 0 tamamlandı</div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <!-- Weekly chart -->
+          <div class="glass">
+            <h3 class="card-title"><i data-lucide="bar-chart-2"></i>Son 7 Günlük Çalışma</h3>
+            <div class="weekly-chart-wrap"><canvas id="weekly-chart"></canvas></div>
+          </div>
+          <!-- Ders breakdown -->
+          <div class="glass">
+            <h3 class="card-title"><i data-lucide="pie-chart"></i>Ders Dağılımı</h3>
+            <div class="list-scroll" id="s-ders-list"></div>
+          </div>
+        </div>
+
+        <div class="grid-2" style="margin-top:1rem">
+          <!-- Daily goal -->
+          <div class="glass glow-green">
+            <h3 class="card-title"><i data-lucide="target"></i>Günlük Hedefim</h3>
+            <div class="goal-input">
+              <label for="goal-hrs">Hedef:</label>
+              <input type="number" id="goal-hrs" value="6" min="1" max="18">
+              <span style="font-size:0.85rem;color:var(--text-2)">Saat</span>
+            </div>
+            <div class="goal-box">
+              <div style="display:flex;justify-content:space-between;font-size:0.78rem;color:var(--text-2);margin-bottom:5px">
+                <span id="goal-progress-txt">0 / 6 saat</span>
+                <span id="goal-pct">%0</span>
+              </div>
+              <div class="prog-wrap"><div class="prog-fill" id="goal-fill" style="width:0%;background:linear-gradient(90deg,var(--aurora-green),var(--aurora-cyan))"></div></div>
+              <div class="goal-msg" id="goal-msg">Bugün henüz çalışmaya başlamadın. Hadi başla!</div>
+            </div>
+          </div>
+          <!-- Question summary -->
+          <div class="glass glow-cyan">
+            <h3 class="card-title"><i data-lucide="hash"></i>Bugünkü Soru Özeti</h3>
+            <div id="s-q-summary">
+              <div class="empty" style="padding:1.5rem 0"><i data-lucide="hash"></i><p>Henüz soru kaydı yok.</p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div><!-- /main-body -->
+
+  <footer class="app-foot">
+    &copy; 2026 YKS Odak — Hedeflerine odaklan, vazgeçme! 🚀
+  </footer>
+
+</div><!-- /app-shell -->
+
+<!-- Mobile Bottom Bar -->
+<nav class="mobile-bar">
+  <div class="mobile-bar-inner">
+    <button class="mob-btn active" onclick="goTo('plan',this)" data-sec="plan">
+      <i data-lucide="calendar-check"></i><span>Plan</span>
+    </button>
+    <button class="mob-btn" onclick="goTo('pomodoro',this)" data-sec="pomodoro">
+      <i data-lucide="clock-4"></i><span>Pomodoro</span>
+    </button>
+    <button class="mob-btn" onclick="goTo('stopwatch',this)" data-sec="stopwatch">
+      <i data-lucide="timer"></i><span>Krono</span>
+    </button>
+    <button class="mob-btn" onclick="goTo('nets',this)" data-sec="nets">
+      <i data-lucide="trending-up"></i><span>Netler</span>
+    </button>
+    <button class="mob-btn" onclick="goTo('questions',this)" data-sec="questions">
+      <i data-lucide="hash"></i><span>Soru</span>
+    </button>
+    <button class="mob-btn" onclick="goTo('topics',this)" data-sec="topics">
+      <i data-lucide="book-open"></i><span>Konu</span>
+    </button>
+    <button class="mob-btn" onclick="goTo('summary',this)" data-sec="summary">
+      <i data-lucide="bar-chart-3"></i><span>Özet</span>
+    </button>
+  </div>
+</nav>
+
+<script src="app.js"></script>
+</body>
+</html>
