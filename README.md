@@ -4,7 +4,7 @@ YKS sınavına hazırlık sürecinde odaklanmayı artıran, çalışmaları taki
 
 ## 🔗 Canlı Demo
 
-> Netlify üzerinden yayında — [Siteyi Ziyaret Et](https://yks-odak.netlify.app/)
+> Netlify üzerinden yayında — [Siteyi Ziyaret Et](https://your-netlify-url.netlify.app)
 
 ---
 
