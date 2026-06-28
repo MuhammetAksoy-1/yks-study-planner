@@ -1,0 +1,20 @@
+{
+  "name": "YKS Odak - Premium Çalışma Asistanı",
+  "short_name": "YKS Odak",
+  "description": "YKS sınavına hazırlık sürecinde odaklanmanı artıran, çalışmalarını takip eden ve gelişimini grafiklerle gösteren premium çalışma asistanı.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#050510",
+  "theme_color": "#6C5CE7",
+  "orientation": "any",
+  "lang": "tr",
+  "icons": [
+    {
+      "src": "icons/icon-512.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "productivity"]
+}
