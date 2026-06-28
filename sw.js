@@ -1,4 +1,4 @@
-const CACHE_NAME = 'yks-odak-v5';
+const CACHE_NAME = 'yks-odak-v8';
 const ASSETS = [
   './',
   './index.html',
