@@ -17,8 +17,26 @@
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="stylesheet" href="style.css">
+  <!-- KaTeX for beautiful math equations -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
 </head>
 <body class="dark-theme">
+
+<!-- Splash Screen -->
+<div id="splash-screen">
+  <div class="splash-content">
+    <div class="splash-logo">
+      <img src="icons/icon-512.jpg" alt="YKS Odak Logo" class="splash-img">
+    </div>
+    <h1 class="splash-title">YKS Odak</h1>
+    <p class="splash-sub">Premium Çalışma Asistanı</p>
+    <div class="splash-loader">
+      <div class="splash-bar"></div>
+    </div>
+  </div>
+</div>
 
 <!-- Aurora animated background -->
 <div class="aurora-bg">
@@ -79,8 +97,10 @@
       <button class="side-btn active" onclick="goTo('plan',this)"><i data-lucide="calendar-check"></i><span>Çalışma Planı</span></button>
       <button class="side-btn" onclick="goTo('pomodoro',this)"><i data-lucide="clock-4"></i><span>Pomodoro</span></button>
       <button class="side-btn" onclick="goTo('stopwatch',this)"><i data-lucide="timer"></i><span>Kronometre</span></button>
+      <button class="side-btn" onclick="goTo('ai',this)"><i data-lucide="sparkles" style="color:var(--aurora-amber)"></i><span>Aurora AI Asistan</span></button>
       <button class="side-btn" onclick="goTo('nets',this)"><i data-lucide="trending-up"></i><span>Net Takipçisi</span></button>
       <button class="side-btn" onclick="goTo('questions',this)"><i data-lucide="hash"></i><span>Soru Sayacı</span></button>
+      <button class="side-btn" onclick="goTo('notebook',this)"><i data-lucide="folder-heart"></i><span>Soru Defterim</span></button>
       <button class="side-btn" onclick="goTo('topics',this)"><i data-lucide="book-open"></i><span>Konu Takipçisi</span></button>
       <button class="side-btn" onclick="goTo('summary',this)"><i data-lucide="bar-chart-3"></i><span>Özet & İstatistik</span></button>
     </nav>
@@ -191,7 +211,6 @@
             <div class="pom-controls">
               <button class="btn btn-secondary btn-icon" id="pom-reset-btn" title="Sıfırla"><i data-lucide="rotate-ccw"></i></button>
               <button class="btn btn-primary btn-lg" id="pom-play-btn"><i data-lucide="play" id="pom-play-ico"></i><span id="pom-play-txt">Başlat</span></button>
-              <button class="btn btn-secondary btn-icon" id="pom-skip-btn" title="Atla"><i data-lucide="skip-forward"></i></button>
             </div>
             <!-- Stars -->
             <div class="star-streak">
@@ -217,58 +236,168 @@
                 <span>dk</span>
               </div>
             </div>
-          </div>
+        </div>
+
+        <!-- Sessions list -->
+        <div class="glass" style="max-width:480px;margin:1.5rem auto 0">
+          <h3 class="card-title" style="justify-content:space-between">
+            <span><i data-lucide="history"></i>Bugünkü Oturumlar</span>
+            <button class="btn btn-danger" style="padding:4px 10px;font-size:0.72rem" onclick="clearSessions()">Temizle</button>
+          </h3>
+          <div class="list-scroll" id="pom-sess-list"></div>
         </div>
       </section>
 
       <!-- ══ STOPWATCH ══ -->
       <section id="sec-stopwatch" class="sec">
-        <div class="sec-head-row">
-          <div class="sec-head">
-            <h2>Kronometre</h2>
-            <p>Ders sürenizi hassasça ölçün ve kaydedin.</p>
-          </div>
-          <div class="sw-status" id="sw-status">
+        <div class="sec-head" style="text-align:center">
+          <h2>Kronometre</h2>
+          <p>Ders sürenizi hassasça ölçün ve kaydedin.</p>
+        </div>
+
+        <!-- Centered stopwatch display -->
+        <div class="glass glow-cyan flex-col text-center" style="align-items:center;justify-content:center;max-width:480px;margin:0 auto 1.5rem">
+          <div class="sw-status" id="sw-status" style="margin-bottom:0.75rem">
             <div class="dot"></div>
             <span class="sw-status-text" id="sw-status-txt">Beklemede</span>
           </div>
-        </div>
-        <div class="grid-2">
-          <div class="glass glow-cyan flex-col text-center" style="align-items:center;justify-content:center">
-            <div class="sw-display" id="sw-digits">00:00:00</div>
-            <div class="sw-ders">
-              <label for="sw-ders">Ders:</label>
-              <select id="sw-ders" style="min-width:130px">
-                <option value="Matematik">Matematik</option>
-                <option value="Geometri">Geometri</option>
-                <option value="Türkçe">Türkçe</option>
-                <option value="Edebiyat">Edebiyat</option>
-                <option value="Fizik">Fizik</option>
-                <option value="Kimya">Kimya</option>
-                <option value="Biyoloji">Biyoloji</option>
-                <option value="Tarih">Tarih</option>
-                <option value="Coğrafya">Coğrafya</option>
-                <option value="Felsefe">Felsefe</option>
-                <option value="Din Kültürü">Din Kültürü</option>
-                <option value="İngilizce">İngilizce</option>
-              </select>
-            </div>
-            <div style="display:flex;gap:0.75rem;align-items:center">
-              <button class="btn btn-danger" id="sw-reset-btn"><i data-lucide="rotate-ccw"></i>Sıfırla</button>
-              <button class="btn btn-primary btn-lg" id="sw-play-btn"><i data-lucide="play" id="sw-play-ico"></i><span id="sw-play-txt">Başlat</span></button>
-              <button class="btn btn-success" id="sw-save-btn"><i data-lucide="save"></i>Kaydet</button>
-            </div>
-            <div class="sw-total">Bugün toplam: <strong id="sw-today">0 dk</strong></div>
+          <div class="sw-display" id="sw-digits">00:00:00</div>
+          <div class="sw-ders">
+            <label for="sw-ders">Ders:</label>
+            <select id="sw-ders" style="min-width:130px">
+              <option value="Matematik">Matematik</option>
+              <option value="Geometri">Geometri</option>
+              <option value="Türkçe">Türkçe</option>
+              <option value="Edebiyat">Edebiyat</option>
+              <option value="Fizik">Fizik</option>
+              <option value="Kimya">Kimya</option>
+              <option value="Biyoloji">Biyoloji</option>
+              <option value="Tarih">Tarih</option>
+              <option value="Coğrafya">Coğrafya</option>
+              <option value="Felsefe">Felsefe</option>
+              <option value="Din Kültürü">Din Kültürü</option>
+              <option value="İngilizce">İngilizce</option>
+            </select>
           </div>
-          <div class="glass">
-            <h3 class="card-title" style="justify-content:space-between">
-              <span><i data-lucide="history"></i>Bugünkü Oturumlar</span>
-              <button class="btn btn-danger" style="padding:4px 10px;font-size:0.72rem" onclick="clearSessions()">Temizle</button>
-            </h3>
-            <div class="list-scroll" id="sess-list"></div>
+          <div style="display:flex;gap:0.75rem;align-items:center;justify-content:center;flex-wrap:wrap;width:100%">
+            <button class="btn btn-danger" id="sw-reset-btn"><i data-lucide="rotate-ccw"></i>Sıfırla</button>
+            <button class="btn btn-primary btn-lg" id="sw-play-btn"><i data-lucide="play" id="sw-play-ico"></i><span id="sw-play-txt">Başlat</span></button>
+            <button class="btn btn-success" id="sw-save-btn"><i data-lucide="save"></i>Kaydet</button>
+          </div>
+          <div class="sw-total">Bugün toplam: <strong id="sw-today">0 dk</strong></div>
+        </div>
+
+        <!-- Sessions list -->
+        <div class="glass" style="max-width:480px;margin:0 auto">
+          <h3 class="card-title" style="justify-content:space-between">
+            <span><i data-lucide="history"></i>Bugünkü Oturumlar</span>
+            <button class="btn btn-danger" style="padding:4px 10px;font-size:0.72rem" onclick="clearSessions()">Temizle</button>
+          </h3>
+          <div class="list-scroll" id="sess-list"></div>
+        </div>
+      </section>
+
+
+      <!-- ══ AURORA AI ASİSTAN ══ -->
+      <section id="sec-ai" class="sec">
+        <div class="sec-head-row">
+          <div class="sec-head">
+            <h2>Aurora AI Yapay Zeka Asistanı</h2>
+            <p>YKS konularını sor, anlamadığın soruların fotoğrafını yükle veya soru çözdür!</p>
+          </div>
+          <button class="btn btn-secondary" onclick="openGeminiConfig()" style="gap:6px">
+            <i data-lucide="settings"></i><span>API Ayarları</span>
+          </button>
+        </div>
+
+        <div class="grid-2" style="grid-template-columns: 1fr; max-width: 800px; margin: 0 auto;">
+          <!-- API Key Alert banner if not set -->
+          <div class="api-key-warning glass glow-amber" id="gemini-key-warning" style="margin-bottom: 1rem; display: flex; align-items: center; justify-content: space-between; padding: 1rem;">
+            <div style="display:flex; align-items:center; gap:0.75rem;">
+              <i data-lucide="alert-triangle" style="color:var(--aurora-amber)"></i>
+              <div>
+                <strong style="color:var(--text-1); font-size:0.9rem">YKS AI Asistanını Kullanmak İçin Ücretsiz API Anahtarı Gerekli</strong>
+                <p style="font-size:0.78rem; color:var(--text-2); margin-top:2px;">Google AI Studio'dan 30 saniyede tamamen ücretsiz bir API anahtarı alıp asistanı aktifleştirebilirsin.</p>
+              </div>
+            </div>
+            <button class="btn btn-primary" style="padding: 6px 12px; font-size: 0.8rem;" onclick="openGeminiConfig()">Anahtarı Kur</button>
+          </div>
+
+          <!-- Chat Window -->
+          <div class="glass flex-col" style="height: 600px; padding: 0; overflow: hidden; border-color: rgba(108, 92, 231, 0.15);">
+            <!-- Chat Header -->
+            <div style="background: rgba(108, 92, 231, 0.05); padding: 1rem; border-bottom: 1px solid var(--border-dim); display: flex; align-items: center; justify-content: space-between;">
+              <div style="display:flex; align-items:center; gap:0.75rem;">
+                <div style="width: 10px; height: 10px; background: var(--aurora-green); border-radius: 50%; box-shadow: 0 0 8px var(--aurora-green);" id="ai-status-dot"></div>
+                <div>
+                  <h4 style="font-size:0.9rem; font-weight:700; color:var(--text-1)">Aurora AI</h4>
+                  <span style="font-size:0.7rem; color:var(--text-3)">YKS Eğitim Koçu & Soru Çözücü</span>
+                </div>
+              </div>
+              <button class="btn btn-danger" style="padding: 4px 8px; font-size: 0.7rem;" onclick="clearAIChat()">Sohbeti Temizle</button>
+            </div>
+
+            <!-- Messages Box -->
+            <div class="chat-messages" id="ai-messages" style="flex: 1; padding: 1.25rem; overflow-y: auto; display: flex; flex-direction: column; gap: 1rem;">
+              <!-- Dynamic bubbles added here -->
+            </div>
+
+            <!-- Image preview box -->
+            <div id="ai-img-preview-box" class="hidden" style="background: rgba(255,255,255,0.02); padding: 0.5rem 1rem; border-top: 1px solid var(--border-dim); display: flex; align-items: center; gap: 1rem;">
+              <div style="position: relative; width: 60px; height: 60px; border-radius: var(--radius-md); overflow: hidden; border: 1px solid var(--border-dim);">
+                <img id="ai-img-preview" src="" style="width: 100%; height: 100%; object-fit: cover;">
+                <button type="button" onclick="removeAttachedImage()" style="position: absolute; top: 2px; right: 2px; background: rgba(0,0,0,0.6); color: white; border: none; border-radius: 50%; width: 18px; height: 18px; font-size: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer;">&times;</button>
+              </div>
+              <span id="ai-img-name" style="font-size: 0.75rem; color: var(--text-2)">resim.jpg</span>
+            </div>
+
+            <!-- Input area -->
+            <form id="ai-input-form" onsubmit="sendAIMessage(event)" style="display:flex; padding: 0.75rem 1rem; background: rgba(10,10,26,0.5); border-top: 1px solid var(--border-dim); gap: 0.75rem; align-items: center;">
+              <input type="file" id="ai-file-input" accept="image/*" style="display:none;" onchange="handleImageAttachment(event)">
+              <button type="button" class="btn btn-secondary" onclick="document.getElementById('ai-file-input').click()" style="padding: 10px; border-radius: 50%; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;" title="Soru Fotoğrafı Yükle">
+                <i data-lucide="image"></i>
+              </button>
+              <input type="text" id="ai-msg-input" placeholder="YKS sorunu sor veya bir resim ekle..." style="flex: 1; padding: 10px 16px; border-radius: var(--radius-full); background: var(--bg-input); border: 1px solid var(--border-dim); color: var(--text-1); font-size: 0.9rem;" required>
+              <button type="submit" class="btn btn-primary" style="padding: 10px; border-radius: 50%; width: 42px; height: 42px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;" id="ai-send-btn">
+                <i data-lucide="send"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- API Config Modal (centered card) -->
+        <div id="ai-config-modal" class="hidden" style="position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); z-index: 100000; display: flex; align-items: center; justify-content: center;">
+          <div class="glass glow-purple" style="width: 90%; max-width: 450px; padding: 1.75rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.25rem;">
+              <h3 style="font-size:1.1rem; font-weight:800; display:flex; align-items:center; gap:8px;">
+                <i data-lucide="key" style="color:var(--aurora-purple)"></i>
+                <span>Gemini API Ayarları</span>
+              </h3>
+              <button type="button" onclick="closeGeminiConfig()" style="background:none; border:none; color:var(--text-3); font-size:1.2rem; cursor:pointer;">&times;</button>
+            </div>
+            <p style="font-size:0.8rem; color:var(--text-2); line-height:1.45; margin-bottom:1.25rem;">
+              Aurora AI, Google'ın güçlü **Gemini** yapay zekasını kullanır. API Anahtarı almak tamamen **ücretsizdir** ve kredi kartı gerektirmez.
+            </p>
+            <div style="background: rgba(108, 92, 231, 0.08); border: 1px dashed rgba(108, 92, 231, 0.2); border-radius: var(--radius-md); padding: 0.75rem 1rem; margin-bottom: 1.25rem; font-size: 0.78rem;">
+              <strong>💡 Nasıl API Anahtarı Alırım?</strong>
+              <ol style="margin-left: 1.2rem; margin-top: 4px; display:flex; flex-direction:column; gap:4px;">
+                <li><a href="https://aistudio.google.com/" target="_blank" style="color:var(--aurora-cyan); font-weight:700;">Google AI Studio</a> sayfasına git.</li>
+                <li>Giriş yapip <strong>"Get API Key"</strong> butonuna tıkla.</li>
+                <li>Oluşturulan anahtarı kopyala ve aşağıdaki kutuya yapıştır.</li>
+              </ol>
+            </div>
+            <div class="form-g" style="margin-bottom: 1.5rem;">
+              <label for="ai-key-input" style="font-size:0.75rem; font-weight:700;">Gemini API Anahtarın</label>
+              <input type="password" id="ai-key-input" placeholder="AIzaSy..." style="width: 100%; padding: 10px 14px; border-radius: var(--radius-md); background: var(--bg-input); border: 1px solid var(--border-dim); color: var(--text-1); font-size: 0.88rem;">
+            </div>
+            <div style="display:flex; gap:0.75rem; justify-content:flex-end;">
+              <button type="button" class="btn btn-secondary" onclick="closeGeminiConfig()">İptal</button>
+              <button type="button" class="btn btn-primary" onclick="saveGeminiKey()">Anahtarı Kaydet</button>
+            </div>
           </div>
         </div>
       </section>
+
 
       <!-- ══ NET TRACKER ══ -->
       <section id="sec-nets" class="sec">
@@ -489,6 +618,155 @@
       </section>
 
 
+      <!-- ══ KARTOTEK / SORU DEFTERİ ══ -->
+      <section id="sec-notebook" class="sec">
+        <div class="sec-head-row" id="notebook-main-head">
+          <div class="sec-head">
+            <h2>Soru Defterim</h2>
+            <p>Yapamadığın veya tekrar çözmek istediğin soruları ders ders klasörleyerek biriktir.</p>
+          </div>
+          <button class="btn btn-primary" onclick="openCreateFolderModal()"><i data-lucide="folder-plus"></i><span>Yeni Klasör</span></button>
+        </div>
+
+        <!-- Folder View (default) -->
+        <div id="notebook-folders-view">
+          <div class="folders-grid" id="notebook-folders-list">
+            <!-- Dynamic Folder Cards -->
+          </div>
+          <div id="notebook-folders-empty" class="empty">
+            <i data-lucide="folders"></i>
+            <p>Henüz klasör oluşturmadın. Yukarıdaki butondan yeni bir klasör oluşturarak başla!</p>
+          </div>
+        </div>
+
+        <!-- Single Folder Detail View (hidden by default) -->
+        <div id="notebook-detail-view" class="hidden">
+          <div class="sec-head-row" style="margin-bottom: 1.5rem;">
+            <div style="display:flex; align-items:center; gap:0.75rem;">
+              <button class="btn btn-secondary" onclick="backToFolders()" style="padding: 8px 12px;"><i data-lucide="arrow-left"></i><span>Geri</span></button>
+              <div>
+                <h2 id="notebook-folder-title" style="margin:0; font-size:1.4rem;">Klasör Adı</h2>
+                <span id="notebook-folder-meta" style="font-size:0.75rem; color:var(--text-3)">Toplam 0 Soru</span>
+              </div>
+            </div>
+            <button class="btn btn-primary" onclick="openAddQuestionModal()"><i data-lucide="plus"></i><span>Soru Ekle</span></button>
+          </div>
+          <div class="notebook-q-grid" id="notebook-questions-list">
+            <!-- Dynamic Question Cards -->
+          </div>
+          <div id="notebook-questions-empty" class="empty">
+            <i data-lucide="file-question"></i>
+            <p>Bu klasörde henüz kayıtlı soru yok. Sağ üstten soru ekleyebilirsin!</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── MODAL: YENİ KLASÖR OLUŞTUR ── -->
+      <div id="notebook-folder-modal" class="hidden" style="position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); z-index: 100000; display: flex; align-items: center; justify-content: center;">
+        <div class="glass glow-purple" style="width: 90%; max-width: 400px; padding: 1.5rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.25rem;">
+            <h3 style="font-size:1.1rem; font-weight:800; display:flex; align-items:center; gap:8px;">
+              <i data-lucide="folder-plus" style="color:var(--aurora-purple)"></i>
+              <span>Yeni Klasör Oluştur</span>
+            </h3>
+            <button type="button" onclick="closeCreateFolderModal()" style="background:none; border:none; color:var(--text-3); font-size:1.2rem; cursor:pointer;">&times;</button>
+          </div>
+          <div class="form-g" style="margin-bottom: 1rem;">
+            <label for="folder-name-input">Klasör Adı (Ders / Konu)</label>
+            <input type="text" id="folder-name-input" placeholder="Örn: Matematik - Trigonometri" required style="width:100%; padding:10px 14px; border-radius:var(--radius-md); background:var(--bg-input); border:1px solid var(--border-dim); color:var(--text-1);">
+          </div>
+          <div class="form-g" style="margin-bottom: 1.5rem;">
+            <label>Klasör Rengi</label>
+            <div style="display:flex; gap:10px; margin-top:5px;" id="folder-colors-container">
+              <div class="notebook-color-pill active" style="background: var(--aurora-purple)" data-color="purple"></div>
+              <div class="notebook-color-pill" style="background: var(--aurora-cyan)" data-color="cyan"></div>
+              <div class="notebook-color-pill" style="background: var(--aurora-green)" data-color="green"></div>
+              <div class="notebook-color-pill" style="background: var(--aurora-pink)" data-color="pink"></div>
+              <div class="notebook-color-pill" style="background: var(--aurora-amber)" data-color="amber"></div>
+            </div>
+          </div>
+          <div style="display:flex; gap:0.75rem; justify-content:flex-end;">
+            <button type="button" class="btn btn-secondary" onclick="closeCreateFolderModal()">İptal</button>
+            <button type="button" class="btn btn-primary" onclick="createFolderSubmit()">Oluştur</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── MODAL: YENİ SORU EKLE ── -->
+      <div id="notebook-question-modal" class="hidden" style="position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); z-index: 100000; display: flex; align-items: center; justify-content: center;">
+        <div class="glass glow-purple" style="width: 90%; max-width: 450px; padding: 1.5rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.25rem;">
+            <h3 style="font-size:1.1rem; font-weight:800; display:flex; align-items:center; gap:8px;">
+              <i data-lucide="plus-circle" style="color:var(--aurora-purple)"></i>
+              <span>Klasöre Soru Ekle</span>
+            </h3>
+            <button type="button" onclick="closeAddQuestionModal()" style="background:none; border:none; color:var(--text-3); font-size:1.2rem; cursor:pointer;">&times;</button>
+          </div>
+          
+          <div class="form-g" style="margin-bottom: 1rem;">
+            <label>Soru Görseli</label>
+            <input type="file" id="nb-q-file" accept="image/*" style="display:none;" onchange="handleNotebookImageUpload(event)">
+            <div class="image-preview-placeholder" onclick="document.getElementById('nb-q-file').click()" id="nb-q-placeholder">
+              <i data-lucide="upload-cloud" style="width:32px; height:32px;"></i>
+              <span>Tıkla ve Soru Fotoğrafı Yükle</span>
+            </div>
+          </div>
+
+          <div class="form-g" style="margin-bottom: 1rem;">
+            <label for="nb-q-note-input">Soru Hakkında Not (Hata nedeni / Önemli formül)</label>
+            <textarea id="nb-q-note-input" placeholder="Örn: Formülü unuttuğum için yapamadım. Yarım açı kurallarını tekrar et." style="width:100%; height:60px; padding:10px 14px; border-radius:var(--radius-md); background:var(--bg-input); border:1px solid var(--border-dim); color:var(--text-1); resize:none; font-family:inherit; font-size:0.85rem;"></textarea>
+          </div>
+
+          <div class="form-g" style="margin-bottom: 1.5rem;">
+            <label for="nb-q-sol-input">Çözüm Notu (İsteğe Bağlı)</label>
+            <textarea id="nb-q-sol-input" placeholder="Çözüm adımlarını buraya yazabilirsin..." style="width:100%; height:60px; padding:10px 14px; border-radius:var(--radius-md); background:var(--bg-input); border:1px solid var(--border-dim); color:var(--text-1); resize:none; font-family:inherit; font-size:0.85rem;"></textarea>
+          </div>
+
+          <div style="display:flex; gap:0.75rem; justify-content:flex-end;">
+            <button type="button" class="btn btn-secondary" onclick="closeAddQuestionModal()">İptal</button>
+            <button type="button" class="btn btn-primary" onclick="addQuestionToFolderSubmit()">Kaydet</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── MODAL: SORU DETAY GÖRÜNTÜLE ── -->
+      <div id="notebook-view-modal" class="hidden" style="position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 100000; display: flex; align-items: center; justify-content: center;">
+        <div class="glass glow-purple" style="width: 95%; max-width: 600px; padding: 1.5rem; display:flex; flex-direction:column; max-height: 90vh;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+            <h3 style="font-size:1.1rem; font-weight:800;" id="nb-view-title">Soru Detayı</h3>
+            <button type="button" onclick="closeViewQuestionModal()" style="background:none; border:none; color:var(--text-3); font-size:1.2rem; cursor:pointer;">&times;</button>
+          </div>
+
+          <div style="flex:1; overflow-y:auto; display:flex; flex-direction:column; gap:1rem; padding-right:5px;">
+            <!-- Large Image -->
+            <div style="width:100%; background:rgba(0,0,0,0.4); border-radius:var(--radius-md); overflow:hidden; border:1px solid var(--border-dim); max-height: 350px; display:flex; align-items:center; justify-content:center;">
+              <img id="nb-view-img" src="" style="max-width:100%; max-height:350px; object-fit:contain;">
+            </div>
+
+            <!-- Notes -->
+            <div class="glass" style="padding:1rem; background:rgba(255,255,255,0.01)">
+              <strong style="font-size:0.85rem; color:var(--aurora-purple); display:block; margin-bottom:4px;">Yapamama / Hata Nedeni Notu:</strong>
+              <p id="nb-view-note" style="font-size:0.88rem; margin:0; line-height:1.4; color:var(--text-1)"></p>
+            </div>
+
+            <!-- Solution -->
+            <div class="glass" style="padding:1rem; background:rgba(255,255,255,0.01)" id="nb-view-sol-box">
+              <strong style="font-size:0.85rem; color:var(--aurora-green); display:block; margin-bottom:4px;">Çözüm Adımları:</strong>
+              <p id="nb-view-sol" style="font-size:0.88rem; margin:0; line-height:1.4; color:var(--text-1); white-space:pre-wrap;"></p>
+            </div>
+          </div>
+
+          <div style="display:flex; gap:0.75rem; justify-content:space-between; margin-top:1.25rem; border-top:1px solid var(--border-dim); padding-top:1rem;">
+            <button type="button" class="btn btn-danger" id="nb-view-delete-btn"><i data-lucide="trash-2"></i><span>Sil</span></button>
+            <div style="display:flex; gap:0.75rem;">
+              <button type="button" class="btn btn-secondary" onclick="sendToAIFromNotebook()"><i data-lucide="sparkles"></i><span>AI Asistana Gönder</span></button>
+              <button type="button" class="btn btn-primary" onclick="closeViewQuestionModal()">Kapat</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
       <!-- ══ SUMMARY ══ -->
       <section id="sec-summary" class="sec">
         <div class="sec-head">
@@ -571,6 +849,46 @@
 
 </div><!-- /app-shell -->
 
+<!-- Mobile More Bottom Sheet -->
+<div id="mobile-more-sheet" class="hidden" style="position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(8px); z-index: 100001; display: none; align-items: flex-end; justify-content: center; transition: opacity 0.3s ease;">
+  <div class="glass glow-purple" id="more-sheet-content" style="width: 100%; max-width: 500px; border-radius: 20px 20px 0 0; padding: 1.5rem 1.5rem 2.5rem 1.5rem; transform: translateY(100%); transition: transform 0.3s cubic-bezier(0.1, 0.8, 0.25, 1); max-height: 80vh; overflow-y: auto;">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; border-bottom:1px solid var(--border-dim); padding-bottom:0.75rem;">
+      <h3 style="font-size:1.1rem; font-weight:800; display:flex; align-items:center; gap:8px; margin:0;">
+        <i data-lucide="grid" style="color:var(--aurora-purple)"></i>
+        <span>Tüm Araçlar</span>
+      </h3>
+      <button type="button" onclick="closeMobileMoreSheet()" style="background:none; border:none; color:var(--text-3); font-size:1.5rem; cursor:pointer; padding:4px;">&times;</button>
+    </div>
+    
+    <div style="display:grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; text-align:center;">
+      <button class="sheet-grid-btn" onclick="triggerMobileNav('stopwatch')">
+        <i data-lucide="timer" style="color: var(--aurora-cyan); margin: 0 auto;"></i>
+        <span style="margin-top:6px">Kronometre</span>
+      </button>
+      <button class="sheet-grid-btn" onclick="triggerMobileNav('nets')">
+        <i data-lucide="trending-up" style="color: var(--aurora-green); margin: 0 auto;"></i>
+        <span style="margin-top:6px">Netler</span>
+      </button>
+      <button class="sheet-grid-btn" onclick="triggerMobileNav('questions')">
+        <i data-lucide="hash" style="color: var(--aurora-amber); margin: 0 auto;"></i>
+        <span style="margin-top:6px">Soru Sayacı</span>
+      </button>
+      <button class="sheet-grid-btn" onclick="triggerMobileNav('topics')">
+        <i data-lucide="book-open" style="color: var(--aurora-cyan); margin: 0 auto;"></i>
+        <span style="margin-top:6px">Konular</span>
+      </button>
+      <button class="sheet-grid-btn" onclick="triggerMobileNav('summary')">
+        <i data-lucide="bar-chart-3" style="color: var(--aurora-purple); margin: 0 auto;"></i>
+        <span style="margin-top:6px">Özetler</span>
+      </button>
+      <button class="sheet-grid-btn" onclick="triggerMobileNav('settings-api')">
+        <i data-lucide="key" style="color: var(--aurora-pink); margin: 0 auto;"></i>
+        <span style="margin-top:6px">API Ayarları</span>
+      </button>
+    </div>
+  </div>
+</div>
+
 <!-- Mobile Bottom Bar -->
 <nav class="mobile-bar">
   <div class="mobile-bar-inner">
@@ -580,20 +898,14 @@
     <button class="mob-btn" onclick="goTo('pomodoro',this)" data-sec="pomodoro">
       <i data-lucide="clock-4"></i><span>Pomodoro</span>
     </button>
-    <button class="mob-btn" onclick="goTo('stopwatch',this)" data-sec="stopwatch">
-      <i data-lucide="timer"></i><span>Krono</span>
+    <button class="mob-btn" onclick="goTo('ai',this)" data-sec="ai">
+      <i data-lucide="sparkles" style="color:var(--aurora-amber)"></i><span>AI</span>
     </button>
-    <button class="mob-btn" onclick="goTo('nets',this)" data-sec="nets">
-      <i data-lucide="trending-up"></i><span>Netler</span>
+    <button class="mob-btn" onclick="goTo('notebook',this)" data-sec="notebook">
+      <i data-lucide="folder-heart"></i><span>Defter</span>
     </button>
-    <button class="mob-btn" onclick="goTo('questions',this)" data-sec="questions">
-      <i data-lucide="hash"></i><span>Soru</span>
-    </button>
-    <button class="mob-btn" onclick="goTo('topics',this)" data-sec="topics">
-      <i data-lucide="book-open"></i><span>Konu</span>
-    </button>
-    <button class="mob-btn" onclick="goTo('summary',this)" data-sec="summary">
-      <i data-lucide="bar-chart-3"></i><span>Özet</span>
+    <button class="mob-btn" onclick="openMobileMoreSheet()">
+      <i data-lucide="grid"></i><span>Diğer</span>
     </button>
   </div>
 </nav>

@@ -33,27 +33,96 @@ const SUBJECT_COLOR = {
   'Felsefe':'#ff7675','Din Kültürü':'#fab1a0','İngilizce':'#74b9ff',
 };
 
-// ── MEB Müfredatı — TYT Tam Konu Listesi ─────────────────────────────────────
+// ── MEB Anadolu Lisesi Müfredatı — TYT (9. ve 10. Sınıf) ─────────────────────
 const TYT_TOPICS = {
-  'Türkçe': [
+  // ═══════ 9. SINIF ═══════
+  'Matematik (9. Sınıf)': [
+    'Küme Kavramı ve Gösterimi',
+    'Kümelerde İşlemler (Birleşim, Kesişim, Fark)',
+    'Alt Küme ve Eşit Küme',
+    'Kartezyen Çarpım',
+    'Mantık — Önerme ve Bileşik Önermeler',
+    'Koşullu Önermeler ve Niceleyiciler',
+    'Doğal Sayılar ve Tam Sayılar',
+    'Bölünebilme Kuralları',
+    'EBOB ve EKOK',
+    'Rasyonel Sayılar ve Ondalık Gösterim',
+    'Üslü İfadeler',
+    'Köklü İfadeler',
+    'Çarpanlara Ayırma',
+    'Oran ve Orantı',
+    'Denklem Çözme (1. Derece)',
+    'Eşitsizlikler',
+    'Mutlak Değer',
+    'Fonksiyon Kavramı ve Gösterimi',
+    'Fonksiyon Çeşitleri (Birebir, Örten, İçine)',
+  ],
+  'Geometri (9. Sınıf)': [
+    'Temel Kavramlar (Nokta, Doğru, Düzlem)',
+    'Açı Kavramı ve Açı Ölçüleri',
+    'Açılar Arası İlişkiler',
+    'Üçgende Açı-Kenar Bağıntıları',
+    'Üçgende Açıortay ve Kenarortay',
+    'Üçgende Eşlik ve Benzerlik',
+    'Dik Üçgen ve Pisagor Bağıntısı',
+    'İkizkenar ve Eşkenar Üçgen',
+    'Üçgenin Alanı',
+    'Çokgenler — Dörtgenler',
+    'Paralelkenar, Dikdörtgen, Kare',
+    'Yamuk ve Özellikleri',
+    'Çemberde Temel Kavramlar',
+    'Çemberde Açılar',
+  ],
+  'Fizik (9. Sınıf)': [
+    'Fizik Bilimine Giriş ve Ölçme',
+    'Madde ve Özellikleri (Kütle, Hacim, Özkütleler)',
+    'Katılarda, Sıvılarda ve Gazlarda Basınç',
+    'Kaldırma Kuvveti — Archimedes İlkesi',
+    'Isı ve Sıcaklık',
+    'Hal Değişimleri',
+    'Genleşme',
+  ],
+  'Kimya (9. Sınıf)': [
+    'Kimya Bilimi ve Güvenlik',
+    'Atom ve Yapısı (Proton, Nötron, Elektron)',
+    'Atom Modelleri Tarihi (Dalton, Thomson, Rutherford, Bohr)',
+    'Periyodik Sistem ve Element Özellikleri',
+    'Elektron Dizilimleri',
+    'Kimyasal Türler Arası Etkileşimler',
+    'Maddenin Halleri',
+    'Maddenin Fiziksel ve Kimyasal Özellikleri',
+  ],
+  'Biyoloji (9. Sınıf)': [
+    'Yaşam Bilimi — Biyolojiye Giriş',
+    'Canlıların Ortak Özellikleri',
+    'Canlıların Yapısında Bulunan Temel Bileşikler (Su, Mineraller)',
+    'Karbonhidratlar',
+    'Yağlar (Lipitler)',
+    'Proteinler',
+    'Nükleik Asitler (DNA ve RNA)',
+    'Vitaminler',
+    'Hücre — Prokaryot ve Ökaryot',
+    'Hücre Organelleri',
+    'Hücre Zarından Madde Geçişi (Difüzyon, Osmoz)',
+    'Canlıların Sınıflandırılması',
+  ],
+  'Türkçe (9-10)': [
     'Sözcükte Anlam — Gerçek, Mecaz, Yan Anlam',
-    'Sözcükte Anlam — Eş Anlam ve Zıt Anlam',
+    'Sözcükte Anlam — Eş, Yakın ve Zıt Anlam',
     'Sözcükte Anlam — Deyimler ve Atasözleri',
-    'Sözcükte Anlam — İkilemeler, Terim, Argo',
-    'Sözcükte Anlam — Sesteş Sözcükler',
+    'Sözcükte Anlam — İkilemeler, Sesteş Sözcükler',
     'Cümlede Anlam — Öznel ve Nesnel Yargı',
     'Cümlede Anlam — Neden-Sonuç, Amaç-Sonuç',
-    'Cümlede Anlam — Koşul, Karşılaştırma, Tanım',
-    'Cümlede Anlam — Benzetme ve Mecaz',
+    'Cümlede Anlam — Koşul, Karşılaştırma',
     'Paragraf — Ana Düşünce ve Başlık Bulma',
     'Paragraf — Yardımcı Düşünce',
     'Paragraf — Boşluk ve Paragraf Tamamlama',
     'Paragraf — Anlatım Biçimleri',
     'Paragraf — Düşünceyi Geliştirme Yolları',
-    'Dil Bilgisi — Sözcük Türleri (İsim, Sıfat, Zamir)',
-    'Dil Bilgisi — Sözcük Türleri (Zarf, Edat, Bağlaç, Ünlem)',
+    'Dil Bilgisi — İsim, Sıfat, Zamir',
+    'Dil Bilgisi — Zarf, Edat, Bağlaç, Ünlem',
     'Dil Bilgisi — Fiil Çekimi (Kip ve Kişi)',
-    'Dil Bilgisi — Yapı Bakımından Sözcük',
+    'Dil Bilgisi — Yapı Bakımından Sözcükler',
     'Dil Bilgisi — Cümle Öğeleri (Özne, Yüklem)',
     'Dil Bilgisi — Cümle Öğeleri (Nesne, Tümleçler)',
     'Dil Bilgisi — Cümle Türleri',
@@ -61,88 +130,136 @@ const TYT_TOPICS = {
     'Dil Bilgisi — Ses Bilgisi ve Ses Olayları',
     'Dil Bilgisi — Yazım Kuralları',
     'Dil Bilgisi — Noktalama İşaretleri',
-    'Dil Bilgisi — Sözcük Türetme ve Yapım Ekleri',
   ],
-  'Temel Matematik': [
-    'Sayılar ve Sayı Kümeleri',
-    'Doğal Sayılarda Bölünebilme Kuralları',
-    'EBOB ve EKOK',
-    'Tam Sayılar',
-    'Rasyonel Sayılar',
-    'Üslü Sayılar',
-    'Köklü Sayılar',
-    'Oran ve Orantı',
-    'Yüzde ve Faiz Hesabı',
-    'Kâr — Zarar Problemleri',
-    'Çarpanlara Ayırma',
-    'Denklemler (1. Derece)',
-    'Eşitsizlikler',
-    'Mutlak Değer',
-    'Karışım Problemleri',
-    'Hız — Yol — Zaman Problemleri',
-    'Çalışma Problemleri',
-    'Yaş ve Sayı Problemleri',
-    'Mantık — Önerme ve Bağlaçlar',
-    'Mantık — Koşullu Önermeler ve Niceleyiciler',
-    'Küme Kavramı ve Gösterim',
-    'Küme İşlemleri (Birleşim, Kesişim, Fark)',
-    'Kartezyen Çarpım',
-    'Fonksiyon Kavramı',
-    'Fonksiyon Türleri (Birebir, Örten)',
+  'Tarih (9. Sınıf)': [
+    'Tarih Bilimi — Kavram ve Yöntemler',
+    'Uygarlığın Doğuşu ve İlk Uygarlıklar',
+    'Mezopotamya Uygarlıkları (Sümer, Babil, Asur)',
+    'Mısır Uygarlığı',
+    'Ege ve Yunan Uygarlıkları',
+    'İlk Türk Devletleri — Büyük Hun Devleti',
+    'Göktürk Devleti',
+    'Uygur Devleti',
+    'İslamiyetin Doğuşu',
+    'Dört Halife Dönemi',
+    'Emeviler ve Abbasiler',
+  ],
+  'Coğrafya (9. Sınıf)': [
+    'Coğrafya Biliminin Konusu ve Yöntemi',
+    'Coğrafi Konum ve Etkileri',
+    'Harita Bilgisi ve Projeksiyonlar',
+    'Dünyanın Şekli ve Hareketleri',
+    'Atmosfer ve Sıcaklık',
+    'Basınç ve Rüzgarlar',
+    'Nem, Yağış ve İklim Tipleri',
+    'İç Kuvvetler (Orojenez, Epirojenez)',
+    'Volkanizma ve Depremler',
+    'Dış Kuvvetler — Akarsu Aşındırması',
+    'Dış Kuvvetler — Rüzgar ve Buzul',
+  ],
+
+  // ═══════ 10. SINIF ═══════
+  'Matematik (10. Sınıf)': [
+    'Sayı Kümeleri ve Aralıklar',
     'Bileşke ve Ters Fonksiyon',
-    'Temel Geometri — Açı ve Doğru',
-    'Üçgenler (Açı ve Kenar Özellikleri)',
-    'Özel Üçgenler (Dik, İkizkenar, Eşkenar)',
-    'Çokgenler ve Dörtgenler',
-    'Çember ve Daire',
-    'Alan ve Çevre Hesapları',
-    'İstatistik (Ortalama, Ortanca, Tepe Değer)',
+    'Polinomlar ve Polinom İşlemleri',
+    'Polinom Çarpanlara Ayırma',
+    '2. Derece Denklemler',
+    '2. Derece Eşitsizlikler',
+    'Parabol ve Grafiği',
     'Permütasyon',
     'Kombinasyon',
-    'Binom ve Pascal Üçgeni',
-    'Olasılık',
+    'Binom Açılımı ve Pascal Üçgeni',
+    'Olasılık — Temel Kavramlar',
+    'Koşullu Olasılık',
+    'İstatistik — Veri Analizi',
+    'Merkezi Eğilim Ölçüleri (Ortalama, Ortanca)',
+    'Yayılım Ölçüleri (Standart Sapma)',
   ],
-  'Tarih (TYT)': [
-    'Tarih Bilimine Giriş — Kavramlar ve Yöntemler',
-    'İlk Çağ Uygarlıkları — Mezopotamya',
-    'İlk Çağ Uygarlıkları — Mısır ve Ege',
-    'İslam Öncesi Türk Devletleri (Asya Hunları)',
-    'Göktürkler ve Uygurlar',
-    'İslamiyetin Doğuşu ve Yayılışı',
-    'Türklerin İslamiyeti Kabulü',
-    'İlk Türk-İslam Devletleri (Karahanlı, Gazneli)',
+  'Geometri (10. Sınıf)': [
+    'Doğruda Açıortay ve Uzaklık',
+    'Üçgenin Kenarortay ve Ağırlık Merkezi',
+    'Dik Üçgende Trigonometrik Oranlar',
+    'Özel Açıların Trigonometrik Değerleri',
+    'Alan Hesapları — Üçgen ve Dörtgen',
+    'Çember ve Daire Alanı',
+    'Dairenin Dilimi ve Yayı',
+    'Prizmalar ve Yüzey Alanı',
+    'Silindir',
+    'Piramit ve Koni',
+    'Küre',
+  ],
+  'Fizik (10. Sınıf)': [
+    'Kuvvet ve Bileşenleri',
+    'Newtonun Hareket Yasaları',
+    'Sürtünme Kuvveti',
+    'İş, Güç ve Enerji',
+    'İş-Enerji Teoremi',
+    'Basit Makineler (Kaldıraç, Makara)',
+    'Elektrik Yükleri ve Coulomb Yasası',
+    'Elektrik Alanı ve Potansiyel',
+    'Basit Elektrik Devreleri (Seri, Paralel)',
+    'Mıknatıslar ve Manyetik Alan',
+    'Dalgalar — Temel Kavramlar',
+    'Ses Dalgaları',
+    'Yansıma ve Düzlem Ayna',
+    'Kırılma ve Mercekler',
+  ],
+  'Kimya (10. Sınıf)': [
+    'Kimyasal Bağlar — İyonik Bağ',
+    'Kovalent Bağ (Polar ve Apolar)',
+    'Metalik Bağ',
+    'Zayıf Etkileşimler (Van der Waals)',
+    'Kimyasal Tepkimeler ve Denkleştirme',
+    'Tepkime Türleri (Yanma, Nötrleşme)',
+    'Asitler ve Bazlar (Temel)',
+    'Tuzlar',
+    'Karışımlar ve Ayrıştırma Yöntemleri',
+    'Çözeltiler ve Derişim',
+    'Endüstride Kimya',
+  ],
+  'Biyoloji (10. Sınıf)': [
+    'Hücre Bölünmesi — Mitoz',
+    'Hücre Bölünmesi — Mayoz',
+    'Eşeyli ve Eşeysiz Üreme',
+    'Kalıtımın Genel İlkeleri — Mendel Genetiği',
+    'Tek Gen Çaprazlamaları',
+    'Kan Grupları Kalıtımı',
+    'Eşeye Bağlı Kalıtım',
+    'Ekosistem Ekolojisi',
+    'Madde Döngüleri (Karbon, Azot, Su)',
+    'Besin Zinciri ve Enerji Akışı',
+    'Biyomlar',
+    'Güncel Çevre Sorunları',
+  ],
+  'Tarih (10. Sınıf)': [
+    'Türklerin Müslüman Olması',
+    'İlk Türk-İslam Devletleri — Karahanlılar',
+    'Gazneliler',
     'Büyük Selçuklu Devleti',
-    'Anadolu Selçukluları ve Beylikler',
+    'Malazgirt Savaşı ve Anadolunun Türkleşmesi',
+    'Anadolu Selçuklu Devleti',
+    'Anadolu Beylikleri',
+    'Haçlı Seferleri',
+    'Moğol İstilası',
     'Osmanlı Devletinin Kuruluşu',
-    'Osmanlı Yükselme Dönemi (Fatih, Yavuz)',
-    'Kanuni Sultan Süleyman Dönemi',
-    'Osmanlı Duraklama ve Gerileme',
-    'Osmanlı Islahat Hareketleri (Tanzimat)',
-    '1. Dünya Savaşı ve Osmanlının Çöküşü',
-    'Kurtuluş Savaşı',
-    'Atatürk İlke ve İnkılapları',
-    'Türkiye Cumhuriyetinin Kuruluşu',
-    '2. Dünya Savaşı ve Türkiye',
-    'Soğuk Savaş Dönemi',
+    'Osmanlı Beylikten Devlete (Osman, Orhan, 1. Murat)',
+    'Osmanlının Balkanlardaki Fetihleri',
+    'Ankara Savaşı ve Fetret Devri',
+    'İstanbulun Fethi',
   ],
-  'Coğrafya (TYT)': [
-    'Coğrafyanın Konusu ve Önemi',
-    'Harita Bilgisi',
-    'Koordinatlar — Enlem ve Boylam',
-    'Dünyanın Şekli ve Hareketleri',
-    'İklim Elemanları — Sıcaklık',
-    'İklim Elemanları — Yağış ve Rüzgar',
-    'İklim Tipleri',
-    'Türkiyenin İklimi',
+  'Coğrafya (10. Sınıf)': [
+    'Türkiyenin Coğrafi Konumu',
     'Türkiyenin Yüzey Şekilleri',
-    'İç Kuvvetler — Volkanizma ve Deprem',
-    'Dış Kuvvetler — Akarsu, Rüzgar, Buzul',
-    'Türkiyenin Nüfusu',
-    'Türkiyenin Ekonomisi — Tarım',
-    'Türkiyenin Ekonomisi — Sanayi ve Ticaret',
-    'Çevre Sorunları',
-    'Doğal Afetler',
-    'Beşeri Coğrafya Kavramları',
+    'Türkiyenin İklimi',
+    'Türkiyenin Bitki Örtüsü',
+    'Türkiyenin Akarsuları',
+    'Türkiyenin Gölleri',
+    'Türkiyenin Nüfusu — Yapı ve Dağılış',
+    'Türkiyede Göç',
+    'Nüfus Politikaları',
+    'Yerleşme Tipleri (Kır-Kent)',
+    'Doğal Afetler ve Korunma',
   ],
   'Felsefe (TYT)': [
     'Felsefenin Tanımı ve Temel Kavramları',
@@ -154,186 +271,199 @@ const TYT_TOPICS = {
     'Din Felsefesi',
     'Mantığa Giriş — Kavram ve Önermeler',
     'Akıl Yürütme — Tümdengelim ve Tümevarım',
-    'Klasik Mantık — Kategorik Önermeler',
-    'Modern Mantık — Sembolik Mantık',
+    'Klasik ve Modern Mantık',
   ],
   'Din Kültürü (TYT)': [
     'İslamın Temel Kaynakları — Kuran',
-    'İslamın Temel Kaynakları — Sünnet ve Hadis',
-    'İslamda İnanç Esasları',
-    'İslamda İbadetler',
-    'Hz. Muhammedin Hayatı ve Kişiliği',
+    'Sünnet ve Hadis',
+    'İnanç Esasları',
+    'İbadetler',
+    'Hz. Muhammedin Hayatı',
     'Ahlak ve Değerler',
     'İslam ve Diğer Dinler',
     'Laiklik ve Din Özgürlüğü',
-    'Türk-İslam Kültürü ve Medeniyeti',
-  ],
-  'Fizik (TYT)': [
-    'Fizik Bilimine Giriş ve Ölçme',
-    'Madde ve Özellikleri',
-    'Kuvvet ve Denge',
-    'Newtonun Hareket Yasaları',
-    'Sürtünme Kuvveti',
-    'Enerji ve Güç',
-    'İş-Enerji Teoremi',
-    'Basit Makineler',
-    'Basınç — Katı, Sıvı, Gaz',
-    'Isı ve Sıcaklık',
-    'Maddenin Halleri',
-    'Elektrik Yükü ve Elektriksel Kuvvet',
-    'Basit Elektrik Devreleri',
-    'Manyetizma (Temel)',
-    'Dalgalar (Temel)',
-    'Optik — Yansıma ve Kırılma (Temel)',
-  ],
-  'Kimya (TYT)': [
-    'Kimya Bilimine Giriş',
-    'Atom Modelleri',
-    'Periyodik Sistem',
-    'Kimyasal Türler Arası Etkileşimler',
-    'Maddenin Halleri ve Özellikleri',
-    'Doga ve Kimya — Su, Toprak, Hava',
-    'Kimyasal Tepkimeler',
-    'Asit, Baz ve Tuz',
-    'Kimya Her Yerde — Günlük Hayat Kimyası',
-  ],
-  'Biyoloji (TYT)': [
-    'Yaşam Bilimi — Biyolojiye Giriş',
-    'Hücre — Prokaryot ve Ökaryot',
-    'Hücre Organelleri',
-    'Hücre Zarı ve Madde Geçişi',
-    'Canlıların Ortak Özellikleri',
-    'Canlıların Çeşitliliği ve Sınıflandırılması',
-    'Bitkiler Alemi (Çiçekli — Çiçeksiz)',
-    'Hayvanlar Alemi',
-    'Ekosistem Ekolojisi',
-    'Madde Döngüleri — Karbon, Azot, Su',
-    'Güncel Çevre Sorunları',
-    'Kalıtım — Mendel Kanunları',
+    'Türk-İslam Kültürü',
   ],
 };
 
-// ── MEB Müfredatı — AYT Tam Konu Listesi ─────────────────────────────────────
+// ── MEB Anadolu Lisesi Müfredatı — AYT (11. ve 12. Sınıf) ────────────────────
 const AYT_TOPICS = {
-  'AYT Matematik': [
-    'Trigonometri — Temel Kavramlar',
-    'Trigonometri — Sinüs, Kosinüs, Tanjant',
-    'Trigonometrik Denklemler',
-    'Trigonometrik Eşitsizlikler',
-    'Analitik Geometri — Nokta',
-    'Analitik Geometri — Doğru Denklemleri',
-    'Analitik Geometri — İki Doğrunun Durumu',
-    'Analitik Geometri — Çember',
-    'Fonksiyonlarda İşlemler (İleri)',
-    'Bileşke Fonksiyon',
-    'Ters Fonksiyon',
-    'Fonksiyonların Grafikleri',
-    'Limit — Tanım ve Hesaplama',
-    'Süreklilik',
-    'Türev — Tanım ve Kurallar',
-    'Türevin Geometrik Yorumu',
-    'Türev Uygulamaları — Ekstremum ve Monotonluk',
-    'Türev Uygulamaları — Fizik ve Optimizasyon',
-    'Belirsiz İntegral',
-    'Belirli İntegral',
-    'İntegral Uygulamaları — Alan Hesabı',
-    'Karmaşık Sayılar',
+  // ═══════ 11. SINIF ═══════
+  'Matematik (11. Sınıf)': [
     'Üstel Fonksiyonlar',
     'Logaritma ve Özellikleri',
     'Üstel ve Logaritmik Denklemler',
+    'Trigonometri — Temel Kavramlar',
+    'Trigonometri — Birim Çember',
+    'Sinüs, Kosinüs, Tanjant Fonksiyonları',
+    'Trigonometrik Denklemler',
+    'Toplam-Fark Formülleri',
     'Diziler — Genel Terim',
     'Aritmetik Dizi',
     'Geometrik Dizi',
-    'Özel Sayı Dizileri',
-    'Polinomlar — Bölme ve Çarpanlara Ayırma',
-    'Polinom Denklemleri',
-    'Permütasyon ve Kombinasyon (İleri)',
-    'Binom Açılımı',
-    'Olasılık (İleri)',
-    'Vektörler',
-    'Matris ve Determinant',
-    'Lineer Denklem Sistemleri',
+    'Seriler (Toplam Formülleri)',
+    'Limit — Tanım ve Hesaplama',
+    'Belirsizlik Durumları',
+    'Süreklilik',
   ],
-  'AYT Fizik': [
-    'Kuvvet ve Denge (İleri)',
-    'Tek Boyutlu Hareket — Kinematik',
-    'İki Boyutlu Hareket — Atış Hareketi',
-    'Dairesel Hareket',
-    'Newtonun Yasaları — Dinamik',
-    'Sürtünme ve Uygulamaları',
-    'Bağlı Cisimler',
-    'İş — Güç — Enerji (İleri)',
+  'Geometri (11. Sınıf)': [
+    'Analitik Geometri — Nokta ve Uzaklık',
+    'Doğru Denklemleri',
+    'İki Doğrunun Birbirine Göre Durumu',
+    'Noktanın Doğruya Uzaklığı',
+    'Çember Denklemi',
+    'Doğru ve Çember İlişkisi',
+  ],
+  'Fizik (11. Sınıf)': [
+    'Kuvvet ve Hareket (İleri Dinamik)',
+    'Bağlı Cisimler Problemleri',
+    'Eğik Düzlemde Hareket',
+    'İş, Güç ve Enerji (İleri)',
     'Momentum ve İmpuls',
-    'Çarpışmalar',
-    'Tork ve Dönme Hareketi',
-    'Katı Cisimlerin Dengesi',
+    'Çarpışmalar (Esnek, Esnek Olmayan)',
+    'Tork ve Denge',
     'Ağırlık Merkezi',
-    'Basit Harmonik Hareket — Yay-Kütle',
-    'Basit Harmonik Hareket — Sarkaç',
-    'Mekanik Dalgalar',
-    'Ses Dalgaları',
-    'Doppler Etkisi',
-    'Isı ve Sıcaklık (İleri)',
-    'Gazlarda Isı ve Termodinamik',
-    'Termodinamik Kanunları',
-    'Isı Makineleri',
-    'Elektrik Alanı',
-    'Elektriksel Potansiyel ve Sığaç',
+    'Basit Harmonik Hareket (Yay-Kütle)',
+    'Sarkaç',
+    'Dalga Mekaniği',
+    'Yüzey Dalgaları',
+    'Ses Dalgaları ve Doppler Etkisi',
+    'Elektrik Akımı',
+    'Direnç ve Ohm Yasası',
+    'Kirchhoff Yasaları',
     'Kondansatörler',
-    'Elektrik Akımı ve Direnç',
-    'Kirchhoff Kanunları',
-    'RC Devreleri',
     'Manyetik Alan ve Kuvvet',
-    'Biot-Savart Kanunu',
-    'Elektromanyetik İndüksiyon — Faraday',
-    'Lenz Kanunu',
-    'Alternatif Akım',
-    'Transformatörler',
-    'Yansıma ve Düzlem Ayna',
-    'Küresel Aynalar',
-    'Kırılma — Snell Yasası',
-    'İnce Mercekler',
-    'Özel Görelilik',
-    'Fotoelektrik Olay',
-    'Bohr Atom Modeli',
-    'Radyoaktivite',
-    'Çekirdek Reaksiyonları (Fisyon, Füzyon)',
+    'Elektromanyetik İndüksiyon',
+    'Alternatif Akım ve Transformatörler',
   ],
-  'AYT Kimya': [
-    'Atom Teorisi Tarihi',
-    'Atom Modelleri — Bohr ve Dalton',
-    'Kuantum Modeli (Temel)',
-    'Periyodik Sistem ve Özellikleri',
-    'İyonik Bağ',
-    'Kovalent Bağ — Apolar ve Polar',
-    'Metalik Bağ',
-    'Zayıf Kuvvetler — Van der Waals, H-bağı',
-    'Gaz Hali — İdeal Gaz Yasaları',
-    'Gazlarda Karışımlar',
-    'Sıvı Hali — Yüzey Gerilimi',
-    'Katı Hali — Kristal Yapılar',
-    'Mol Kavramı ve Hesaplamalar',
-    'Kimyasal Formüller',
+  'Kimya (11. Sınıf)': [
+    'Modern Atom Teorisi — Kuantum Modeli',
+    'Periyodik Özellikler',
+    'Gazlar — İdeal Gaz Yasaları',
+    'Gazlarda Karışım (Dalton)',
+    'Mol Kavramı',
+    'Kimyasal Hesaplamalar (Stokiyometri)',
     'Kütlece Yüzde Bileşim',
-    'Kimyasal Denklemler ve Denkleştirme',
-    'Stokiyometri — Mol Hesapları',
-    'Verim Hesabı',
-    'Reaksiyon Türleri',
-    'Termokimya — Entalpi ve Hess Kanunu',
-    'Yanma Isısı',
+    'Termokimya — Entalpi',
+    'Hess Yasası',
+    'Tepkime Hızı',
+    'Hızı Etkileyen Faktörler',
     'Kimyasal Denge',
     'Le Chatelier İlkesi',
-    'Kc ve Kp İfadeleri',
-    'Arrhenius ve Brönsted-Lowry Teorileri',
-    'Su ve pH Hesapları',
-    'Kuvvetli ve Zayıf Asit-Baz Hesapları',
+    'Denge Sabiti (Kc ve Kp)',
+  ],
+  'Biyoloji (11. Sınıf)': [
+    'Hücre Solunumu — Glikoliz',
+    'Hücre Solunumu — Krebs Döngüsü',
+    'Hücre Solunumu — Elektron Taşıma Sistemi',
+    'Fotosentez — Işığa Bağımlı Reaksiyonlar',
+    'Fotosentez — Calvin Döngüsü',
+    'Kemosentez',
+    'DNA Replikasyonu',
+    'Protein Sentezi — Transkripsiyon',
+    'Protein Sentezi — Translasyon',
+    'Genetik Kod ve Kodon',
+    'Mutasyon Çeşitleri',
+    'Biyoteknoloji ve Gen Mühendisliği',
+    'Komünite ve Popülasyon Ekolojisi',
+  ],
+  'Türk Dili ve Edebiyatı (11. Sınıf)': [
+    'Tanzimat Edebiyatı — Genel Özellikler',
+    'Tanzimat 1. Dönem (Şinasi, Namık Kemal)',
+    'Tanzimat 2. Dönem (Recaizade, Sami Paşazade)',
+    'Servetifünun Edebiyatı',
+    'Tevfik Fikret ve Cenap Şahabettin',
+    'Halit Ziya Uşaklıgil',
+    'Fecr-i Ati Edebiyatı',
+    'Milli Edebiyat Dönemi',
+    'Ziya Gökalp, Ömer Seyfettin',
+    'Beş Hececiler',
+    'Roman Türü — Yapı ve İnceleme',
+    'Hikaye Türü — Olay ve Durum Hikayesi',
+    'Tiyatro Türleri',
+    'Makale ve Deneme',
+  ],
+  'Tarih (11. Sınıf)': [
+    'Osmanlı Yükselme Dönemi',
+    'Kanuni Sultan Süleyman',
+    'Osmanlıda Toprak ve Devlet Yönetimi',
+    'Osmanlı Duraklama Dönemi',
+    'Osmanlı Gerileme Dönemi',
+    'Lale Devri ve III. Ahmet',
+    'Osmanlıda Islahat Hareketleri (18. yy)',
+    'Sanayi Devrimi ve Etkileri',
+    'Fransız İhtilali ve Milliyetçilik',
+    'Osmanlıda Tanzimat Fermanı',
+    'Islahat Fermanı',
+    '1. ve 2. Meşrutiyet',
+    'Balkan Savaşları',
+    'Osmanlıda Son Dönem Fikir Akımları',
+  ],
+  'Coğrafya (11. Sınıf)': [
+    'Türkiyede Tarımsal Faaliyetler',
+    'Türkiyede Hayvancılık',
+    'Türkiyede Madencilik ve Enerji',
+    'Türkiyede Sanayi',
+    'Türkiyede Ulaşım',
+    'Türkiyede Ticaret ve Turizm',
+    'Dünya Ülkeleri ve Ekonomik Özellikler',
+    'Bölgesel Kalkınma',
+  ],
+
+  // ═══════ 12. SINIF ═══════
+  'Matematik (12. Sınıf)': [
+    'Türev — Tanım ve Hesaplama',
+    'Türev Kuralları (Toplam, Çarpım, Bölüm)',
+    'Zincir Kuralı',
+    'Türevin Geometrik Yorumu (Teğet ve Normal)',
+    'Artan ve Azalan Fonksiyonlar',
+    'Ekstremum Noktaları (Max ve Min)',
+    'Büküm Noktası',
+    'Türev Uygulamaları (Optimizasyon)',
+    'Belirsiz İntegral',
+    'İntegral Alma Teknikleri',
+    'Belirli İntegral',
+    'İntegral Uygulamaları — Alan Hesabı',
+    'Karmaşık Sayılar',
+    'Karmaşık Düzlem ve İşlemler',
+    'Matris ve Matris İşlemleri',
+    'Determinant',
+    'Lineer Denklem Sistemleri (Cramer)',
+  ],
+  'Geometri (12. Sınıf)': [
+    'Dönüşüm Geometrisi — Öteleme',
+    'Yansıma (Simetri)',
+    'Dönme',
+    'Vektörler ve Bileşenleri',
+    'Vektörlerde İşlemler',
+    'Nokta ve Vektörel Çarpım',
+  ],
+  'Fizik (12. Sınıf)': [
+    'Dairesel Hareket',
+    'Kepler Yasaları ve Uydu Fiziği',
+    'Tek Boyutlu Hareket (Kinematik)',
+    'Serbest Düşme ve Dikey Atış',
+    'Yatay ve Eğik Atış',
+    'Isı ve Termodinamik Yasaları',
+    'Isı Makineleri ve Verim',
+    'Yansıma — Düzlem and Küresel Aynalar',
+    'Kırılma — Snell Yasası',
+    'İnce Mercekler ve Görüntü',
+    'Özel Görelilik — Zaman ve Uzay',
+    'Fotoelektrik Olay',
+    'Bohr Atom Modeli ve Enerji Seviyeleri',
+    'Radyoaktivite — Alfa, Beta, Gama',
+    'Çekirdek Tepkimeleri (Fisyon ve Füzyon)',
+  ],
+  'Kimya (12. Sınıf)': [
+    'Arrhenius ve Brönsted-Lowry Asit-Baz Teorisi',
+    'pH ve pOH Hesapları',
+    'Kuvvetli ve Zayıf Asit-Baz',
     'Tampon Çözeltiler',
     'Asit-Baz Titrasyonu',
     'Oksidasyon-İndirgeme Tepkimeleri',
-    'Elektrokimyasal Piller',
+    'Elektrokimyasal Piller (Galvanik)',
     'Elektroliz',
-    'Çözelti Derişimleri — Molarite ve Yüzde',
-    'Koligatif Özellikler',
     'Organik Kimya — Hidrokarbonlar',
     'Alkanlar, Alkenler, Alkinler',
     'Aromatik Bileşikler — Benzen',
@@ -341,204 +471,108 @@ const AYT_TOPICS = {
     'Aldehit ve Ketonlar',
     'Karboksilik Asitler ve Esterler',
     'Aminler ve Amitler',
-    'Organik Reaksiyonlar — Ekleme ve Yer Degistirme',
     'Polimerler',
-    'Biyomoleküller — Karbonhidrat, Protein, Lipit',
+    'Karbonhidratlar, Proteinler ve Yağlar',
   ],
-  'AYT Biyoloji': [
-    'Biyolojik Moleküller — Karbonhidratlar',
-    'Biyolojik Moleküller — Proteinler',
-    'Biyolojik Moleküller — Lipitler',
-    'Biyolojik Moleküller — Nükleik Asitler',
-    'Hücre Zarı ve Madde Geçişi (İleri)',
-    'Hücre Organelleri (Ayrıntılı)',
-    'Hücre Solunumu — Glikoliz',
-    'Hücre Solunumu — Krebs ve ETS',
-    'Fotosentez — Aydınlık Reaksiyonları',
-    'Fotosentez — Calvin Döngüsü',
-    'Hücre Bölünmesi — Mitoz',
-    'Hücre Bölünmesi — Mayoz',
-    'DNA Yapısı ve Replikasyonu',
-    'RNA Çeşitleri',
-    'Protein Sentezi — Transkripsiyon',
-    'Protein Sentezi — Translasyon',
-    'Mendel Genetigi — Tek Gen Çaprazlaması',
-    'Mendel Genetigi — Dihybrid Çaprazlamalar',
-    'Kan Grupları ve Rh Faktörü',
-    'Bağlı Genler ve Crossing-Over',
-    'Eseyе Bağlı Kalıtım — X Kromozomuna Bağlı',
-    'Mutasyon ve Modifikasyon',
-    'Kanser ve Hücre Döngüsü',
-    'Sindirim Sistemi',
-    'Boşaltım Sistemi — Böbrek',
-    'Dolaşım Sistemi — Kalp ve Kan',
+  'Biyoloji (12. Sınıf)': [
+    'Bitki Biyolojisi — Yaprak, Kök, Gövde',
+    'Bitkide Madde Taşınması',
+    'Bitkide Eşeyli ve Eşeysiz Üreme',
+    'Sindirim Sistemi ve Sindirim Enzimleri',
+    'Dolaşım Sistemi — Kalp ve Kan Damarları',
+    'Kan ve Kan Grupları',
     'Bağışıklık Sistemi',
     'Solunum Sistemi',
-    'Hormonal Düzenleme — Endokrin',
+    'Boşaltım Sistemi — Böbrek',
+    'Destek ve Hareket Sistemi',
     'Sinir Sistemi — Nöron ve Sinaps',
-    'Duyular — Göz ve Kulak',
-    'Hareket Sistemi — Kemik ve Kas',
-    'Üreme ve Embriyonik Gelisim',
-    'Popülasyon Ekolojisi',
-    'Topluluk Ekolojisi — Komünite',
-    'Madde Döngüleri (İleri)',
-    'Biyomlar',
-    'İnsan ve Çevre',
-    'Evrim Teorisinin Temelleri',
-    'Doğal Seçilim',
-    'Tür Kavramı ve Türlesme',
+    'Merkezi Sinir Sistemi (Beyin, Omurilik)',
+    'Duyu Organları (Göz, Kulak)',
+    'Endokrin Sistem — Hormonlar',
+    'Üreme Sistemi ve Embriyonik Gelişim',
+    'Evrim — Doğal Seçilim',
+    'Evrim Kanıtları ve Türleşme',
   ],
-  'Türk Dili ve Edebiyatı': [
-    'Türk Dili Tarihi ve Gelisimi',
-    'Dilin İslevleri',
-    'Ses Bilgisi — Fonetik',
-    'Yapı Bilgisi — Morfem',
-    'Sözcük Türleri (Ayrıntılı)',
-    'Sözdizimi — Cümle Çözümlemesi',
-    'Anlam Bilimi — Semantik',
-    'Metin Türleri — Anlatı, Bilgi, Siir',
-    'Türk Edebiyatının Dönemleri (Genel)',
-    'Destan Dönemi ve İslam Öncesi Edebiyat',
-    'İslami Dönem — Divan Edebiyatı',
-    'Divan Edebiyatında Nazım Sekilleri (Gazel, Kaside)',
-    'Halk Edebiyatı — Asık Edebiyatı',
-    'Halk Edebiyatı — Tekke Edebiyatı',
-    'Tanzimat Edebiyatı (1. Dönem)',
-    'Tanzimat Edebiyatı (2. Dönem)',
-    'Servetifünun Edebiyatı',
-    'Fecr-i Ati Edebiyatı',
-    'Milli Edebiyat Dönemi',
-    'Cumhuriyet Dönemi Türk Edebiyatı',
-    'Cumhuriyet Sonrası Siir Akımları',
-    'Cumhuriyet Dönemi Roman ve Hikaye',
-    'Siir Bilgisi — Nazım Biçimleri ve Türleri',
-    'Siirde Anlam ve Yorum',
-    'Roman ve Hikaye Analizi',
-    'Tiyatro Türleri',
-    'Deneme, Fıkra, Sohbet',
-    'Biyografi, Otobiyografi, Anı',
-    'Mektup ve Günlük',
-    'Gezi Yazısı',
-    'Söylev ve Makale',
+  'Türk Dili ve Edebiyatı (12. Sınıf)': [
+    'Cumhuriyet Dönemi Türk Edebiyatı — Genel',
+    'Cumhuriyet Dönemi Şiir Akımları',
+    'Garip Akımı (Orhan Veli)',
+    '2. Yeni (Cemal Süreya, Turgut Uyar)',
+    'Toplumcu Gerçekçi Şiir (Nazım Hikmet)',
+    'Cumhuriyet Dönemi Roman (Reşat Nuri, Yakup Kadri)',
+    'Köy Romanları (Yaşar Kemal)',
+    'Toplumcu Gerçekçi Roman',
+    'Bireyin İç Dünyasını Elen Alan Roman',
+    'Postmodern Roman',
+    'Cumhuriyet Dönemi Hikaye',
+    'Tiyatro — Cumhuriyet Dönemi',
+    'Deneme, Eleştiri, Söylev',
+    'Biyografi ve Otobiyografi',
+    'Mektup, Günlük, Gezi Yazısı',
   ],
-  'Tarih-1 (AYT)': [
-    'Tarih Öncesi Çağlar ve İlk Yerlesim',
-    'Anadolu Uygarlıkları — Hitit, Frig, Lidya',
-    'Eski Türkler — Orta Asya Türk Devletleri',
-    'Asya Hunları ve Avrupa Hunları',
-    'Göktürkler ve Uygurlar',
-    'İslamiyetin Dogusu ve İslam Tarihi',
-    'Emeviler ve Abbasiler',
-    'Türklerin İslamiyeti Kabulü',
-    'İlk Türk-İslam Devletleri — Karahanlı, Gazneli',
-    'Büyük Selçuklu Devleti',
-    'Anadolu Selçuklu Devleti',
-    'Haçlı Seferleri',
-    'Mogol İstilası ve İlhanlılar',
-    'Türkiye Selçuklularının Yıkılısı',
-    'Osmanlı Devletinin Kurulusu (1299—1453)',
-    'Osmanlının Yükselme Dönemi — Fatih ve Yavuz',
-    'Kanuni Sultan Süleyman Dönemi',
-  ],
-  'Coğrafya-1 (AYT)': [
-    'Doga ve İnsan',
-    'Dünyanın Sekli ve Hareketleri (İleri)',
-    'Haritacılık ve Projeksiyon Sistemleri',
-    'İklim Bilgisi — Atmosfer',
-    'Yeryüzü Sekillerinin Olusumu',
-    'Türkiyenin Cografi Konumu',
-    'Türkiyede İklim ve Bitki Örtüsü',
-    'Türkiyenin Yüzey Sekilleri (Ayrıntılı)',
-    'Türkiyenin Hidrografyası — Akarsular ve Göller',
-    'Türkiyede Nüfus — Yapı ve Dağılıs',
-    'Türkiyede Göç',
-    'Türkiyede Yerlesmе Özellikleri',
-  ],
-  'Tarih-2 (AYT)': [
-    'Osmanlı Duraklama ve Gerileme Dönemi',
-    'Osmanlıda Islahat Hareketleri (17-18. yy)',
-    'Sanayi Devrimi ve Dünyaya Etkileri',
-    'Fransız İhtilali ve Etkileri',
-    'Osmanlıda Tanzimat ve Islahat Fermanları',
-    'Osmanlıda Mesrutiyet Dönemleri',
-    'Milliyetçilik Akımları ve Osmanlı',
-    'Balkan Savaşları',
-    '1. Dünya Savaşı — Sebepler ve Sonuçlar',
-    '1. Dünya Savaşında Osmanlı Cepheleri',
-    'Mondros Mütarekesi ve İsGaller',
-    'Kuvay-i Milliye ve Direnis',
-    'Kurtuluş Savası Muharebeleri',
-    'Lozan Antlasması',
-    'Türkiye Cumhuriyetinin İlanı',
+  'Tarih (12. Sınıf)': [
+    '1. Dünya Savaşı — Sebep ve Cepheler',
+    'Osmanlının 1. Dünya Savaşı Cepheleri',
+    'Mondros Mütarekesi ve İşgaller',
+    'Mustafa Kemalin Samsuna Çıkışı',
+    'Amasya Genelgesi ve Kongreler',
+    'TBMM\'nin Açılması',
+    'Kuvay-i Milliye Hareketi',
+    'Sakarya ve Büyük Taarruz',
+    'Mudanya ve Lozan Antlaşmaları',
+    'Cumhuriyetin İlanı',
     'Atatürk İnkılapları — Siyasi',
-    'Atatürk İnkılapları — Hukuk ve Egitim',
+    'Atatürk İnkılapları — Hukuk ve Eğitim',
     'Atatürk İnkılapları — Sosyal ve Ekonomik',
-    '2. Dünya Savası — Sebepler ve Sonuçlar',
-    'Soguk Savas ve Türkiye',
-    'Yakın Dönem Türk Tarihi (1950—2000)',
+    'Atatürk İlkeleri',
+    '2. Dünya Savaşı',
+    'Soğuk Savaş Dönemi',
+    'Türkiyenin Yakın Tarihi (1950-2000)',
   ],
-  'Coğrafya-2 (AYT)': [
-    'Türkiyede Tarımsal Faaliyetler',
-    'Türkiyede Hayvancılık',
-    'Türkiyede Madencilik',
-    'Türkiyede Enerji Kaynakları',
-    'Türkiyede Sanayi',
-    'Türkiyede Ulasım',
-    'Türkiyede Turizm',
-    'Türkiyede Dıs Ticaret',
-    'Dünyanın Genel Cografi Özellikleri',
-    'Kıtalar ve Okyanuslar',
-    'Dünyada Nüfus Sorunları',
-    'Küresel İklim Degisikligi',
+  'Coğrafya (12. Sınıf)': [
+    'Küresel Çevre Sorunları',
+    'İklim Değişikliği',
     'Sürdürülebilir Kalkınma',
-    'Türkiye Bölgeleri — Genel Tekrar',
+    'Doğal Kaynakların Kullanımı',
+    'Türkiye Bölgeleri — Marmara',
+    'Türkiye Bölgeleri — Ege',
+    'Türkiye Bölgeleri — Akdeniz',
+    'Türkiye Bölgeleri — İç Anadolu',
+    'Türkiye Bölgeleri — Karadeniz',
+    'Türkiye Bölgeleri — Doğu Anadolu',
+    'Türkiye Bölgeleri — Güneydoğu Anadolu',
+    'Dünya Nüfusu ve Göç',
   ],
   'Felsefe Grubu (AYT)': [
-    'Psikoloji Bilimine Giris',
-    'Psikolojinin Tarihsel Gelisimi',
-    'Davranısçılık',
+    'Psikolojiye Giriş',
+    'Psikolojinin Tarihsel Gelişimi',
+    'Davranışçılık ve Bilişsel Psikoloji',
     'Psikanaliz — Freud',
-    'Bilissel Psikoloji',
+    'Öğrenme ve Bellek',
     'Algı ve Dikkat',
-    'Öğrenme Teorileri',
-    'Bellek',
     'Duygu ve Motivasyon',
-    'Kisilik Kuramları',
-    'Psikolojik Bozukluklar (Genel)',
-    'Sosyoloji Bilimine Giris',
+    'Kişilik Kuramları',
+    'Sosyolojiye Giriş',
     'Toplumsal Yapı ve Kurumlar',
-    'Toplumsal Degisme',
+    'Toplumsal Değişme',
     'Kültür ve Medeniyet',
-    'Sosyal Gruplar — Aile, Egitim, Din',
-    'Toplumsal Sapma',
     'Klasik Mantık — Kategorik Çıkarımlar',
-    'Önermeler Mantıgı',
     'Sembolik Mantık',
-    'Safsata Türleri',
-    'Antik Yunan Felsefesi — Sokrates, Platon, Aristo',
-    'Orta Çag Felsefesi',
-    'Modern Felsefe — Descartes, Hume, Kant',
-    'Çagdas Felsefe Akımları',
+    'Antik Yunan Felsefesi',
+    'Modern Felsefe (Descartes, Kant)',
+    'Çağdaş Felsefe Akımları',
   ],
   'Din Kültürü (AYT)': [
     'Kuranın Yorumu — Tefsir',
     'Hadis Usulü',
     'Fıkıh ve İslam Hukuku',
-    'Kelam — İnanç Problemleri',
     'İslam Mezhepleri',
     'Tasavvuf',
-    'İslamda Ahlak Anlayısı',
-    'Din ve Laiklik',
-    'Karsılastırmalı Dinler — Yahudilik, Hristiyanlık',
-    'Türk-İslam Düsüncesinin Temsilcileri',
-    'Günümüz Dini Sorunları',
+    'Karşılaştırmalı Dinler',
+    'Türk-İslam Düşünürleri',
   ],
   'İngilizce (AYT)': [
-    'Vocabulary — Kelime Bilgisi',
-    'Grammar — Parts of Speech',
-    'Grammar — Simple Tenses',
-    'Grammar — Continuous Tenses',
-    'Grammar — Perfect Tenses',
+    'Grammar — Tenses (Simple, Continuous, Perfect)',
     'Grammar — Modal Verbs',
     'Grammar — Passive Voice',
     'Grammar — Conditional Sentences (0,1,2,3)',
@@ -546,18 +580,12 @@ const AYT_TOPICS = {
     'Grammar — Relative Clauses',
     'Grammar — Gerunds and Infinitives',
     'Grammar — Conjunctions and Transitions',
-    'Grammar — Prepositions',
-    'Grammar — Articles and Determiners',
     'Reading — Main Idea and Topic Sentence',
-    'Reading — Detail Questions',
-    'Reading — Inference',
-    'Reading — Vocabulary in Context',
+    'Reading — Detail Questions and Inference',
     'Reading — Paragraph Completion',
-    'Reading — Sentence Ordering',
     'Reading — Irrelevant Sentence',
     'Reading — Dialogue Completion',
-    'Translation — Türkçeye Çeviri',
-    'Translation — İngilizceye Çeviri',
+    'Translation — Türkçeye ve İngilizceye Çeviri',
   ],
 };
 
@@ -573,8 +601,11 @@ let S = {
   activeSection: 'plan',
   planScope: 'gunluk',
   activeTopicExam: 'TYT',
-  activeTopicDers: 'Türkçe',
+  activeTopicDers: 'Matematik (9. Sınıf)',
   activeNetChart: 'TYT',
+  geminiKey: '',
+  aiChatHistory: [],
+  notebookFolders: [],
 
   pomodoro: {
     phase: 'work',   // 'work'|'short'|'long'
@@ -595,7 +626,7 @@ let S = {
 
 // ── Persistence ─────────────────────────────
 function load() {
-  const keys = ['plans','sessions','nets','questions','topics','dailyGoal','theme'];
+  const keys = ['plans','sessions','nets','questions','topics','dailyGoal','theme','stopwatch','pomodoro','geminiKey','aiChatHistory','notebookFolders'];
   keys.forEach(k => {
     try {
       const v = localStorage.getItem('ykso2_'+k);
@@ -614,9 +645,87 @@ function load() {
       S.topics[ders] = AYT_TOPICS[ders].map(t => ({name:t, status:'baslama'}));
     }
   });
+
+  // Resume stopwatch if it was running
+  if (S.stopwatch.isRunning) {
+    const elapsed = S.stopwatch.lastTick ? Math.floor((Date.now() - S.stopwatch.lastTick) / 1000) : 0;
+    S.stopwatch.secs += Math.max(0, elapsed);
+    S.stopwatch.isRunning = false;
+    setTimeout(() => {
+      const dersSel = document.getElementById('sw-ders');
+      if (dersSel) dersSel.value = S.stopwatch.ders;
+      swToggle();
+    }, 100);
+  } else {
+    setTimeout(() => {
+      document.getElementById('sw-digits').textContent = fmtHMS(S.stopwatch.secs);
+      updateSwTotal();
+    }, 100);
+  }
+
+  // Resume pomodoro if it was running
+  if (S.pomodoro.isRunning) {
+    const elapsed = S.pomodoro.lastTick ? Math.floor((Date.now() - S.pomodoro.lastTick) / 1000) : 0;
+    if (elapsed > 0) {
+      if (S.pomodoro.phase === 'work') {
+        if (elapsed >= S.pomodoro.secs) {
+          S.pomodoro.streak++;
+          S.sessions.push({id:Date.now(),ts:Date.now(),ders:S.pomodoro.ders,dur:S.pomodoro.workMins*60,type:'pomodoro'});
+          save('sessions');
+          S.pomodoro.phase = (S.pomodoro.streak%4===0) ? 'long' : 'short';
+          S.pomodoro.secs = pomPhaseTotal();
+          S.pomodoro.isRunning = false;
+          save('pomodoro');
+          setTimeout(() => {
+            alert('Tebrikler! Sen yokken bir Pomodoro tamamlandı.');
+            updateSummary();
+            pomRender();
+            pomRenderStars();
+          }, 300);
+        } else {
+          S.pomodoro.secs -= elapsed;
+          S.pomodoro.isRunning = false;
+          setTimeout(() => {
+            const dersSel = document.getElementById('pom-ders');
+            if (dersSel) dersSel.value = S.pomodoro.ders;
+            pomToggle();
+          }, 100);
+        }
+      } else {
+        if (elapsed >= S.pomodoro.secs) {
+          if (S.pomodoro.phase === 'long') S.pomodoro.streak = 0;
+          S.pomodoro.phase = 'work';
+          S.pomodoro.secs = pomPhaseTotal();
+          S.pomodoro.isRunning = false;
+          save('pomodoro');
+          setTimeout(() => {
+            alert('Mola bitti! Yeni pomodoroya başlayabilirsin.');
+            pomRender();
+            pomRenderStars();
+          }, 300);
+        } else {
+          S.pomodoro.secs -= elapsed;
+          S.pomodoro.isRunning = false;
+          setTimeout(() => {
+            pomToggle();
+          }, 100);
+        }
+      }
+    } else {
+      S.pomodoro.isRunning = false;
+      setTimeout(() => {
+        pomToggle();
+      }, 100);
+    }
+  } else {
+    setTimeout(() => {
+      pomRender();
+      pomRenderStars();
+    }, 100);
+  }
 }
 function save(key) {
-  const keys = key ? [key] : ['plans','sessions','nets','questions','topics','dailyGoal','theme'];
+  const keys = key ? [key] : ['plans','sessions','nets','questions','topics','dailyGoal','theme','stopwatch','pomodoro','geminiKey','aiChatHistory','notebookFolders'];
   keys.forEach(k => {
     try { localStorage.setItem('ykso2_'+k, JSON.stringify(S[k])); } catch(e) {}
   });
@@ -642,7 +751,13 @@ function chimeSave() { tone(987,.1,'sine'); setTimeout(()=>tone(1318,.2,'sine'),
 function chimeClick(){ tone(700,.05,'sine',.04); }
 
 // ── Helpers ──────────────────────────────────
-function today() { return new Date().toISOString().split('T')[0]; }
+function today() {
+  const date = new Date();
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2, '0');
+  const r = String(date.getDate()).padStart(2, '0');
+  return `${y}-${m}-${r}`;
+}
 function todayStr() { return new Date().toDateString(); }
 function fmtDur(s) {
   const h=Math.floor(s/3600), m=Math.floor((s%3600)/60), sec=s%60;
@@ -660,9 +775,15 @@ function weekBounds() {
   const diff=d.getDate()-day+(day===0?-6:1);
   const mon=new Date(d.getFullYear(), d.getMonth(), diff);
   const sun=new Date(d.getFullYear(), d.getMonth(), diff+6);
+  const fmt = (date) => {
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, '0');
+    const r = String(date.getDate()).padStart(2, '0');
+    return `${y}-${m}-${r}`;
+  };
   return {
-    mon: mon.toISOString().split('T')[0],
-    sun: sun.toISOString().split('T')[0],
+    mon: fmt(mon),
+    sun: fmt(sun),
   };
 }
 function badge(ders) {
@@ -670,9 +791,15 @@ function badge(ders) {
 }
 function getActiveSecs() {
   let x=0;
-  if (S.stopwatch.isRunning) x+=S.stopwatch.secs;
-  if (S.pomodoro.isRunning && S.pomodoro.phase==='work')
-    x+=(S.pomodoro.workMins*60)-S.pomodoro.secs;
+  if (S.stopwatch.secs > 0) {
+    x += S.stopwatch.secs;
+  }
+  if (S.pomodoro.phase === 'work') {
+    const elapsed = (S.pomodoro.workMins * 60) - S.pomodoro.secs;
+    if (elapsed > 0) {
+      x += elapsed;
+    }
+  }
   return x;
 }
 function todaySessions() {
@@ -680,12 +807,22 @@ function todaySessions() {
 }
 
 // ── Init ─────────────────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
   load();
+  await initNotebookDB();
   applyTheme();
   setInputDefaults();
   setupPWA();
   lucide.createIcons();
+
+  // Splash screen — hide after 2 seconds
+  setTimeout(() => {
+    const splash = document.getElementById('splash-screen');
+    if (splash) {
+      splash.classList.add('hidden');
+      setTimeout(() => splash.remove(), 700);
+    }
+  }, 2000);
 
   // Listeners
   document.getElementById('theme-btn').addEventListener('click', toggleTheme);
@@ -698,7 +835,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Pomodoro
   document.getElementById('pom-play-btn').addEventListener('click', pomToggle);
   document.getElementById('pom-reset-btn').addEventListener('click', pomReset);
-  document.getElementById('pom-skip-btn').addEventListener('click', pomSkip);
+  // Skip button removed
   ['pom-work','pom-short','pom-long'].forEach(id=>{
     document.getElementById(id).addEventListener('change', pomSettingsUpdate);
   });
@@ -728,14 +865,22 @@ document.addEventListener('DOMContentLoaded', () => {
   renderTopics();
   pomRender();
   pomRenderStars();
+  initAI();
 
   // Service Worker
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('./sw.js').catch(()=>{});
   }
 
-  // Save on unload
+  // Save on unload and visibilitychange
   window.addEventListener('beforeunload', saveOnUnload);
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') {
+      saveTimerStates();
+    } else if (document.visibilityState === 'visible') {
+      catchUpTimers();
+    }
+  });
 });
 
 function setInputDefaults() {
@@ -826,6 +971,11 @@ function goTo(sec, btn) {
   chimeClick();
   if (sec==='summary') { updateSummary(); initWeeklyChart(); }
   if (sec==='nets') initNetChart();
+  if (sec==='notebook') { renderFolders(); }
+  if (sec==='ai') {
+    const chatEl = document.getElementById('ai-messages');
+    if (chatEl) setTimeout(() => chatEl.scrollTop = chatEl.scrollHeight, 50);
+  }
   lucide.createIcons();
 }
 
@@ -929,14 +1079,19 @@ function pomToggle() {
     clearInterval(S.pomodoro.timerId); S.pomodoro.isRunning=false;
     document.getElementById('pom-play-txt').textContent='Devam';
     document.getElementById('pom-play-ico').setAttribute('data-lucide','play');
+    save('pomodoro');
+    updateSummary();
     tone(500,.1);
   } else {
     // Start — stop stopwatch if running
     if (S.stopwatch.isRunning) swToggle();
     S.pomodoro.ders=document.getElementById('pom-ders').value;
     S.pomodoro.isRunning=true;
+    S.pomodoro.lastTick=Date.now();
+    save('pomodoro');
     document.getElementById('pom-play-txt').textContent='Durdur';
     document.getElementById('pom-play-ico').setAttribute('data-lucide','pause');
+    updateSummary();
     tone(880,.15);
     S.pomodoro.timerId=setInterval(pomTick, 1000);
   }
@@ -945,6 +1100,8 @@ function pomToggle() {
 
 function pomTick() {
   S.pomodoro.secs--;
+  S.pomodoro.lastTick=Date.now();
+  if (S.pomodoro.secs % 5 === 0) save('pomodoro');
   pomRender();
   if (S.pomodoro.phase==='work') { updateSummary(); updateSwTotal(); }
   if (S.pomodoro.secs<=0) pomPhaseEnd();
@@ -953,32 +1110,62 @@ function pomTick() {
 function pomPhaseEnd() {
   clearInterval(S.pomodoro.timerId); S.pomodoro.isRunning=false;
   if (S.pomodoro.phase==='work') {
-    chimeWork();
+    // Work phase completed! 
     S.pomodoro.streak++;
     S.sessions.push({id:Date.now(),ts:Date.now(),ders:S.pomodoro.ders,dur:S.pomodoro.workMins*60,type:'pomodoro'});
-    save('sessions'); renderSessions(); updateSummary(); maybeConfetti();
+    save('sessions'); renderSessions(); updateSummary();
+    // Celebration!
+    maybeConfetti();
+    pomNotify();
     S.pomodoro.phase = (S.pomodoro.streak%4===0) ? 'long' : 'short';
   } else {
-    chimeBreak();
+    // Break ended — notify to get back to work
+    chimeWork();
+    pomNotify();
     if (S.pomodoro.phase==='long') S.pomodoro.streak=0;
     S.pomodoro.phase='work';
   }
   S.pomodoro.secs=pomPhaseTotal();
+  save('pomodoro');
   document.getElementById('pom-play-txt').textContent='Başlat';
   document.getElementById('pom-play-ico').setAttribute('data-lucide','play');
   pomRender(); pomRenderStars();
   lucide.createIcons();
 }
 
+// Pomodoro completion notification — sound + browser notification
+function pomNotify() {
+  // Play a loud celebration sound
+  const isWork = S.pomodoro.phase==='work';
+  if (isWork) {
+    // Work done! Multi-tone celebration
+    [523.25, 659.25, 783.99, 1046.50].forEach((f,i) => setTimeout(() => tone(f, 0.4, 'sine', 0.12), i*150));
+  } else {
+    // Break done — alert sound
+    [880, 1100, 880].forEach((f,i) => setTimeout(() => tone(f, 0.2, 'triangle', 0.1), i*200));
+  }
+  // Browser notification
+  if ('Notification' in window && Notification.permission === 'granted') {
+    const title = isWork ? '🎉 Pomodoro Tamamlandı!' : '⏰ Mola Bitti!';
+    const body = isWork ? `${S.pomodoro.streak}. pomodoro bitti. Mola zamanı!` : 'Odaklanma zamanı! Hadi başlayalım.';
+    new Notification(title, { body, icon: 'icons/icon-512.jpg' });
+  }
+  // Request notification permission if not asked
+  if ('Notification' in window && Notification.permission === 'default') {
+    Notification.requestPermission();
+  }
+}
+
 function pomReset() {
   // Save partial work session
   if (S.pomodoro.phase==='work') {
     const elapsed=(S.pomodoro.workMins*60)-S.pomodoro.secs;
-    if (elapsed>=10 && S.pomodoro.isRunning) savePartialSession('pomodoro', S.pomodoro.ders, elapsed);
+    if (elapsed>=10) savePartialSession('pomodoro', S.pomodoro.ders, elapsed);
   }
   clearInterval(S.pomodoro.timerId);
   S.pomodoro.isRunning=false; S.pomodoro.phase='work';
   S.pomodoro.secs=S.pomodoro.workMins*60;
+  save('pomodoro');
   document.getElementById('pom-play-txt').textContent='Başlat';
   document.getElementById('pom-play-ico').setAttribute('data-lucide','play');
   pomRender(); updateSummary(); tone(440,.1);
@@ -998,6 +1185,7 @@ function pomSkip() {
   }
   clearInterval(S.pomodoro.timerId); S.pomodoro.isRunning=false;
   S.pomodoro.secs=pomPhaseTotal();
+  save('pomodoro');
   document.getElementById('pom-play-txt').textContent='Başlat';
   document.getElementById('pom-play-ico').setAttribute('data-lucide','play');
   pomRender(); pomRenderStars(); updateSummary(); tone(700,.1);
@@ -1039,15 +1227,29 @@ function pomRenderStars() {
 function swToggle() {
   if (S.stopwatch.isRunning) {
     clearInterval(S.stopwatch.timerId); S.stopwatch.isRunning=false;
-    document.getElementById('sw-play-txt').textContent='Devam';
+    // Auto-save: When stopping, save the elapsed time as a session
+    if (S.stopwatch.secs>=10) {
+      S.sessions.push({id:Date.now(),ts:Date.now(),ders:S.stopwatch.ders,dur:S.stopwatch.secs,type:'manuel'});
+      save('sessions'); renderSessions();
+      chimeSave();
+      S.stopwatch.secs=0;
+      document.getElementById('sw-digits').textContent='00:00:00';
+      document.getElementById('sw-play-txt').textContent='Başlat';
+    } else {
+      document.getElementById('sw-play-txt').textContent='Devam';
+    }
     document.getElementById('sw-play-ico').setAttribute('data-lucide','play');
     document.getElementById('sw-status').classList.remove('on');
     document.getElementById('sw-status-txt').textContent='Beklemede';
+    save('stopwatch');
+    updateSummary();
     tone(500,.1);
   } else {
     if (S.pomodoro.isRunning) pomToggle();
     S.stopwatch.ders=document.getElementById('sw-ders').value;
     S.stopwatch.isRunning=true;
+    S.stopwatch.lastTick=Date.now();
+    save('stopwatch');
     document.getElementById('sw-play-txt').textContent='Durdur';
     document.getElementById('sw-play-ico').setAttribute('data-lucide','pause');
     const status=document.getElementById('sw-status');
@@ -1056,6 +1258,8 @@ function swToggle() {
     tone(880,.15);
     S.stopwatch.timerId=setInterval(()=>{
       S.stopwatch.secs++;
+      S.stopwatch.lastTick=Date.now();
+      if (S.stopwatch.secs % 5 === 0) save('stopwatch');
       document.getElementById('sw-digits').textContent=fmtHMS(S.stopwatch.secs);
       updateSwTotal();
       updateSummary();
@@ -1067,6 +1271,7 @@ function swToggle() {
 function swReset() {
   clearInterval(S.stopwatch.timerId);
   S.stopwatch.isRunning=false; S.stopwatch.secs=0;
+  save('stopwatch');
   document.getElementById('sw-digits').textContent='00:00:00';
   document.getElementById('sw-play-txt').textContent='Başlat';
   document.getElementById('sw-play-ico').setAttribute('data-lucide','play');
@@ -1087,32 +1292,53 @@ function clearSessions() {
   S.sessions=[]; save('sessions'); renderSessions(); updateSummary(); tone(300,.3);
 }
 
+function deleteSession(id) {
+  if (!confirm('Bu çalışma oturumunu silmek istediğinizden emin misiniz?')) return;
+  S.sessions=S.sessions.filter(s=>s.id!==id);
+  save('sessions');
+  renderSessions();
+  updateSummary();
+  tone(400,.15);
+}
+
 function updateSwTotal() {
   const saved=todaySessions().reduce((a,s)=>a+s.dur,0);
   document.getElementById('sw-today').textContent=fmtDur(saved+getActiveSecs());
 }
 
 function renderSessions() {
-  const el=document.getElementById('sess-list');
+  const swEl=document.getElementById('sess-list');
+  const pomEl=document.getElementById('pom-sess-list');
   const list=todaySessions().slice().reverse();
   updateSwTotal();
-  if (!list.length) {
-    el.innerHTML=`<div class="empty"><i data-lucide="hourglass"></i><p>Bugün henüz oturum yok.</p></div>`;
-    lucide.createIcons(); return;
-  }
-  el.innerHTML=list.map(s=>{
+  
+  const renderEmpty = () => `<div class="empty"><i data-lucide="hourglass"></i><p>Bugün henüz oturum yok.</p></div>`;
+  
+  const renderHtml = (items) => items.map(s=>{
     const t=new Date(s.ts);
     const tStr=`${String(t.getHours()).padStart(2,'0')}:${String(t.getMinutes()).padStart(2,'0')}`;
     const tagC=s.type==='pomodoro'?'tag-pom':'tag-man';
     const tagL=s.type==='pomodoro'?'Pomodoro':'Manuel';
-    return `<div class="sess-item">
-      <div class="sess-left">
+    return `<div class="sess-item" style="display:flex;justify-content:space-between;align-items:center;width:100%">
+      <div class="sess-left" style="display:flex;align-items:center;gap:8px">
         ${badge(s.ders)}
         <span class="sess-tag ${tagC}">${tagL}</span>
       </div>
-      <span class="sess-dur">${fmtDur(s.dur)} <span class="sess-time">${tStr}</span></span>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span class="sess-dur">${fmtDur(s.dur)} <span class="sess-time">${tStr}</span></span>
+        <button class="plan-del" onclick="deleteSession(${s.id})" title="Oturumu Sil" style="padding:4px"><i data-lucide="trash-2" style="width:14px;height:14px"></i></button>
+      </div>
     </div>`;
   }).join('');
+
+  if (!list.length) {
+    if (swEl) swEl.innerHTML=renderEmpty();
+    if (pomEl) pomEl.innerHTML=renderEmpty();
+  } else {
+    const html = renderHtml(list);
+    if (swEl) swEl.innerHTML=html;
+    if (pomEl) pomEl.innerHTML=html;
+  }
   lucide.createIcons();
 }
 
@@ -1123,16 +1349,59 @@ function savePartialSession(type, ders, secs) {
 
 // ── Save on unload ─────────────────────────────
 function saveOnUnload() {
-  let changed=false;
-  if (S.stopwatch.isRunning && S.stopwatch.secs>=10) {
-    S.sessions.push({id:Date.now(),ts:Date.now(),ders:S.stopwatch.ders,dur:S.stopwatch.secs,type:'manuel'});
-    changed=true;
+  saveTimerStates();
+}
+
+function saveTimerStates() {
+  if (S.stopwatch.isRunning) {
+    S.stopwatch.lastTick = Date.now();
   }
-  if (S.pomodoro.isRunning && S.pomodoro.phase==='work') {
-    const el=(S.pomodoro.workMins*60)-S.pomodoro.secs;
-    if (el>=10) { S.sessions.push({id:Date.now(),ts:Date.now(),ders:S.pomodoro.ders,dur:el,type:'pomodoro'}); changed=true; }
+  if (S.pomodoro.isRunning) {
+    S.pomodoro.lastTick = Date.now();
   }
-  if (changed) save('sessions');
+  save('stopwatch');
+  save('pomodoro');
+}
+
+function catchUpTimers() {
+  let changed = false;
+  if (S.stopwatch.isRunning && S.stopwatch.lastTick) {
+    const elapsed = Math.floor((Date.now() - S.stopwatch.lastTick) / 1000);
+    if (elapsed > 0) {
+      S.stopwatch.secs += elapsed;
+      S.stopwatch.lastTick = Date.now();
+      document.getElementById('sw-digits').textContent = fmtHMS(S.stopwatch.secs);
+      updateSwTotal();
+      updateSummary();
+      changed = true;
+    }
+  }
+  if (S.pomodoro.isRunning && S.pomodoro.lastTick) {
+    const elapsed = Math.floor((Date.now() - S.pomodoro.lastTick) / 1000);
+    if (elapsed > 0) {
+      S.pomodoro.lastTick = Date.now();
+      if (S.pomodoro.phase === 'work') {
+        if (elapsed >= S.pomodoro.secs) {
+          pomPhaseEnd();
+        } else {
+          S.pomodoro.secs -= elapsed;
+          pomRender();
+        }
+      } else {
+        if (elapsed >= S.pomodoro.secs) {
+          pomPhaseEnd();
+        } else {
+          S.pomodoro.secs -= elapsed;
+          pomRender();
+        }
+      }
+      changed = true;
+    }
+  }
+  if (changed) {
+    save('stopwatch');
+    save('pomodoro');
+  }
 }
 
 // ══════════════════════════════════════════════
@@ -1422,7 +1691,11 @@ function updateSummary() {
   const active=getActiveSecs();
   const {mon,sun}=weekBounds();
   const weekSess=S.sessions.filter(s=>{
-    const d=new Date(s.ts).toISOString().split('T')[0];
+    const dateObj = new Date(s.ts);
+    const y = dateObj.getFullYear();
+    const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+    const r = String(dateObj.getDate()).padStart(2, '0');
+    const d = `${y}-${m}-${r}`;
     return d>=mon&&d<=sun;
   });
   const weekTotal=weekSess.reduce((a,s)=>a+s.dur,0)+active;
@@ -1529,11 +1802,20 @@ function initWeeklyChart() {
   const dayNames=['Paz','Pzt','Sal','Çar','Per','Cum','Cmt'];
   for (let i=6;i>=0;i--) {
     const d=new Date(); d.setDate(d.getDate()-i);
-    days.push(d.toISOString().split('T')[0]);
+    const yr = d.getFullYear();
+    const mt = String(d.getMonth() + 1).padStart(2, '0');
+    const dt = String(d.getDate()).padStart(2, '0');
+    days.push(`${yr}-${mt}-${dt}`);
     labels.push(dayNames[d.getDay()]);
   }
   const data=days.map(day=>{
-    const secs=S.sessions.filter(s=>new Date(s.ts).toISOString().split('T')[0]===day).reduce((a,s)=>a+s.dur,0);
+    const secs=S.sessions.filter(s=>{
+      const dateObj = new Date(s.ts);
+      const y = dateObj.getFullYear();
+      const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+      const r = String(dateObj.getDate()).padStart(2, '0');
+      return `${y}-${m}-${r}` === day;
+    }).reduce((a,s)=>a+s.dur,0);
     return Math.round(secs/60); // minutes
   });
 
@@ -1599,4 +1881,881 @@ function maybeConfetti() {
     else { ctx.clearRect(0,0,canvas.width,canvas.height); _confettiRunning=false; }
   };
   draw();
+}
+
+// ══════════════════════════════════════════════
+// AURORA AI ASSISTANT
+// ══════════════════════════════════════════════
+const AI_WELCOME_MSG = `Merhaba! Ben **Aurora AI**, senin YKS çalışma asistanınım. 🚀
+
+YKS (TYT/AYT) sınavına hazırlık sürecinde sana her konuda destek olabilirim:
+* **Soru Çözümü:** Çözemediğin matematik, fizik, kimya veya herhangi bir dersin sorusunu alt kısımdaki resim ikonuna tıklayarak fotoğrafını yükleyebilirsin. Senin için adım adım çözebilirim!
+* **Ders Anlatımı:** Anlamadığın formülleri, tarihi olayları veya dil bilgisi kurallarını sorabilirsin.
+* **Koçluk & Motivasyon:** Çalışma programı tavsiyeleri alabilir, stresle başa çıkma yollarını danışabilirsin.
+
+*Asistanı aktifleştirmek için sağ üstteki **API Ayarları** butonundan ücretsiz API anahtarını tanımlamayı unutma!*`;
+
+let _attachedImage = null;
+
+function initAI() {
+  const warningBanner = document.getElementById('gemini-key-warning');
+  const statusDot = document.getElementById('ai-status-dot');
+  
+  if (S.geminiKey) {
+    if (warningBanner) warningBanner.style.display = 'none';
+    if (statusDot) {
+      statusDot.style.background = 'var(--aurora-green)';
+      statusDot.style.boxShadow = '0 0 8px var(--aurora-green)';
+    }
+  } else {
+    if (warningBanner) warningBanner.style.display = 'flex';
+    if (statusDot) {
+      statusDot.style.background = 'var(--aurora-amber)';
+      statusDot.style.boxShadow = '0 0 8px var(--aurora-amber)';
+    }
+  }
+  
+  const msgBox = document.getElementById('ai-messages');
+  if (!msgBox) return;
+  msgBox.innerHTML = '';
+  
+  // If history is empty, insert welcome message
+  if (S.aiChatHistory.length === 0) {
+    S.aiChatHistory.push({ role: 'model', text: AI_WELCOME_MSG });
+    save('aiChatHistory');
+  }
+  
+  S.aiChatHistory.forEach(m => {
+    renderAIMessage(m.role, m.text, m.image);
+  });
+  
+  msgBox.scrollTop = msgBox.scrollHeight;
+}
+
+function openGeminiConfig() {
+  document.getElementById('ai-key-input').value = S.geminiKey || '';
+  document.getElementById('ai-config-modal').classList.remove('hidden');
+  chimeClick();
+}
+
+function closeGeminiConfig() {
+  document.getElementById('ai-config-modal').classList.add('hidden');
+  chimeClick();
+}
+
+function saveGeminiKey() {
+  const key = document.getElementById('ai-key-input').value.trim();
+  S.geminiKey = key;
+  save('geminiKey');
+  closeGeminiConfig();
+  initAI();
+  tone(1000, 0.15);
+}
+
+function clearAIChat() {
+  if (!confirm('Sohbet geçmişini temizlemek istiyor musunuz?')) return;
+  S.aiChatHistory = [];
+  save('aiChatHistory');
+  initAI();
+  tone(400, 0.15);
+}
+
+function handleImageAttachment(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  if (file.size > 4 * 1024 * 1024) {
+    alert('Resim boyutu 4MB\'tan küçük olmalıdır.');
+    e.target.value = '';
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = function(evt) {
+    const rawData = evt.target.result;
+    const commaIndex = rawData.indexOf(',');
+    const base64Data = rawData.substring(commaIndex + 1);
+    
+    _attachedImage = {
+      mimeType: file.type,
+      data: base64Data
+    };
+    
+    document.getElementById('ai-img-preview').src = rawData;
+    document.getElementById('ai-img-name').textContent = file.name;
+    document.getElementById('ai-img-preview-box').classList.remove('hidden');
+    tone(700, 0.1);
+  };
+  reader.readAsDataURL(file);
+}
+
+function removeAttachedImage() {
+  _attachedImage = null;
+  document.getElementById('ai-file-input').value = '';
+  document.getElementById('ai-img-preview-box').classList.add('hidden');
+  tone(400, 0.1);
+}
+
+function renderAIMessage(role, text, image) {
+  const msgBox = document.getElementById('ai-messages');
+  if (!msgBox) return;
+  
+  const div = document.createElement('div');
+  div.className = `message-bubble message-${role === 'user' ? 'user' : 'ai'}`;
+  
+  if (image) {
+    const img = document.createElement('img');
+    img.src = `data:${image.mimeType};base64,${image.data}`;
+    img.className = 'message-image';
+    div.appendChild(img);
+  }
+  
+  const content = document.createElement('div');
+  content.innerHTML = parseMarkdown(text);
+  div.appendChild(content);
+  
+  msgBox.appendChild(div);
+  
+  // Trigger KaTeX math rendering
+  if (typeof renderMathInElement === 'function') {
+    renderMathInElement(content, {
+      delimiters: [
+        { left: '$$', right: '$$', display: true },
+        { left: '$', right: '$', display: false },
+        { left: '\\(', right: '\\)', display: false },
+        { left: '\\[', right: '\\[', display: true }
+      ],
+      throwOnError: false
+    });
+  }
+  
+  msgBox.scrollTop = msgBox.scrollHeight;
+}
+
+async function sendAIMessage(e) {
+  if (e) e.preventDefault();
+  
+  const input = document.getElementById('ai-msg-input');
+  let text = input.value.trim();
+  if (!text && !_attachedImage) return;
+  
+  if (!S.geminiKey) {
+    alert('Lütfen öncelikle sağ üstteki API Ayarlarından ücretsiz bir Gemini API Anahtarı girin.');
+    openGeminiConfig();
+    return;
+  }
+  
+  // Default prompt if only image is sent
+  if (_attachedImage && !text) {
+    text = "Bu resimdeki soruyu çözüp açıklar mısın?";
+  }
+  
+  const userMsg = { role: 'user', text: text, image: _attachedImage };
+  S.aiChatHistory.push(userMsg);
+  save('aiChatHistory');
+  
+  // Render user message immediately
+  renderAIMessage('user', text, _attachedImage);
+  
+  input.value = '';
+  const attachedImgCopy = _attachedImage; // Keep reference before resetting
+  removeAttachedImage();
+  tone(880, 0.1);
+  
+  // Render typing indicator bubble
+  const msgBox = document.getElementById('ai-messages');
+  const typingDiv = document.createElement('div');
+  typingDiv.className = 'message-bubble message-ai';
+  typingDiv.id = 'ai-typing-indicator';
+  typingDiv.innerHTML = `
+    <div class="typing-dots">
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+      <div class="typing-dot"></div>
+    </div>
+  `;
+  msgBox.appendChild(typingDiv);
+  msgBox.scrollTop = msgBox.scrollHeight;
+  
+  try {
+    let success = false;
+    let aiText = '';
+    
+    if (S.geminiKey.startsWith('gsk_')) {
+      // ── GROQ API (OpenAI Compatible) ──
+      const messages = [];
+      
+      // System instructions as system role
+      messages.push({
+        role: "system",
+        content: "Sen YKS (Yükseköğretim Kurumları Sınavı) hazırlık sürecindeki öğrencilere yardımcı olan uzman bir yapay zeka çalışma asistanısın. Öğrencilerin sorduğu TYT/AYT sorularını, formülleri, ders konularını adım adım açıkla. Matematiksel ifadeleri LaTeX (örn: \\(x^2\\) veya \\[ \\int x dx \\]) formatında yaz. Her zaman Türkçe cevap ver, motive edici ve arkadaş canlısı ol."
+      });
+      
+      // Only get last 12 messages for context
+      const apiHistory = S.aiChatHistory.slice(-12);
+      
+      apiHistory.forEach(m => {
+        const contentParts = [];
+        if (m.image) {
+          contentParts.push({
+            type: "image_url",
+            image_url: {
+              url: `data:${m.image.mimeType};base64,${m.image.data}`
+            }
+          });
+        }
+        contentParts.push({
+          type: "text",
+          text: m.text || "Soruyu açıkla."
+        });
+        
+        messages.push({
+          role: m.role === 'user' ? 'user' : 'assistant',
+          content: contentParts
+        });
+      });
+      
+      const groqModels = ["llama-3.2-11b-vision-instruct", "llama-3.2-90b-vision-instruct", "llama-3.2-11b-vision-preview"];
+      let lastErr = "";
+      
+      for (const model of groqModels) {
+        try {
+          const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${S.geminiKey}`
+            },
+            body: JSON.stringify({
+              model: model,
+              messages: messages,
+              temperature: 0.7
+            })
+          });
+          
+          if (response.ok) {
+            const resData = await response.json();
+            aiText = resData.choices[0].message.content;
+            success = true;
+            break;
+          } else {
+            let errText = '';
+            try {
+              const errData = await response.json();
+              errText = errData.error?.message || JSON.stringify(errData);
+            } catch(e) {
+              errText = await response.text();
+            }
+            lastErr = errText || `HTTP Hata Kodu ${response.status}`;
+            if (response.status === 401 || (response.status === 400 && lastErr.includes('API key'))) {
+              break;
+            }
+          }
+        } catch (err) {
+          lastErr = err.message;
+        }
+      }
+      
+      // Remove typing indicator
+      const indicator = document.getElementById('ai-typing-indicator');
+      if (indicator) indicator.remove();
+      
+      if (!success) {
+        throw new Error(lastErr || 'Tüm Groq model denemeleri başarısız oldu.');
+      }
+      
+    } else {
+      // ── GEMINI API ──
+      // Clean and alternate history (Gemini strict rules)
+      const apiHistory = [];
+      let lastRole = null;
+      for (let i = 0; i < S.aiChatHistory.length; i++) {
+        const msg = S.aiChatHistory[i];
+        if (apiHistory.length === 0 && msg.role !== 'user') {
+          continue;
+        }
+        if (lastRole === msg.role) {
+          apiHistory[apiHistory.length - 1].text += "\n" + msg.text;
+          if (msg.image) {
+            apiHistory[apiHistory.length - 1].image = msg.image;
+          }
+        } else {
+          apiHistory.push({ role: msg.role, text: msg.text, image: msg.image });
+          lastRole = msg.role;
+        }
+      }
+      
+      // Only send last 12 messages of the cleaned alternating history
+      const slicedHistory = apiHistory.slice(-12);
+      
+      // Ensure the sliced history still starts with a user turn
+      while (slicedHistory.length > 0 && slicedHistory[0].role !== 'user') {
+        slicedHistory.shift();
+      }
+      
+      if (slicedHistory.length === 0) {
+        slicedHistory.push({ role: 'user', text: text, image: attachedImgCopy });
+      }
+      
+      const contents = slicedHistory.map((m, idx) => {
+        const parts = [];
+        if (m.image) {
+          parts.push({
+            inlineData: {
+              mimeType: m.image.mimeType,
+              data: m.image.data
+            }
+          });
+        }
+        
+        let messageText = m.text || "Soruyu açıkla.";
+        if (idx === 0) {
+          messageText = `[Sistem Talimatı: Sen YKS (Yükseköğretim Kurumları Sınavı) hazırlık sürecindeki öğrencilere yardımcı olan uzman bir yapay zeka çalışma asistanısın. Öğrencilerin sorduğu TYT/AYT sorularını, formülleri, ders konularını adım adım açıkla. Matematiksel ifadeleri LaTeX (örn: \\(x^2\\) veya \\[ \\int x dx \\]) formatında yaz. Her zaman Türkçe cevap ver, motive edici ve arkadaş canlısı ol.]\n\nÖğrenci Sorusu: ${messageText}`;
+        }
+        
+        parts.push({ text: messageText });
+        return {
+          role: m.role === 'user' ? 'user' : 'model',
+          parts: parts
+        };
+      });
+      
+      const models = ['gemini-2.5-pro', 'gemini-2.0-flash-lite', 'gemini-2.5-flash-lite', 'gemini-2.0-flash', 'gemini-2.5-flash', 'gemini-3.5-flash'];
+      let firstModelError = '';
+      let lastError = '';
+      
+      for (let i = 0; i < models.length; i++) {
+        const model = models[i];
+        try {
+          const response = await fetch(`https://generativelanguage.googleapis.com/v1/models/${model}:generateContent?key=${S.geminiKey}`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              contents: contents
+            })
+          });
+          
+          if (response.ok) {
+            const resData = await response.json();
+            if (resData.candidates && resData.candidates[0] && resData.candidates[0].content && resData.candidates[0].content.parts) {
+              aiText = resData.candidates[0].content.parts[0].text;
+              success = true;
+              break;
+            }
+          } else {
+            let errText = '';
+            try {
+              const errData = await response.json();
+              errText = errData.error?.message || JSON.stringify(errData);
+            } catch(e) {
+              errText = await response.text();
+            }
+            const currentError = errText || `HTTP Hata Kodu ${response.status}`;
+            if (i === 0) {
+              firstModelError = currentError;
+            }
+            lastError = currentError;
+            // Only break loop if the API key itself is invalid, do not break on rate limits/quota limits
+            if (response.status === 400 && (lastError.includes('API key') || lastError.includes('not valid'))) {
+              break;
+            }
+          }
+        } catch (err) {
+          if (i === 0) {
+            firstModelError = err.message;
+          }
+          lastError = err.message;
+        }
+      }
+      
+      // Remove typing indicator
+      const indicator = document.getElementById('ai-typing-indicator');
+      if (indicator) indicator.remove();
+      
+      if (!success) {
+        throw new Error(firstModelError || lastError || 'Tüm model denemeleri başarısız oldu.');
+      }
+    }
+    
+    const aiMsg = { role: 'model', text: aiText };
+    S.aiChatHistory.push(aiMsg);
+    save('aiChatHistory');
+    
+    renderAIMessage('model', aiText);
+    tone(1046, 0.15);
+    
+  } catch (err) {
+    console.error(err);
+    const indicator = document.getElementById('ai-typing-indicator');
+    if (indicator) indicator.remove();
+    
+    const errorMsg = `⚠️ **Yapay Zeka Sunucu Hatası:**\n\n\`${err.message}\`\n\nLütfen bir süre sonra tekrar deneyin veya internet bağlantınızı kontrol edin.`;
+    renderAIMessage('model', errorMsg);
+    tone(300, 0.3);
+  }
+}
+
+function parseMarkdown(text) {
+  const mathBlocks = [];
+  let placeholderCount = 0;
+  
+  // Replace $$...$$
+  let processed = text.replace(/\$\$([\s\S]*?)\$\$/g, (match, math) => {
+    const placeholder = `__MATH_BLOCK_DISPLAY_${placeholderCount++}__`;
+    mathBlocks.push({ placeholder, content: `$$${math}$$` });
+    return placeholder;
+  });
+  
+  // Replace \[...\]
+  processed = processed.replace(/\\\[([\s\S]*?)\\\]/g, (match, math) => {
+    const placeholder = `__MATH_BLOCK_DISPLAY_${placeholderCount++}__`;
+    mathBlocks.push({ placeholder, content: `\\[${math}\\]` });
+    return placeholder;
+  });
+
+  // Replace \(...\)
+  processed = processed.replace(/\\\(([\s\S]*?)\\\)/g, (match, math) => {
+    const placeholder = `__MATH_BLOCK_INLINE_${placeholderCount++}__`;
+    mathBlocks.push({ placeholder, content: `\\(${math}\\)` });
+    return placeholder;
+  });
+  
+  // Escape HTML tags to prevent XSS
+  let html = processed
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+
+  // Bold text: **text**
+  html = html.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+
+  // Italic text: *text* (avoiding underscores to protect LaTeX math subscripts)
+  html = html.replace(/\*(.*?)\*/g, "<em>$1</em>");
+
+  // Code blocks: ```language ... ```
+  html = html.replace(/```(\w*)\n([\s\S]*?)```/g, "<pre><code class=\"language-$1\">$2</code></pre>");
+
+  // Inline code: `code`
+  html = html.replace(/`(.*?)`/g, "<code>$1</code>");
+
+  // Newlines to <br> (but not inside pre/code tags)
+  const parts = html.split(/(<\/pre>)/);
+  html = parts.map(p => {
+    if (p.includes('<pre>') || p === '</pre>') return p;
+    return p.replace(/\n/g, '<br>');
+  }).join('');
+
+  // Restore LaTeX math blocks
+  mathBlocks.forEach(block => {
+    html = html.replace(block.placeholder, block.content);
+  });
+
+  return html;
+}
+
+// ══════════════════════════════════════════════
+// KARTOTEK / SORU DEFTERİ (INDEXEDDB & STORAGE)
+// ══════════════════════════════════════════════
+const DB_NAME = 'YKSNotebookDB_v2';
+const DB_VERSION = 1;
+const STORE_NAME = 'questions';
+let _nbDb = null;
+let _currentFolderId = null;
+let _selectedFolderColor = 'purple';
+let _notebookImageBase64 = null;
+let _notebookImageMime = null;
+let _viewingQuestionId = null;
+
+function initNotebookDB() {
+  return new Promise((resolve) => {
+    const request = indexedDB.open(DB_NAME, DB_VERSION);
+    request.onerror = () => {
+      console.warn("IndexedDB başlatılamadı. LocalStorage yedek olarak kullanılacak.");
+      resolve(null);
+    };
+    request.onsuccess = (e) => {
+      _nbDb = e.target.result;
+      resolve(_nbDb);
+    };
+    request.onupgradeneeded = (e) => {
+      const database = e.target.result;
+      if (!database.objectStoreNames.contains(STORE_NAME)) {
+        database.createObjectStore(STORE_NAME, { keyPath: 'id' });
+      }
+    };
+  });
+}
+
+function saveNotebookQuestionToDB(q) {
+  return new Promise((resolve) => {
+    if (!_nbDb) {
+      try {
+        const localQs = JSON.parse(localStorage.getItem('ykso2_nb_fallback') || '[]');
+        localQs.push(q);
+        localStorage.setItem('ykso2_nb_fallback', JSON.stringify(localQs));
+      } catch(e) {
+        alert("Depolama alanı yetersiz! Lütfen tarayıcınızda yer açın veya çerezleri temizleyin.");
+      }
+      resolve();
+      return;
+    }
+    const transaction = _nbDb.transaction([STORE_NAME], 'readwrite');
+    const store = transaction.objectStore(STORE_NAME);
+    const request = store.put(q);
+    request.onsuccess = () => resolve();
+    request.onerror = () => resolve();
+  });
+}
+
+function getNotebookQuestionsFromDB() {
+  return new Promise((resolve) => {
+    if (!_nbDb) {
+      resolve(JSON.parse(localStorage.getItem('ykso2_nb_fallback') || '[]'));
+      return;
+    }
+    const transaction = _nbDb.transaction([STORE_NAME], 'readonly');
+    const store = transaction.objectStore(STORE_NAME);
+    const request = store.getAll();
+    request.onsuccess = (e) => resolve(e.target.result);
+    request.onerror = () => resolve([]);
+  });
+}
+
+function deleteNotebookQuestionFromDB(id) {
+  return new Promise((resolve) => {
+    if (!_nbDb) {
+      const localQs = JSON.parse(localStorage.getItem('ykso2_nb_fallback') || '[]');
+      const filtered = localQs.filter(q => q.id !== id);
+      localStorage.setItem('ykso2_nb_fallback', JSON.stringify(filtered));
+      resolve();
+      return;
+    }
+    const transaction = _nbDb.transaction([STORE_NAME], 'readwrite');
+    const store = transaction.objectStore(STORE_NAME);
+    const request = store.delete(id);
+    request.onsuccess = () => resolve();
+    request.onerror = () => resolve();
+  });
+}
+
+function openCreateFolderModal() {
+  document.getElementById('folder-name-input').value = '';
+  _selectedFolderColor = 'purple';
+  document.querySelectorAll('.notebook-color-pill').forEach(p => {
+    p.classList.remove('active');
+    if (p.getAttribute('data-color') === 'purple') p.classList.add('active');
+  });
+  document.getElementById('notebook-folder-modal').classList.remove('hidden');
+  
+  const container = document.getElementById('folder-colors-container');
+  if (!container.dataset.listening) {
+    container.dataset.listening = 'true';
+    container.addEventListener('click', (e) => {
+      const pill = e.target.closest('.notebook-color-pill');
+      if (pill) {
+        document.querySelectorAll('.notebook-color-pill').forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        _selectedFolderColor = pill.getAttribute('data-color');
+      }
+    });
+  }
+}
+
+function closeCreateFolderModal() {
+  document.getElementById('notebook-folder-modal').classList.add('hidden');
+}
+
+function createFolderSubmit() {
+  const name = document.getElementById('folder-name-input').value.trim();
+  if (!name) return;
+  const newFolder = {
+    id: 'f_' + Date.now(),
+    name: name,
+    color: _selectedFolderColor,
+    date: Date.now()
+  };
+  S.notebookFolders.push(newFolder);
+  save('notebookFolders');
+  closeCreateFolderModal();
+  renderFolders();
+  tone(880, 0.15);
+}
+
+function openAddQuestionModal() {
+  _notebookImageBase64 = null;
+  _notebookImageMime = null;
+  document.getElementById('nb-q-file').value = '';
+  document.getElementById('nb-q-note-input').value = '';
+  document.getElementById('nb-q-sol-input').value = '';
+  
+  const placeholder = document.getElementById('nb-q-placeholder');
+  placeholder.innerHTML = `
+    <i data-lucide="upload-cloud" style="width:32px; height:32px;"></i>
+    <span>Tıkla ve Soru Fotoğrafı Yükle</span>
+  `;
+  lucide.createIcons();
+  
+  document.getElementById('notebook-question-modal').classList.remove('hidden');
+}
+
+function closeAddQuestionModal() {
+  document.getElementById('notebook-question-modal').classList.add('hidden');
+}
+
+function handleNotebookImageUpload(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(evt) {
+    _notebookImageBase64 = evt.target.result.split(',')[1];
+    _notebookImageMime = file.type;
+    
+    const placeholder = document.getElementById('nb-q-placeholder');
+    placeholder.innerHTML = `
+      <img src="${evt.target.result}" style="width:100%; height:100%; object-fit:contain;">
+    `;
+  };
+  reader.readAsDataURL(file);
+}
+
+async function addQuestionToFolderSubmit() {
+  if (!_notebookImageBase64) {
+    alert("Lütfen sorunun fotoğrafını yükleyin.");
+    return;
+  }
+  const note = document.getElementById('nb-q-note-input').value.trim();
+  const solution = document.getElementById('nb-q-sol-input').value.trim();
+  
+  const newQ = {
+    id: 'q_' + Date.now(),
+    folderId: _currentFolderId,
+    image: {
+      data: _notebookImageBase64,
+      mimeType: _notebookImageMime
+    },
+    note: note,
+    solution: solution,
+    date: Date.now()
+  };
+  
+  await saveNotebookQuestionToDB(newQ);
+  closeAddQuestionModal();
+  renderFolderDetail(_currentFolderId);
+  tone(1000, 0.15);
+}
+
+async function deleteFolder(id, event) {
+  if (event) event.stopPropagation();
+  if (!confirm("Bu klasörü ve içindeki tüm soruları silmek istediğine emin misin?")) return;
+  
+  const allQs = await getNotebookQuestionsFromDB();
+  const folderQs = allQs.filter(q => q.folderId === id);
+  for (const q of folderQs) {
+    await deleteNotebookQuestionFromDB(q.id);
+  }
+  
+  S.notebookFolders = S.notebookFolders.filter(f => f.id !== id);
+  save('notebookFolders');
+  renderFolders();
+  tone(300, 0.2);
+}
+
+async function renderFolders() {
+  const listEl = document.getElementById('notebook-folders-list');
+  const emptyEl = document.getElementById('notebook-folders-empty');
+  listEl.innerHTML = '';
+  
+  document.getElementById('notebook-folders-view').classList.remove('hidden');
+  document.getElementById('notebook-detail-view').classList.add('hidden');
+  document.getElementById('notebook-main-head').classList.remove('hidden');
+
+  if (S.notebookFolders.length === 0) {
+    emptyEl.classList.remove('hidden');
+    return;
+  }
+  emptyEl.classList.add('hidden');
+
+  const allQs = await getNotebookQuestionsFromDB();
+
+  S.notebookFolders.forEach(f => {
+    const qCount = allQs.filter(q => q.folderId === f.id).length;
+    const card = document.createElement('div');
+    card.className = `folder-card glass glow-${f.color}`;
+    card.onclick = () => openFolderDetail(f.id);
+    
+    card.innerHTML = `
+      <button class="folder-delete-btn" onclick="deleteFolder('${f.id}', event)" title="Klasörü Sil">
+        <i data-lucide="trash-2"></i>
+      </button>
+      <div class="folder-icon-wrap" style="background:rgba(255,255,255,0.03); color:var(--aurora-${f.color})">
+        <i data-lucide="folder"></i>
+      </div>
+      <h3>${f.name}</h3>
+      <span class="count-lbl">${qCount} Soru Kayıtlı</span>
+    `;
+    listEl.appendChild(card);
+  });
+  lucide.createIcons();
+}
+
+function openFolderDetail(id) {
+  _currentFolderId = id;
+  renderFolderDetail(id);
+}
+
+function backToFolders() {
+  _currentFolderId = null;
+  renderFolders();
+}
+
+async function renderFolderDetail(id) {
+  const folder = S.notebookFolders.find(f => f.id === id);
+  if (!folder) return;
+
+  document.getElementById('notebook-folders-view').classList.add('hidden');
+  document.getElementById('notebook-main-head').classList.add('hidden');
+  document.getElementById('notebook-detail-view').classList.remove('hidden');
+
+  document.getElementById('notebook-folder-title').textContent = folder.name;
+  
+  const listEl = document.getElementById('notebook-questions-list');
+  const emptyEl = document.getElementById('notebook-questions-empty');
+  listEl.innerHTML = '';
+
+  const allQs = await getNotebookQuestionsFromDB();
+  const folderQs = allQs.filter(q => q.folderId === id).sort((a,b) => b.date - a.date);
+
+  document.getElementById('notebook-folder-meta').textContent = `Toplam ${folderQs.length} Soru`;
+
+  if (folderQs.length === 0) {
+    emptyEl.classList.remove('hidden');
+    return;
+  }
+  emptyEl.classList.add('hidden');
+
+  folderQs.forEach(q => {
+    const card = document.createElement('div');
+    card.className = 'notebook-q-card';
+    
+    const formattedDate = new Date(q.date).toLocaleDateString('tr-TR', { day: 'numeric', month: 'short', year: 'numeric' });
+    const previewImg = `data:${q.image.mimeType};base64,${q.image.data}`;
+
+    card.innerHTML = `
+      <button class="delete-icon-btn" onclick="deleteNotebookQuestion('${q.id}', event)" title="Soruyu Sil">
+        <i data-lucide="trash-2" style="width:14px; height:14px;"></i>
+      </button>
+      <div class="notebook-q-img-wrap" onclick="viewQuestionDetails('${q.id}')">
+        <img src="${previewImg}">
+      </div>
+      <div class="notebook-q-body">
+        <p class="notebook-q-note">${q.note || 'Not eklenmemiş.'}</p>
+        <div class="notebook-q-meta">
+          <span>${formattedDate}</span>
+          <button class="btn btn-secondary" style="padding: 4px 8px; font-size: 0.75rem;" onclick="viewQuestionDetails('${q.id}')">Detay & Çözüm</button>
+        </div>
+      </div>
+    `;
+    listEl.appendChild(card);
+  });
+  lucide.createIcons();
+}
+
+async function deleteNotebookQuestion(id, event) {
+  if (event) event.stopPropagation();
+  if (!confirm("Bu soruyu silmek istediğine emin misin?")) return;
+  await deleteNotebookQuestionFromDB(id);
+  renderFolderDetail(_currentFolderId);
+  tone(300, 0.2);
+}
+
+async function viewQuestionDetails(id) {
+  _viewingQuestionId = id;
+  const allQs = await getNotebookQuestionsFromDB();
+  const q = allQs.find(item => item.id === id);
+  if (!q) return;
+
+  const previewImg = `data:${q.image.mimeType};base64,${q.image.data}`;
+  document.getElementById('nb-view-img').src = previewImg;
+  document.getElementById('nb-view-note').textContent = q.note || 'Eklenmiş bir not yok.';
+  
+  const solBox = document.getElementById('nb-view-sol-box');
+  if (q.solution) {
+    solBox.classList.remove('hidden');
+    document.getElementById('nb-view-sol').textContent = q.solution;
+  } else {
+    solBox.classList.add('hidden');
+  }
+
+  const delBtn = document.getElementById('nb-view-delete-btn');
+  delBtn.onclick = async () => {
+    closeViewQuestionModal();
+    await deleteNotebookQuestion(q.id);
+  };
+
+  document.getElementById('notebook-view-modal').classList.remove('hidden');
+}
+
+function closeViewQuestionModal() {
+  document.getElementById('notebook-view-modal').classList.add('hidden');
+  _viewingQuestionId = null;
+}
+
+async function sendToAIFromNotebook() {
+  if (!_viewingQuestionId) return;
+  const allQs = await getNotebookQuestionsFromDB();
+  const q = allQs.find(item => item.id === _viewingQuestionId);
+  if (!q) return;
+
+  _attachedImage = {
+    data: q.image.data,
+    mimeType: q.image.mimeType
+  };
+
+  const imgBox = document.getElementById('ai-img-preview-box');
+  const img = document.getElementById('ai-img-preview');
+  const name = document.getElementById('ai-img-name');
+
+  img.src = `data:${q.image.mimeType};base64,${q.image.data}`;
+  name.textContent = "defterden_soru.jpg";
+  imgBox.classList.remove('hidden');
+
+  closeViewQuestionModal();
+  
+  goTo('ai', document.querySelector('.side-btn[onclick*="ai"]'));
+  
+  const input = document.getElementById('ai-msg-input');
+  input.value = "Bu defterimdeki soruyu benim için çözüp açıklar mısın?";
+  input.focus();
+  
+  tone(1000, 0.1);
+}
+
+// ── Mobile More Bottom Sheet Actions ──
+function openMobileMoreSheet() {
+  const sheet = document.getElementById('mobile-more-sheet');
+  const content = document.getElementById('more-sheet-content');
+  sheet.classList.remove('hidden');
+  sheet.style.display = 'flex';
+  setTimeout(() => {
+    content.style.transform = 'translateY(0)';
+  }, 10);
+  tone(880, 0.08);
+}
+
+function closeMobileMoreSheet() {
+  const sheet = document.getElementById('mobile-more-sheet');
+  const content = document.getElementById('more-sheet-content');
+  content.style.transform = 'translateY(100%)';
+  setTimeout(() => {
+    sheet.classList.add('hidden');
+    sheet.style.display = 'none';
+  }, 300);
+}
+
+function triggerMobileNav(sec) {
+  closeMobileMoreSheet();
+  if (sec === 'settings-api') {
+    openGeminiConfig();
+  } else {
+    const sideBtn = document.querySelector(`.side-btn[onclick*="${sec}"]`);
+    goTo(sec, sideBtn);
+  }
 }
