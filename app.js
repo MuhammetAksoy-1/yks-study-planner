@@ -814,7 +814,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   setInputDefaults();
   setupPWA();
   lucide.createIcons();
-
   // Splash screen — hide after 2 seconds
   setTimeout(() => {
     const splash = document.getElementById('splash-screen');
@@ -823,7 +822,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       setTimeout(() => splash.remove(), 700);
     }
   }, 2000);
-
   // Listeners
   document.getElementById('theme-btn').addEventListener('click', toggleTheme);
   document.getElementById('quote-btn').addEventListener('click', nextQuote);
