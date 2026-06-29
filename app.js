@@ -870,13 +870,68 @@ document.addEventListener('DOMContentLoaded', async () => {
     navigator.serviceWorker.register('./sw.js').catch(()=>{});
   }
 
+  // Request notification permission early
+  if ('Notification' in window && Notification.permission === 'default') {
+    // Ask after 5 seconds to not be intrusive
+    setTimeout(() => {
+      Notification.requestPermission();
+    }, 5000);
+  }
+
   // Save on unload and visibilitychange
   window.addEventListener('beforeunload', saveOnUnload);
+  
+  let _leftAppAt = null;
+  
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'hidden') {
       saveTimerStates();
+      
+      // Send notification if a timer is actively running
+      const pomRunning = S.pomodoro.isRunning && S.pomodoro.phase === 'work';
+      const swRunning = S.stopwatch.isRunning;
+      
+      if (pomRunning || swRunning) {
+        _leftAppAt = Date.now();
+        
+        if ('Notification' in window && Notification.permission === 'granted') {
+          const timerName = pomRunning ? `Pomodoro (${S.pomodoro.ders})` : `Kronometre (${S.stopwatch.ders})`;
+          try {
+            new Notification('⏱️ YKS Odak — Zamanlayıcın Çalışıyor!', {
+              body: `${timerName} hâlâ çalışıyor. Odaklanmaya devam et, hedefine yaklaşıyorsun! 🎯`,
+              icon: './icons/icon-512.jpg',
+              tag: 'yks-timer-running',
+              renotify: true
+            });
+          } catch(e) {}
+        }
+      }
+      
     } else if (document.visibilityState === 'visible') {
       catchUpTimers();
+      
+      // Show "away time" toast if user was away while timer was running
+      if (_leftAppAt) {
+        const awaySeconds = Math.floor((Date.now() - _leftAppAt) / 1000);
+        _leftAppAt = null;
+        
+        if (awaySeconds >= 10) {
+          const pomRunning = S.pomodoro.isRunning && S.pomodoro.phase === 'work';
+          const swRunning = S.stopwatch.isRunning;
+          
+          if (pomRunning || swRunning) {
+            const mins = Math.floor(awaySeconds / 60);
+            const secs = awaySeconds % 60;
+            let awayText = '';
+            if (mins > 0) {
+              awayText = `${mins} dk ${secs} sn`;
+            } else {
+              awayText = `${secs} saniye`;
+            }
+            showAwayToast(awayText);
+          }
+        }
+      }
     }
   });
 });
@@ -2756,4 +2811,38 @@ function triggerMobileNav(sec) {
     const sideBtn = document.querySelector(`.side-btn[onclick*="${sec}"]`);
     goTo(sec, sideBtn);
   }
+}
+
+// ── Away Toast Notification ──
+function showAwayToast(awayText) {
+  // Remove existing toast if any
+  const existing = document.getElementById('away-toast');
+  if (existing) existing.remove();
+
+  const toast = document.createElement('div');
+  toast.id = 'away-toast';
+  toast.innerHTML = `
+    <div class="away-toast-icon">👋</div>
+    <div class="away-toast-body">
+      <strong>Tekrar hoş geldin!</strong>
+      <span>${awayText} uzaktaydın. Zamanlayıcın çalışmaya devam etti.</span>
+    </div>
+    <button onclick="this.parentElement.remove()" class="away-toast-close">&times;</button>
+  `;
+  document.body.appendChild(toast);
+
+  // Animate in
+  requestAnimationFrame(() => {
+    toast.classList.add('show');
+  });
+
+  // Auto dismiss after 6 seconds
+  setTimeout(() => {
+    if (toast.parentElement) {
+      toast.classList.remove('show');
+      setTimeout(() => { if (toast.parentElement) toast.remove(); }, 400);
+    }
+  }, 6000);
+
+  tone(660, 0.12, 'sine');
 }
