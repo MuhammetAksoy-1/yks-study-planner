@@ -53,8 +53,8 @@
     <div class="brand">
       <div class="brand-icon"><i data-lucide="graduation-cap"></i></div>
       <div>
-        <h1>YKS Odak</h1>
-        <div class="sub">Premium Çalışma Asistanı</div>
+        <h1 style="display:flex; align-items:center; gap:6px;">YKS Odak<span id="user-title-badge" class="title-badge" style="display:none;"></span></h1>
+        <div class="sub" id="brand-subtitle">Premium Çalışma Asistanı</div>
       </div>
     </div>
 
@@ -73,6 +73,12 @@
     </div>
 
     <div class="header-actions">
+      <!-- Streak Badge -->
+      <div class="streak-badge" id="streak-badge" title="Çalışma Serin">
+        <span class="streak-fire">🔥</span>
+        <span class="streak-count" id="streak-count">0</span>
+        <span class="streak-label">gün</span>
+      </div>
       <button class="install-btn" id="install-btn">
         <i data-lucide="download"></i> Uygulamayı Yükle
       </button>
@@ -103,6 +109,7 @@
       <button class="side-btn" onclick="goTo('notebook',this)"><i data-lucide="folder-heart"></i><span>Soru Defterim</span></button>
       <button class="side-btn" onclick="goTo('topics',this)"><i data-lucide="book-open"></i><span>Konu Takipçisi</span></button>
       <button class="side-btn" onclick="goTo('summary',this)"><i data-lucide="bar-chart-3"></i><span>Özet & İstatistik</span></button>
+      <button class="side-btn" onclick="goTo('shop',this)"><i data-lucide="shopping-bag" style="color:var(--aurora-amber)"></i><span>YKS Mağaza</span></button>
     </nav>
 
     <!-- Content -->
@@ -782,13 +789,23 @@
 
         <!-- Stat cards -->
         <div class="stat-cards">
+          <div class="stat-card grad-amber">
+            <div class="stat-top"><span>Çalışma Serisi</span><i data-lucide="flame"></i></div>
+            <div class="stat-val" id="s-streak">🔥 0 Gün</div>
+            <div style="display:flex; flex-direction:column; gap:6px;">
+              <span id="s-streak-sub" class="stat-sub" style="margin:0">Henüz çalışma yok</span>
+              <button class="btn btn-secondary" id="rest-day-btn" onclick="toggleTodayRestDay()" style="padding: 4px 8px; font-size: 0.7rem; align-self: flex-start; margin-top: 4px; border-color: rgba(253, 203, 110, 0.3);">
+                🌴 Bugünü Dinlenme Günü Yap
+              </button>
+            </div>
+          </div>
           <div class="stat-card grad-purple">
             <div class="stat-top"><span>Toplam Çalışma</span><i data-lucide="hourglass"></i></div>
             <div class="stat-val" id="s-time">0 dk</div>
             <div class="stat-sub">Bu hafta tüm oturumlar</div>
           </div>
           <div class="stat-card grad-cyan">
-            <div class="stat-top"><span>Pomodoro</span><i data-lucide="flame"></i></div>
+            <div class="stat-top"><span>Pomodoro</span><i data-lucide="clock-4"></i></div>
             <div class="stat-val" id="s-pom">0</div>
             <div class="stat-sub">Tamamlanan odaklanma seansı</div>
           </div>
@@ -838,7 +855,224 @@
             </div>
           </div>
         </div>
+
+        <!-- Deneme Takvimi -->
+        <div class="glass glow-purple" style="margin-top:1rem">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
+            <h3 class="card-title" style="margin:0"><i data-lucide="calendar-days"></i>Deneme Takvimi</h3>
+            <button class="btn btn-primary" style="padding: 6px 12px; font-size: 0.78rem;" onclick="openExamModal()"><i data-lucide="plus"></i>Deneme Ekle</button>
+          </div>
+          <div id="exam-list">
+            <div class="empty" style="padding:1.25rem 0"><i data-lucide="calendar-days"></i><p>Henüz deneme sınavı eklenmedi.</p></div>
+          </div>
+        </div>
+
+        <!-- Veri Yedekleme -->
+        <div class="glass" style="margin-top:1rem">
+          <h3 class="card-title"><i data-lucide="hard-drive"></i>Veri Yedekleme & Geri Yükleme</h3>
+          <p style="font-size:0.78rem; color:var(--text-2); margin-bottom:1rem;">Tüm çalışma verilerini, netleri, planları ve ayarları tek tıkla yedekle. Telefon değiştirirken veya tarayıcı temizlerken kayıp yaşama.</p>
+          <div style="display:flex; gap:0.75rem; flex-wrap:wrap;">
+            <button class="btn btn-primary" onclick="exportBackup()"><i data-lucide="download"></i>Yedeği İndir (.json)</button>
+            <button class="btn btn-secondary" onclick="document.getElementById('import-file').click()"><i data-lucide="upload"></i>Yedekten Geri Yükle</button>
+            <input type="file" id="import-file" accept=".json" style="display:none" onchange="importBackup(event)">
+          </div>
+        </div>
+
       </section>
+
+      <!-- ── MODAL: DENEME SINAVI EKLE ── -->
+      <div id="exam-modal" class="hidden" style="position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); z-index: 100000; display: flex; align-items: center; justify-content: center;">
+        <div class="glass glow-purple" style="width: 90%; max-width: 400px; padding: 1.5rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.25rem;">
+            <h3 style="font-size:1.1rem; font-weight:800; display:flex; align-items:center; gap:8px;">
+              <i data-lucide="calendar-plus" style="color:var(--aurora-purple)"></i>
+              <span>Deneme Sınavı Ekle</span>
+            </h3>
+            <button type="button" onclick="closeExamModal()" style="background:none; border:none; color:var(--text-3); font-size:1.2rem; cursor:pointer;">&times;</button>
+          </div>
+          <div class="form-g" style="margin-bottom: 1rem;">
+            <label for="exam-name-input">Deneme Adı</label>
+            <input type="text" id="exam-name-input" placeholder="Örn: TYT Deneme 5" style="width:100%; padding:10px 14px; border-radius:var(--radius-md); background:var(--bg-input); border:1px solid var(--border-dim); color:var(--text-1);">
+          </div>
+          <div class="form-g" style="margin-bottom: 1.5rem;">
+            <label for="exam-date-input">Sınav Tarihi</label>
+            <input type="date" id="exam-date-input" style="width:100%; padding:10px 14px; border-radius:var(--radius-md); background:var(--bg-input); border:1px solid var(--border-dim); color:var(--text-1);">
+          </div>
+          <div style="display:flex; gap:0.75rem; justify-content:flex-end;">
+            <button type="button" class="btn btn-secondary" onclick="closeExamModal()">İptal</button>
+            <button type="button" class="btn btn-primary" onclick="addExam()">Ekle</button>
+          </div>
+        </div>
+      </div>
+      <!-- ══ YKS MAĞAZA ══ -->
+      <section id="sec-shop" class="sec">
+        <div class="sec-head-row" style="margin-bottom:1.5rem">
+          <div class="sec-head">
+            <h2>YKS Mağaza</h2>
+            <p>Ders çalıştıkça kazandığın token'ları burada harcayabilirsin.</p>
+          </div>
+          <!-- Token Counter display -->
+          <div style="display:flex; align-items:center; gap:12px;">
+            <div class="glass" style="padding: 10px 18px; display:flex; align-items:center; gap:8px; border-radius:30px; border-color:var(--border-glow)">
+              <span style="font-size:1.2rem">🪙</span>
+              <strong id="shop-token-count" style="font-size:1.1rem; font-weight:800; color:var(--aurora-amber); font-family:var(--font-mono)">0</strong>
+              <span style="font-size:0.75rem; color:var(--text-3); font-weight:600">Token</span>
+            </div>
+            <div class="glass" style="padding: 10px 18px; display:flex; align-items:center; gap:8px; border-radius:30px; border-color:var(--border-glow)">
+              <span style="font-size:1.2rem">🌴</span>
+              <strong id="shop-pass-count" style="font-size:1.1rem; font-weight:800; color:var(--aurora-green); font-family:var(--font-mono)">0</strong>
+              <span style="font-size:0.75rem; color:var(--text-3); font-weight:600">Dinlenme Kartı</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <!-- Left Column: Consumables & Sounds -->
+          <div class="flex-col gap-4">
+            <!-- Consumables -->
+            <div class="glass glow-green">
+              <h3 class="card-title"><i data-lucide="shopping-bag" style="color:var(--aurora-green)"></i>Sarf Malzemeleri</h3>
+              <div class="shop-list">
+                <!-- Rest Pass -->
+                <div class="shop-item">
+                  <div class="shop-item-info">
+                    <span class="shop-item-icon">🌴</span>
+                    <div class="shop-item-detail">
+                      <span class="shop-item-name">Dinlenme Kartı (Rest Pass)</span>
+                      <span class="shop-item-desc">Serini bozmadan 1 gün dinlenmeni sağlar.</span>
+                    </div>
+                  </div>
+                  <button class="btn btn-primary" onclick="buyShopItem('rest_pass', 20)"><i data-lucide="shopping-cart"></i>20 Token</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Focus Music -->
+            <div class="glass glow-cyan">
+              <h3 class="card-title"><i data-lucide="music" style="color:var(--aurora-cyan)"></i>Telif Hakları Korunmuş Odaklanma Sesleri</h3>
+              <div class="shop-list">
+                <!-- Rain -->
+                <div class="shop-item" id="shop-item-sound_rain">
+                  <div class="shop-item-info">
+                    <span class="shop-item-icon">🌧️</span>
+                    <div class="shop-item-detail">
+                      <span class="shop-item-name">Sakin Yağmur Sesi</span>
+                      <span class="shop-item-desc">Arka planda çalan telifsiz yağmur loop'u.</span>
+                    </div>
+                  </div>
+                  <button class="btn btn-primary" onclick="handleSoundItemClick('sound_rain', 100)">100 Token</button>
+                </div>
+                <!-- Lo-Fi -->
+                <div class="shop-item" id="shop-item-sound_lofi">
+                  <div class="shop-item-info">
+                    <span class="shop-item-icon">🎵</span>
+                    <div class="shop-item-detail">
+                      <span class="shop-item-name">Lo-Fi Çalışma Ritimleri</span>
+                      <span class="shop-item-desc">Odaklanmana yardım edecek telifsiz lo-fi beat.</span>
+                    </div>
+                  </div>
+                  <button class="btn btn-primary" onclick="handleSoundItemClick('sound_lofi', 120)">120 Token</button>
+                </div>
+                <!-- Forest -->
+                <div class="shop-item" id="shop-item-sound_forest">
+                  <div class="shop-item-info">
+                    <span class="shop-item-icon">🍃</span>
+                    <div class="shop-item-detail">
+                      <span class="shop-item-name">Derin Orman Ambiyansı</span>
+                      <span class="shop-item-desc">Doğal rüzgar ve sakinleştirici orman esintisi.</span>
+                    </div>
+                  </div>
+                  <button class="btn btn-primary" onclick="handleSoundItemClick('sound_forest', 100)">100 Token</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Themes & Titles -->
+          <div class="flex-col gap-4">
+            <!-- Themes -->
+            <div class="glass glow-purple">
+              <h3 class="card-title"><i data-lucide="palette" style="color:var(--aurora-purple)"></i>Premium Temalar</h3>
+              <div class="shop-list">
+                <!-- Retro Theme -->
+                <div class="shop-item" id="shop-item-theme_retro">
+                  <div class="shop-item-info">
+                    <span class="shop-item-icon">🌆</span>
+                    <div class="shop-item-detail">
+                      <span class="shop-item-name">Retro Synth Wave</span>
+                      <span class="shop-item-desc">80'lerin neon pembesi ve turuncu ışıkları.</span>
+                    </div>
+                  </div>
+                  <button class="btn btn-primary" onclick="handleThemeItemClick('theme_retro', 150)">150 Token</button>
+                </div>
+                <!-- Forest Theme -->
+                <div class="shop-item" id="shop-item-theme_forest">
+                  <div class="shop-item-info">
+                    <span class="shop-item-icon">🌿</span>
+                    <div class="shop-item-detail">
+                      <span class="shop-item-name">Orman Huzuru (Zen)</span>
+                      <span class="shop-item-desc">Sakinleştirici yeşil ve toprak tonları.</span>
+                    </div>
+                  </div>
+                  <button class="btn btn-primary" onclick="handleThemeItemClick('theme_forest', 150)">150 Token</button>
+                </div>
+                <!-- Space Theme -->
+                <div class="shop-item" id="shop-item-theme_space">
+                  <div class="shop-item-info">
+                    <span class="shop-item-icon">🌌</span>
+                    <div class="shop-item-detail">
+                      <span class="shop-item-name">Derin Uzay</span>
+                      <span class="shop-item-desc">Karanlık kozmos ve derin mavi esintiler.</span>
+                    </div>
+                  </div>
+                  <button class="btn btn-primary" onclick="handleThemeItemClick('theme_space', 150)">150 Token</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Titles -->
+            <div class="glass glow-pink">
+              <h3 class="card-title"><i data-lucide="award" style="color:var(--aurora-pink)"></i>Havalı Ünvanlar</h3>
+              <div class="shop-list">
+                <!-- Title 1 -->
+                <div class="shop-item" id="shop-item-title_derece">
+                  <div class="shop-item-info">
+                    <span class="shop-item-icon">👑</span>
+                    <div class="shop-item-detail">
+                      <span class="shop-item-name">Derece Canavarı</span>
+                      <span class="shop-item-desc">Adının yanına havalı bir derece rozeti takar.</span>
+                    </div>
+                  </div>
+                  <button class="btn btn-primary" onclick="handleTitleItemClick('title_derece', 80)">80 Token</button>
+                </div>
+                <!-- Title 2 -->
+                <div class="shop-item" id="shop-item-title_pomo">
+                  <div class="shop-item-info">
+                    <span class="shop-item-icon">🍅</span>
+                    <div class="shop-item-detail">
+                      <span class="shop-item-name">Pomodoro Üstadı</span>
+                      <span class="shop-item-desc">Sadece en odaklanmış olanlara özel ünvan.</span>
+                    </div>
+                  </div>
+                  <button class="btn btn-primary" onclick="handleTitleItemClick('title_pomo', 80)">80 Token</button>
+                </div>
+                <!-- Title 3 -->
+                <div class="shop-item" id="shop-item-title_night">
+                  <div class="shop-item-info">
+                    <span class="shop-item-icon">🦉</span>
+                    <div class="shop-item-detail">
+                      <span class="shop-item-name">Gece Kuşu</span>
+                      <span class="shop-item-desc">Sabahlara kadar çalışanların resmi ünvanı.</span>
+                    </div>
+                  </div>
+                  <button class="btn btn-primary" onclick="handleTitleItemClick('title_night', 80)">80 Token</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
 
     </main>
   </div><!-- /main-body -->
@@ -881,6 +1115,11 @@
         <i data-lucide="bar-chart-3" style="color: var(--aurora-purple); margin: 0 auto;"></i>
         <span style="margin-top:6px">Özetler</span>
       </button>
+      <button class="sheet-grid-btn" onclick="triggerMobileNav('shop')">
+        <i data-lucide="shopping-bag" style="color: var(--aurora-amber); margin: 0 auto;"></i>
+        <span style="margin-top:6px">Mağaza</span>
+      </button>
+
       <button class="sheet-grid-btn" onclick="triggerMobileNav('settings-api')">
         <i data-lucide="key" style="color: var(--aurora-pink); margin: 0 auto;"></i>
         <span style="margin-top:6px">API Ayarları</span>

@@ -1271,3 +1271,225 @@ input:focus,select:focus{
 .away-toast-close:hover {
   color: var(--text-1);
 }
+
+/* ── Streak Badge ── */
+.streak-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: linear-gradient(135deg, rgba(253, 203, 110, 0.15), rgba(255, 118, 117, 0.1));
+  border: 1px solid rgba(253, 203, 110, 0.25);
+  border-radius: 50px;
+  padding: 6px 14px;
+  cursor: default;
+  transition: transform 0.2s ease;
+}
+.streak-badge:hover {
+  transform: scale(1.05);
+}
+.streak-fire {
+  font-size: 1.1rem;
+  animation: fireFlicker 1.5s infinite alternate ease-in-out;
+}
+@keyframes fireFlicker {
+  0% { transform: scale(1) rotate(-3deg); }
+  100% { transform: scale(1.15) rotate(3deg); }
+}
+.streak-count {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--aurora-amber);
+  font-family: var(--font-mono);
+}
+.streak-label {
+  font-size: 0.7rem;
+  color: var(--text-3);
+  font-weight: 600;
+}
+
+/* ── Stat Card Amber Gradient ── */
+.grad-amber {
+  border-left: 3px solid var(--aurora-amber);
+  background: linear-gradient(135deg, rgba(253, 203, 110, 0.06), transparent);
+}
+
+/* ── Exam List Items ── */
+.exam-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-dim);
+  gap: 12px;
+}
+.exam-item:last-child {
+  border-bottom: none;
+}
+.exam-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+.exam-countdown-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 52px;
+  padding: 6px 10px;
+  border-radius: var(--radius-md);
+  font-size: 0.78rem;
+  font-weight: 800;
+  font-family: var(--font-mono);
+}
+.exam-countdown-badge.upcoming {
+  background: linear-gradient(135deg, rgba(108, 92, 231, 0.15), rgba(0, 210, 255, 0.1));
+  color: var(--aurora-cyan);
+}
+.exam-countdown-badge.past {
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-3);
+}
+.exam-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.exam-name {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-1);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.exam-date-lbl {
+  font-size: 0.75rem;
+  color: var(--text-3);
+}
+.exam-del-btn {
+  background: none;
+  border: none;
+  color: var(--text-3);
+  cursor: pointer;
+  padding: 4px;
+  transition: color 0.2s ease;
+}
+.exam-del-btn:hover {
+  color: var(--aurora-pink);
+}
+
+/* ── Shop Layout ── */
+.shop-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 10px;
+}
+.shop-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-dim);
+  border-radius: var(--radius-md);
+  gap: 12px;
+}
+.shop-item-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+.shop-item-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.shop-item-detail {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.shop-item-name {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-1);
+}
+.shop-item-desc {
+  font-size: 0.75rem;
+  color: var(--text-3);
+}
+.shop-item button {
+  min-width: 90px;
+  font-size: 0.78rem;
+  padding: 8px 12px;
+  flex-shrink: 0;
+}
+
+/* ── Active Theme Overrides ── */
+body.active-theme-retro {
+  --bg-deep: #17011a;
+  --bg-card: rgba(23, 1, 26, 0.8);
+  --bg-input: rgba(255, 0, 127, 0.05);
+  --border-dim: rgba(255, 0, 127, 0.15);
+  --border-glow: rgba(255, 0, 127, 0.25);
+  --aurora-purple: #ff007f;
+  --aurora-cyan: #ff7700;
+  --aurora-green: #eefe34;
+}
+body.active-theme-forest {
+  --bg-deep: #0e271c;
+  --bg-card: rgba(14, 39, 28, 0.85);
+  --bg-input: rgba(82, 183, 136, 0.05);
+  --border-dim: rgba(82, 183, 136, 0.15);
+  --border-glow: rgba(82, 183, 136, 0.25);
+  --aurora-purple: #2d6a4f;
+  --aurora-cyan: #52b788;
+  --aurora-green: #74c69d;
+}
+body.active-theme-space {
+  --bg-deep: #02020e;
+  --bg-card: rgba(2, 2, 14, 0.8);
+  --bg-input: rgba(6, 182, 212, 0.05);
+  --border-dim: rgba(6, 182, 212, 0.15);
+  --border-glow: rgba(6, 182, 212, 0.25);
+  --aurora-purple: #4f46e5;
+  --aurora-cyan: #06b6d4;
+  --aurora-green: #3b82f6;
+}
+
+/* ── Title Badges styling in headers ── */
+.title-badge {
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  background: linear-gradient(135deg, var(--aurora-purple), var(--aurora-cyan));
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.active-theme-retro .title-badge {
+  background: linear-gradient(135deg, #ff007f, #ff7700);
+}
+.active-theme-forest .title-badge {
+  background: linear-gradient(135deg, #2d6a4f, #52b788);
+}
+.active-theme-space .title-badge {
+  background: linear-gradient(135deg, #4f46e5, #06b6d4);
+}
+

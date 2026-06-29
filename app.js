@@ -606,6 +606,19 @@ let S = {
   geminiKey: '',
   aiChatHistory: [],
   notebookFolders: [],
+  examDates: [],
+  restDays: [],
+  tokens: 0,
+  restPasses: 0,
+  unlockedItems: ['theme-light', 'theme-dark'],
+  activeTheme: 'default',
+  activeTitle: 'none',
+  lastStreakClaim: '',
+  pendingStudySeconds: 0,
+  duelNickname: '',
+  duelGroupCode: '',
+  userId: '',
+  duelGroupEditKey: '',
 
   pomodoro: {
     phase: 'work',   // 'work'|'short'|'long'
@@ -626,13 +639,19 @@ let S = {
 
 // ── Persistence ─────────────────────────────
 function load() {
-  const keys = ['plans','sessions','nets','questions','topics','dailyGoal','theme','stopwatch','pomodoro','geminiKey','aiChatHistory','notebookFolders'];
+  const keys = ['plans','sessions','nets','questions','topics','dailyGoal','theme','stopwatch','pomodoro','geminiKey','aiChatHistory','notebookFolders','examDates','restDays','tokens','restPasses','unlockedItems','activeTheme','activeTitle','lastStreakClaim','pendingStudySeconds','duelNickname','duelGroupCode','userId','duelGroupEditKey'];
   keys.forEach(k => {
     try {
       const v = localStorage.getItem('ykso2_'+k);
       if (v !== null) S[k] = JSON.parse(v);
     } catch(e) {}
   });
+
+  // Ensure userId exists
+  if (!S.userId) {
+    S.userId = 'usr_' + Math.random().toString(36).substring(2, 15);
+    try { localStorage.setItem('ykso2_userId', JSON.stringify(S.userId)); } catch(e) {}
+  }
   // Init TYT topics if empty
   Object.keys(TYT_TOPICS).forEach(ders => {
     if (!S.topics[ders]) {
@@ -725,7 +744,7 @@ function load() {
   }
 }
 function save(key) {
-  const keys = key ? [key] : ['plans','sessions','nets','questions','topics','dailyGoal','theme','stopwatch','pomodoro','geminiKey','aiChatHistory','notebookFolders'];
+  const keys = key ? [key] : ['plans','sessions','nets','questions','topics','dailyGoal','theme','stopwatch','pomodoro','geminiKey','aiChatHistory','notebookFolders','examDates','restDays','tokens','restPasses','unlockedItems','activeTheme','activeTitle','lastStreakClaim','pendingStudySeconds','duelNickname','duelGroupCode','userId','duelGroupEditKey'];
   keys.forEach(k => {
     try { localStorage.setItem('ykso2_'+k, JSON.stringify(S[k])); } catch(e) {}
   });
@@ -864,6 +883,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   pomRender();
   pomRenderStars();
   initAI();
+  renderExams();
+  checkDailyStreakClaim();
 
   // Service Worker
   if ('serviceWorker' in navigator) {
@@ -944,7 +965,8 @@ function setInputDefaults() {
 
 // ── Theme ────────────────────────────────────
 function applyTheme() {
-  document.body.className = S.theme==='dark' ? 'dark-theme' : 'light-theme';
+  const customTheme = S.activeTheme || 'default';
+  document.body.className = `${S.theme==='dark' ? 'dark-theme' : 'light-theme'} active-theme-${customTheme}`;
 }
 function toggleTheme() {
   S.theme = S.theme==='dark' ? 'light' : 'dark';
@@ -1006,6 +1028,12 @@ function setupPWA() {
   window.addEventListener('appinstalled', ()=>{
     document.getElementById('install-btn').classList.remove('show');
   });
+  
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      window.location.reload();
+    });
+  }
 }
 
 // ── Navigation ───────────────────────────────
@@ -1023,6 +1051,7 @@ function goTo(sec, btn) {
 
   chimeClick();
   if (sec==='summary') { updateSummary(); initWeeklyChart(); }
+  if (sec==='shop') { renderShop(); }
   if (sec==='nets') initNetChart();
   if (sec==='notebook') { renderFolders(); }
   if (sec==='ai') {
@@ -1165,8 +1194,7 @@ function pomPhaseEnd() {
   if (S.pomodoro.phase==='work') {
     // Work phase completed! 
     S.pomodoro.streak++;
-    S.sessions.push({id:Date.now(),ts:Date.now(),ders:S.pomodoro.ders,dur:S.pomodoro.workMins*60,type:'pomodoro'});
-    save('sessions'); renderSessions(); updateSummary();
+    addStudySession('pomodoro', S.pomodoro.ders, S.pomodoro.workMins*60);
     // Celebration!
     maybeConfetti();
     pomNotify();
@@ -1282,8 +1310,7 @@ function swToggle() {
     clearInterval(S.stopwatch.timerId); S.stopwatch.isRunning=false;
     // Auto-save: When stopping, save the elapsed time as a session
     if (S.stopwatch.secs>=10) {
-      S.sessions.push({id:Date.now(),ts:Date.now(),ders:S.stopwatch.ders,dur:S.stopwatch.secs,type:'manuel'});
-      save('sessions'); renderSessions();
+      addStudySession('manuel', S.stopwatch.ders, S.stopwatch.secs);
       chimeSave();
       S.stopwatch.secs=0;
       document.getElementById('sw-digits').textContent='00:00:00';
@@ -1335,9 +1362,9 @@ function swReset() {
 
 function swSave() {
   if (S.stopwatch.secs<10) { alert('En az 10 saniye çalışmalısınız.'); return; }
-  S.sessions.push({id:Date.now(),ts:Date.now(),ders:S.stopwatch.ders,dur:S.stopwatch.secs,type:'manuel'});
-  save('sessions'); chimeSave();
-  swReset(); renderSessions(); updateSummary();
+  addStudySession('manuel', S.stopwatch.ders, S.stopwatch.secs);
+  chimeSave();
+  swReset();
 }
 
 function clearSessions() {
@@ -1396,8 +1423,7 @@ function renderSessions() {
 }
 
 function savePartialSession(type, ders, secs) {
-  S.sessions.push({id:Date.now(),ts:Date.now(),ders,dur:secs,type});
-  save('sessions'); renderSessions();
+  addStudySession(type, ders, secs);
 }
 
 // ── Save on unload ─────────────────────────────
@@ -1766,6 +1792,41 @@ function updateSummary() {
   document.getElementById('s-pom').textContent=pomCount;
   document.getElementById('s-plan-pct').textContent=`${planPct}%`;
   document.getElementById('s-plan-frac').textContent=`${donePlans} / ${weekPlans.length} tamamlandı`;
+
+  // Streak update
+  const streak = calculateStreak();
+  const streakBadge = document.getElementById('streak-badge');
+  const streakCount = document.getElementById('streak-count');
+  const sStreak = document.getElementById('s-streak');
+  const sStreakSub = document.getElementById('s-streak-sub');
+  const restDayBtn = document.getElementById('rest-day-btn');
+
+  if (streakBadge && streakCount) {
+    streakCount.textContent = streak;
+    if (streak > 0) {
+      streakBadge.style.display = 'flex';
+    } else {
+      streakBadge.style.display = 'none';
+    }
+  }
+  if (sStreak && sStreakSub) {
+    sStreak.textContent = `🔥 ${streak} Gün`;
+    sStreakSub.textContent = streak > 0 ? 'Seriyi devam ettiriyorsun!' : 'Bugün çalışarak seriye başla!';
+  }
+  if (restDayBtn) {
+    const todayStrVal = today();
+    if (S.restDays && S.restDays.includes(todayStrVal)) {
+      restDayBtn.textContent = '☀️ Bugün Dinlenme Günü (İptal Et)';
+      restDayBtn.style.background = 'rgba(0, 230, 118, 0.15)';
+      restDayBtn.style.borderColor = 'var(--aurora-green)';
+      restDayBtn.style.color = '#00E676';
+    } else {
+      restDayBtn.textContent = '🌴 Bugünü Dinlenme Günü Yap';
+      restDayBtn.style.background = '';
+      restDayBtn.style.borderColor = 'rgba(253, 203, 110, 0.3)';
+      restDayBtn.style.color = '';
+    }
+  }
 
   // Ders bars
   const byDers={};
@@ -2846,3 +2907,581 @@ function showAwayToast(awayText) {
 
   tone(660, 0.12, 'sine');
 }
+
+// ── Streak Calculation ──
+function calculateStreak() {
+  const studyDates = new Set();
+  if (S.sessions) {
+    S.sessions.forEach(s => {
+      const d = new Date(s.ts);
+      studyDates.add(`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`);
+    });
+  }
+
+  const restDays = new Set(S.restDays || []);
+  
+  let streak = 0;
+  let checkDate = new Date(); // Start from today
+  
+  for (let i = 0; i < 365; i++) {
+    const y = checkDate.getFullYear();
+    const m = String(checkDate.getMonth() + 1).padStart(2, '0');
+    const r = String(checkDate.getDate()).padStart(2, '0');
+    const checkStr = `${y}-${m}-${r}`;
+    
+    const isToday = (i === 0);
+    
+    if (studyDates.has(checkStr)) {
+      streak++;
+    } else if (restDays.has(checkStr)) {
+      // Rest day: streak is frozen (neither incremented nor broken)
+    } else {
+      // Not studied, not a rest day
+      if (isToday) {
+        // Today: they still have time to study, don't break yet!
+      } else {
+        // Yesterday or earlier: streak is broken!
+        break;
+      }
+    }
+    checkDate.setDate(checkDate.getDate() - 1);
+  }
+  return streak;
+}
+
+// ── Backup Export / Import ──
+async function exportBackup() {
+  try {
+    const backupData = JSON.parse(JSON.stringify(S));
+    // Fetch all IndexedDB questions to pack into backup
+    const dbQs = await getNotebookQuestionsFromDB();
+    backupData.indexedDBQuestions = dbQs;
+
+    const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(backupData));
+    const downloadAnchor = document.createElement('a');
+    downloadAnchor.setAttribute("href", dataStr);
+    downloadAnchor.setAttribute("download", `yks_odak_yedek_${today()}.json`);
+    document.body.appendChild(downloadAnchor);
+    downloadAnchor.click();
+    downloadAnchor.remove();
+    tone(880, 0.1, 'sine');
+  } catch(err) {
+    alert("Yedek oluşturulurken hata: " + err.message);
+  }
+}
+
+function importBackup(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = async function(evt) {
+    try {
+      const parsed = JSON.parse(evt.target.result);
+      if (!parsed.plans && !parsed.sessions && !parsed.nets) {
+        alert("Geçersiz yedek dosyası!");
+        return;
+      }
+
+      if (confirm("Bu yedeği yüklemek istediğine emin misin? Mevcut tüm verilerin silinecek ve yedekteki veriler yazılacaktır.")) {
+        // Restore localstorage keys
+        const keys = ['plans','sessions','nets','questions','topics','dailyGoal','theme','stopwatch','pomodoro','geminiKey','aiChatHistory','notebookFolders','examDates','restDays','tokens','restPasses','unlockedItems','activeTheme','activeTitle','lastStreakClaim','pendingStudySeconds','duelNickname','duelGroupCode','userId','duelGroupEditKey'];
+        keys.forEach(k => {
+          if (parsed[k] !== undefined) {
+            localStorage.setItem('ykso2_' + k, JSON.stringify(parsed[k]));
+          }
+        });
+
+        // Restore IndexedDB questions if they exist in backup
+        if (parsed.indexedDBQuestions && _nbDb) {
+          const transaction = _nbDb.transaction([STORE_NAME], 'readwrite');
+          const store = transaction.objectStore(STORE_NAME);
+          
+          // Clear current store first
+          store.clear();
+          
+          // Add each question
+          for (const q of parsed.indexedDBQuestions) {
+            store.put(q);
+          }
+        }
+
+        alert("Veriler başarıyla geri yüklendi! Sayfa yenileniyor...");
+        window.location.reload();
+      }
+    } catch(err) {
+      alert("Dosya yüklenirken hata oluştu: " + err.message);
+    }
+  };
+  reader.readAsText(file);
+}
+
+// ── Deneme Takvimi (Exam Dates) ──
+function openExamModal() {
+  document.getElementById('exam-name-input').value = '';
+  document.getElementById('exam-date-input').value = today();
+  document.getElementById('exam-modal').classList.remove('hidden');
+}
+
+function closeExamModal() {
+  document.getElementById('exam-modal').classList.add('hidden');
+}
+
+function addExam() {
+  const name = document.getElementById('exam-name-input').value.trim();
+  const dateVal = document.getElementById('exam-date-input').value;
+  if (!name || !dateVal) return;
+
+  const newExam = {
+    id: 'e_' + Date.now(),
+    name: name,
+    date: dateVal
+  };
+
+  S.examDates = S.examDates || [];
+  S.examDates.push(newExam);
+  save('examDates');
+  closeExamModal();
+  renderExams();
+  tone(880, 0.1, 'sine');
+}
+
+function deleteExam(id) {
+  if (!confirm("Bu sınavı takvimden silmek istediğine emin misin?")) return;
+  S.examDates = S.examDates.filter(e => e.id !== id);
+  save('examDates');
+  renderExams();
+  tone(300, 0.15, 'sine');
+}
+
+function renderExams() {
+  const container = document.getElementById('exam-list');
+  if (!container) return;
+  container.innerHTML = '';
+
+  S.examDates = S.examDates || [];
+
+  if (S.examDates.length === 0) {
+    container.innerHTML = `
+      <div class="empty" style="padding:1.25rem 0">
+        <i data-lucide="calendar-days"></i>
+        <p>Henüz deneme sınavı eklenmedi.</p>
+      </div>
+    `;
+    lucide.createIcons();
+    return;
+  }
+
+  // Sort exams by date (upcoming first)
+  const sortedExams = [...S.examDates].sort((a, b) => new Date(a.date) - new Date(b.date));
+
+  const todayMidnight = new Date();
+  todayMidnight.setHours(0,0,0,0);
+
+  sortedExams.forEach(e => {
+    const examDate = new Date(e.date);
+    examDate.setHours(0,0,0,0);
+
+    const diffTime = examDate - todayMidnight;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    let badgeClass = 'upcoming';
+    let countdownText = '';
+
+    if (diffDays > 0) {
+      countdownText = `${diffDays} gün`;
+    } else if (diffDays === 0) {
+      countdownText = 'Bugün';
+    } else {
+      badgeClass = 'past';
+      countdownText = 'Geçti';
+    }
+
+    const formattedDate = new Date(e.date).toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
+
+    const item = document.createElement('div');
+    item.className = 'exam-item';
+    item.innerHTML = `
+      <div class="exam-info">
+        <div class="exam-countdown-badge ${badgeClass}">${countdownText}</div>
+        <div class="exam-detail">
+          <span class="exam-name">${e.name}</span>
+          <span class="exam-date-lbl">${formattedDate}</span>
+        </div>
+      </div>
+      <button class="exam-del-btn" onclick="deleteExam('${e.id}')" title="Sınavı Sil">
+        <i data-lucide="trash-2" style="width:16px; height:16px;"></i>
+      </button>
+    `;
+    container.appendChild(item);
+  });
+  lucide.createIcons();
+}
+
+// ── Toggle Today Rest Day ──
+function toggleTodayRestDay() {
+  const todayStrVal = today();
+  S.restDays = S.restDays || [];
+  S.restPasses = S.restPasses || 0;
+  
+  if (S.restDays.includes(todayStrVal)) {
+    // Cancel rest day: refund rest pass
+    S.restDays = S.restDays.filter(d => d !== todayStrVal);
+    S.restPasses++;
+    save('restDays');
+    save('restPasses');
+    tone(600, 0.15, 'sine');
+    showAwayToast(`☀️ Dinlenme günü iptal edildi. 1 Dinlenme Kartı iade edildi! Kalan: 🌴 ${S.restPasses}`);
+  } else {
+    // Check weekly rest day limit (maximum 3 rest days per week)
+    const { mon, sun } = weekBounds();
+    const thisWeekRestDaysCount = S.restDays.filter(d => d >= mon && d <= sun).length;
+    if (thisWeekRestDaysCount >= 3) {
+      alert("⚠️ Haftalık dinlenme günü sınırına ulaştın! Bir haftada en fazla 3 gün dinlenebilirsin.");
+      return;
+    }
+
+    // Declare rest day: cost 1 rest pass
+    if (S.restPasses < 1) {
+      alert("⚠️ Yeterli Dinlenme Kartın yok! Mağazadan 20 Token karşılığında satın alabilirsin.");
+      goTo('shop');
+      return;
+    }
+    S.restDays.push(todayStrVal);
+    S.restPasses--;
+    save('restDays');
+    save('restPasses');
+    tone(880, 0.15, 'sine');
+    showAwayToast(`🌴 Bugün dinlenme günü olarak ayarlandı. 1 Dinlenme Kartı kullanıldı! Kalan: 🌴 ${S.restPasses}`);
+  }
+  
+  updateSummary();
+}
+
+// ── Study Session Recorder (Gamified) ──
+function addStudySession(type, ders, secs) {
+  S.sessions = S.sessions || [];
+  S.sessions.push({ id: Date.now(), ts: Date.now(), ders, dur: secs, type });
+  
+  // Calculate tokens: +1 Token for every 30 minutes (1800 seconds) of study
+  S.pendingStudySeconds = (S.pendingStudySeconds || 0) + secs;
+  const earned = Math.floor(S.pendingStudySeconds / 1800);
+  if (earned > 0) {
+    S.tokens = (S.tokens || 0) + earned;
+    S.pendingStudySeconds = S.pendingStudySeconds % 1800;
+    save('tokens');
+    save('pendingStudySeconds');
+    setTimeout(() => {
+      showAwayToast(`🪙 Tebrikler! Çalışarak ${earned} Token kazandın! Toplam: 🪙 ${S.tokens}`);
+    }, 1000);
+  }
+  
+  save('sessions');
+  renderSessions();
+  updateSummary();
+}
+
+// ── Daily Streak Token Claimer ──
+function checkDailyStreakClaim() {
+  const todayStr = today();
+  S.lastStreakClaim = S.lastStreakClaim || '';
+  
+  // Update equipped title badge on start
+  updateTitleBadgeUI();
+
+  if (S.lastStreakClaim === todayStr) return; // Already claimed today
+
+  const streak = calculateStreak();
+  if (streak > 0) {
+    S.tokens = (S.tokens || 0) + streak;
+    S.lastStreakClaim = todayStr;
+    save('tokens');
+    save('lastStreakClaim');
+    
+    // Play a nice success sound and show claim toast
+    setTimeout(() => {
+      [523.25, 659.25, 783.99].forEach((f, i) => {
+        setTimeout(() => tone(f, 0.2, 'sine', 0.1), i * 120);
+      });
+      showAwayToast(`🔥 Günlük Giriş! ${streak} günlük serin için +${streak} Token kazandın!`);
+    }, 2000);
+  }
+}
+
+// ── Shop Renderer ──
+function renderShop() {
+  // Update unlocks first
+  const stats = checkTitleUnlocks();
+
+  S.tokens = S.tokens || 0;
+  S.restPasses = S.restPasses || 0;
+  S.unlockedItems = S.unlockedItems || ['theme-light', 'theme-dark'];
+  S.activeTheme = S.activeTheme || 'default';
+  S.activeTitle = S.activeTitle || 'none';
+
+  // Update counters
+  const tokCounter = document.getElementById('shop-token-count');
+  const passCounter = document.getElementById('shop-pass-count');
+  if (tokCounter) tokCounter.textContent = S.tokens;
+  if (passCounter) passCounter.textContent = S.restPasses;
+
+  // Render Theme item buttons
+  const themes = ['theme_retro', 'theme_forest', 'theme_space'];
+  themes.forEach(t => {
+    const btn = document.querySelector(`#shop-item-${t} button`);
+    if (!btn) return;
+    
+    if (S.unlockedItems.includes(t)) {
+      if (S.activeTheme === t) {
+        btn.textContent = 'Aktif';
+        btn.className = 'btn btn-secondary';
+        btn.disabled = true;
+      } else {
+        btn.textContent = 'Aktif Et';
+        btn.className = 'btn btn-primary';
+        btn.disabled = false;
+      }
+    } else {
+      btn.innerHTML = `<i data-lucide="lock" style="width:12px; height:12px; display:inline; vertical-align:middle; margin-right:4px;"></i>150 Token`;
+      btn.className = 'btn btn-primary';
+      btn.disabled = false;
+    }
+  });
+
+  // Render Title item buttons (Achievement locked)
+  const titles = ['title_derece', 'title_pomo', 'title_night'];
+  titles.forEach(t => {
+    const btn = document.querySelector(`#shop-item-${t} button`);
+    const descEl = document.querySelector(`#shop-item-${t} .shop-item-desc`);
+    if (!btn) return;
+
+    // Update progress texts dynamically
+    if (descEl) {
+      if (t === 'title_derece') {
+        const hrs = Math.floor(stats.totalSecs / 3600);
+        descEl.textContent = `Toplamda en az 250 saat aktif çalışma. (İlerleme: ${hrs} / 250 saat)`;
+      } else if (t === 'title_pomo') {
+        descEl.textContent = `En az 150 Pomodoro tamamla. (İlerleme: ${stats.pomodorosCount} / 150 Pomodoro)`;
+      } else if (t === 'title_night') {
+        const nightHrs = Math.floor(stats.nightSecs / 3600);
+        descEl.textContent = `Gece 23:00 - 05:00 arası en az 80 saat çalışma. (İlerleme: ${nightHrs} / 80 saat)`;
+      }
+    }
+
+    if (S.unlockedItems.includes(t)) {
+      if (S.activeTitle === t) {
+        btn.textContent = 'Kuşanıldı';
+        btn.className = 'btn btn-secondary';
+        btn.disabled = true;
+      } else {
+        btn.textContent = 'Kuşan';
+        btn.className = 'btn btn-primary';
+        btn.disabled = false;
+      }
+    } else {
+      btn.innerHTML = `<i data-lucide="lock" style="width:12px; height:12px; display:inline; vertical-align:middle; margin-right:4px;"></i>Kilitli`;
+      btn.className = 'btn btn-secondary';
+      btn.disabled = true;
+    }
+  });
+
+  // Render Music item buttons
+  const sounds = ['sound_rain', 'sound_lofi', 'sound_forest'];
+  sounds.forEach(s => {
+    const btn = document.querySelector(`#shop-item-${s} button`);
+    if (!btn) return;
+
+    const prices = { sound_rain: 100, sound_lofi: 120, sound_forest: 100 };
+
+    if (S.unlockedItems.includes(s)) {
+      const isPlaying = _activeAmbientId === s;
+      btn.textContent = isPlaying ? 'Durdur' : 'Çal';
+      btn.className = isPlaying ? 'btn btn-danger' : 'btn btn-secondary';
+      btn.disabled = false;
+    } else {
+      btn.innerHTML = `<i data-lucide="lock" style="width:12px; height:12px; display:inline; vertical-align:middle; margin-right:4px;"></i>${prices[s]} Token`;
+      btn.className = 'btn btn-primary';
+      btn.disabled = false;
+    }
+  });
+
+  lucide.createIcons();
+}
+
+// ── Buy Shop Item ──
+function buyShopItem(itemId, price) {
+  S.tokens = S.tokens || 0;
+  if (S.tokens < price) {
+    alert(`⚠️ Yeterli token'ın yok! Bu ürün ${price} Token değerinde. Senin ise ${S.tokens} Token'ın var.`);
+    return false;
+  }
+
+  S.tokens -= price;
+  save('tokens');
+  tone(880, 0.2, 'sine');
+  
+  if (itemId === 'rest_pass') {
+    S.restPasses = (S.restPasses || 0) + 1;
+    save('restPasses');
+    showAwayToast(`🌴 1 adet Dinlenme Kartı satın alındı! Kalan Token: 🪙 ${S.tokens}`);
+  } else {
+    S.unlockedItems = S.unlockedItems || ['theme-light', 'theme-dark'];
+    S.unlockedItems.push(itemId);
+    save('unlockedItems');
+    showAwayToast(`🎉 Tebrikler! Yeni ürünün kilidi açıldı!`);
+  }
+
+  renderShop();
+  return true;
+}
+
+// ── Themes Manager ──
+function handleThemeItemClick(themeId, price) {
+  S.unlockedItems = S.unlockedItems || ['theme-light', 'theme-dark'];
+  if (S.unlockedItems.includes(themeId)) {
+    // Equip theme
+    S.activeTheme = themeId;
+    save('activeTheme');
+    applyTheme();
+    showAwayToast('🎨 Tema başarıyla değiştirildi!');
+    renderShop();
+  } else {
+    // Buy theme
+    buyShopItem(themeId, price);
+  }
+}
+
+// ── Titles Manager ──
+function handleTitleItemClick(titleId, price) {
+  S.unlockedItems = S.unlockedItems || ['theme-light', 'theme-dark'];
+  if (S.unlockedItems.includes(titleId)) {
+    // Equip title
+    if (S.activeTitle === titleId) {
+      S.activeTitle = 'none';
+    } else {
+      S.activeTitle = titleId;
+    }
+    save('activeTitle');
+    updateTitleBadgeUI();
+    showAwayToast('👑 Ünvanın güncellendi!');
+    renderShop();
+  } else {
+    // Buy title
+    buyShopItem(titleId, price);
+  }
+}
+
+function updateTitleBadgeUI() {
+  const badgeEl = document.getElementById('user-title-badge');
+  if (!badgeEl) return;
+
+  const titleLabels = {
+    title_derece: 'Derece Canavarı',
+    title_pomo: 'Pomodoro Üstadı',
+    title_night: 'Gece Kuşu'
+  };
+
+  const current = S.activeTitle || 'none';
+  if (current === 'none' || !titleLabels[current]) {
+    badgeEl.style.display = 'none';
+  } else {
+    badgeEl.textContent = titleLabels[current];
+    badgeEl.style.display = 'inline-block';
+  }
+}
+
+// ── Ambient Music Controller ──
+let _ambientAudio = null;
+let _activeAmbientId = null;
+
+const SOUND_URLS = {
+  sound_rain: 'https://www.soundjay.com/nature/sounds/rain-07.mp3',
+  sound_lofi: 'https://ccmixter.org/content/admiralbob77/admiralbob77_-_The_Playa_d_En_Bossa_Mix.mp3',
+  sound_forest: 'https://www.soundjay.com/nature/sounds/forest-wind-01.mp3'
+};
+
+function handleSoundItemClick(soundId, price) {
+  S.unlockedItems = S.unlockedItems || ['theme-light', 'theme-dark'];
+  if (S.unlockedItems.includes(soundId)) {
+    toggleAmbientSound(soundId);
+  } else {
+    buyShopItem(soundId, price);
+  }
+}
+
+function toggleAmbientSound(soundId) {
+  if (_activeAmbientId === soundId) {
+    // Stop playing
+    stopAmbientSound();
+  } else {
+    // Play selected sound
+    playAmbientSound(soundId);
+  }
+  renderShop();
+}
+
+function playAmbientSound(soundId) {
+  stopAmbientSound();
+
+  const url = SOUND_URLS[soundId];
+  if (!url) return;
+
+  _ambientAudio = new Audio(url);
+  _ambientAudio.loop = true;
+  _ambientAudio.volume = 0.4;
+  
+  _ambientAudio.play().catch(e => {
+    console.error("Audio playback error:", e);
+    alert("Ses oynatılamadı. Lütfen sayfada bir yere tıkladıktan sonra tekrar dene.");
+  });
+
+  _activeAmbientId = soundId;
+}
+
+function stopAmbientSound() {
+  if (_ambientAudio) {
+    _ambientAudio.pause();
+    _ambientAudio = null;
+  }
+  _activeAmbientId = null;
+}
+
+// ── Achievement Titles Unlocks Checker ──
+function checkTitleUnlocks() {
+  const stats = {
+    totalSecs: 0,
+    pomodorosCount: 0,
+    nightSecs: 0
+  };
+
+  if (S.sessions) {
+    S.sessions.forEach(s => {
+      stats.totalSecs += s.dur;
+      if (s.type === 'pomodoro') stats.pomodorosCount++;
+      
+      const date = new Date(s.ts);
+      const hrs = date.getHours();
+      if (hrs >= 23 || hrs < 5) {
+        stats.nightSecs += s.dur;
+      }
+    });
+  }
+
+  const unlocked = ['theme-light', 'theme-dark'];
+  if (stats.totalSecs >= 250 * 3600) unlocked.push('title_derece');
+  if (stats.pomodorosCount >= 150) unlocked.push('title_pomo');
+  if (stats.nightSecs >= 80 * 3600) unlocked.push('title_night');
+
+  S.unlockedItems = S.unlockedItems || [];
+  unlocked.forEach(item => {
+    if (!S.unlockedItems.includes(item)) {
+      S.unlockedItems.push(item);
+    }
+  });
+  save('unlockedItems');
+
+  return stats;
+}
+
+
+

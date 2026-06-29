@@ -4,13 +4,17 @@ YKS sınavına hazırlık sürecinde odaklanmayı artıran, çalışmaları taki
 
 ## 🔗 Canlı Demo
 
-> Netlify üzerinden yayında — [Siteyi Ziyaret Et](https://yks-odak.netlify.app/)
+> Netlify üzerinden yayında — [Siteyi Ziyaret Et](https://your-netlify-url.netlify.app)
 
 ---
 
 ## ✨ Özellikler
 
 - **⏱️ Pomodoro Zamanlayıcısı** — Yıldız serisi, sesli bildirimler, dairesel animasyon
+- **🏪 YKS Mağaza & Ünvanlar** — Kazanılan tokenler ile premium temalar ve dinlenme günleri satın alma
+- **🏆 Başarıma Bağlı Ünvanlar** — Derece Canavarı (250s çalışma), Pomodoro Üstadı (150 Pomo) ve Gece Kuşu (80s gece çalışması) başarımları ile açılan kilitli ünvan sistemi
+- **🔥 4 Saatlik Streak Barajı** — Günlük serileri (streak) korumak ve geliştirmek için günde en az 4 saat çalışma şartı
+- **🔋 Haftalık Dinlenme Günü Sınırı** — Haftada en fazla 3 dinlenme günü kullanımı ile dengeli ve planlı çalışma disiplini
 - **⌚ Kronometre** — Ders bazlı süre ölçümü ve oturum kaydetme
 - **📋 Çalışma Planı** — Günlük, haftalık, aylık görev yönetimi
 - **📈 Net Takipçisi** — TYT/AYT deneme sonuçları ve gelişim grafiği
@@ -20,7 +24,7 @@ YKS sınavına hazırlık sürecinde odaklanmayı artıran, çalışmaları taki
 - **🎯 YKS Geri Sayımı** — YKS 2027'ye kalan süre
 - **📱 PWA Desteği** — Telefona uygulama olarak yüklenebilir
 - **🌙 Karanlık/Açık Tema**
-- **💾 Offline Çalışma** — İnternetsiz de kullanılabilir
+- **💾 Offline Çalışma** — İnternetsiz de kullanılabilir (Local-first)
 
 ---
 
